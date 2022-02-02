@@ -1,6 +1,8 @@
-$theme-colors: (
-    "primary": green,
-    "dark" : black
-);
+// $theme-colors: (
+//     "primary": green
+//     // "dark" : black
+//     );
 
+$primary: green;
+    
 @import "~bootstrap/scss/bootstrap";
