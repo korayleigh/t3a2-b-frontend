@@ -1,7 +1,20 @@
+import LoginForm from "./components/LoginForm";
+import {Container} from 'react-bootstrap'
+
+
 const Login = () => {
     return (
-        <h1>Login PAGE GOES HERE</h1>
+        <div>
+
+            <Container className="my-5">
+
+            <h1>Login</h1>
+            <LoginForm />
+            </Container>
+
+        </div>
     );
 }
 
 export default Login;
+
