@@ -58,8 +58,9 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
                 </Navbar>
-
-            <Outlet />
+            <Container className="my-5">
+                <Outlet />
+            </Container>
 
         </>
     )
