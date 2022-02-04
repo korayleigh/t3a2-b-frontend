@@ -2,8 +2,10 @@ import React from 'react';
 import { useEffect, useReducer } from 'react';
 import ordersReducer from '../utils/ordersReducer';
 import { getOrders, setOrders } from '../services/ordersServices';
+import {Table} from 'react-bootstrap';
+import OrdersTableRow from './OrdersTableRow';
 
-const OrdersList = () => {
+const OrdersTable = () => {
 
   const initialState = {
     orders: {}
@@ -22,7 +24,7 @@ const OrdersList = () => {
 
   return (
     <div>
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Created</th>
@@ -34,19 +36,14 @@ const OrdersList = () => {
         <tbody>
           {Object.values(store.orders).map(order => {
             return (
-              <tr key={order.id}>
-                <td>{order.created}</td>
-                <td>{order.table}</td>
-                <td>{order.name}</td>
-                <td>{order.total/100.0}</td>
-              </tr>
+              <OrdersTableRow key={order.id} order={order} />
             );
           })}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
 
 
-export default OrdersList;
+export default OrdersTable;

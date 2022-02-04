@@ -1,11 +1,11 @@
 import React from 'react';
-import OrdersList from './components/OrdersList';
+import OrdersTable from './components/OrdersTable';
 
 const Orders = () => {
   return (
     <div>
       <h1>Orders</h1>
-      <OrdersList />
+      <OrdersTable />
     </div>
   );
 };
