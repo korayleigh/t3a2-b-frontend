@@ -1,23 +1,23 @@
-import React from 'react'
-import { useEffect, useReducer } from 'react'
-import ordersReducer from '../utils/ordersReducer'
-import { getOrders, setOrders } from '../services/ordersServices'
+import React from 'react';
+import { useEffect, useReducer } from 'react';
+import ordersReducer from '../utils/ordersReducer';
+import { getOrders, setOrders } from '../services/ordersServices';
 
 const OrdersList = () => {
 
   const initialState = {
     orders: {}
-  }
+  };
 
-  const [store, dispatch] = useReducer(ordersReducer, initialState)
+  const [store, dispatch] = useReducer(ordersReducer, initialState);
 
   useEffect(() => {
     getOrders()
       .then(orders => {
-        setOrders(dispatch, orders)
+        setOrders(dispatch, orders);
       })
-      .catch(error => console.log(error))
-  },[])
+      .catch(error => console.log(error));
+  },[]);
 
 
   return (
@@ -40,13 +40,13 @@ const OrdersList = () => {
                 <td>{order.name}</td>
                 <td>{order.total/100.0}</td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 
-export default OrdersList
+export default OrdersList;

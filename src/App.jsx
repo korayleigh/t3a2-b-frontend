@@ -1,16 +1,16 @@
-import React from 'react'
-import './App.scss'
-import Header from './Header'
-import Home from './Home'
-import Order from './Order'
-import OrderStatus from './OrderStatus'
-import Login from './Login'
-import Default from './Default'
-import { BrowserRouter, Route, Routes} from 'react-router-dom'
-import { useReducer } from 'react'
-import { GlobalContext } from './utils/globalContext'
-import globalReducer from './utils/globalReducer'
-import Orders from './Orders'
+import React from 'react';
+import './App.scss';
+import Header from './Header';
+import Home from './Home';
+import Order from './Order';
+import OrderStatus from './OrderStatus';
+import Login from './Login';
+import Default from './Default';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import { useReducer } from 'react';
+import { GlobalContext } from './utils/globalContext';
+import globalReducer from './utils/globalReducer';
+import Orders from './Orders';
 
 function App() {
   
@@ -18,8 +18,8 @@ function App() {
     menuCategories: [],
     loggedInUser: sessionStorage.getItem('email') || null,
     auth: {jwt: sessionStorage.getItem('jwt') || null}
-  }
-  const [store, dispatch] = useReducer(globalReducer,initialState)
+  };
+  const [store, dispatch] = useReducer(globalReducer,initialState);
 
   return (
     <div>
@@ -39,7 +39,7 @@ function App() {
         </BrowserRouter>
       </GlobalContext.Provider>      
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
