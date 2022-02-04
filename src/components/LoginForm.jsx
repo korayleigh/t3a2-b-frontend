@@ -1,29 +1,31 @@
+import React from 'react'
 import {Form, Button, FloatingLabel, Alert} from 'react-bootstrap'
 import {useState} from 'react'
 import {signIn} from '../services/authServices'
 import {useGlobalContext} from '../utils/globalContext'
 import { useNavigate } from 'react-router-dom'
+import { setLoginCredentials } from '../services/globalContextServices'
 
 const LoginForm = () => {
 
-	const initialFormState = {
-		email: '',
-		password: '',
+  const initialFormState = {
+    email: '',
+    password: '',
     validated: false,
     valid: false
-	}
+  }
 
-	const [formState, setFormState] = useState(initialFormState)
-	const {dispatch} = useGlobalContext()
+  const [formState, setFormState] = useState(initialFormState)
+  const {dispatch} = useGlobalContext()
   const navigate = useNavigate()
 
-	const handleChange = (event) => {
-		setFormState({
-			...formState,
+  const handleChange = (event) => {
+    setFormState({
+      ...formState,
       validated: false,
-			[event.target.name]: event.target.value
-		})
-	}
+      [event.target.name]: event.target.value
+    })
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -32,34 +34,27 @@ const LoginForm = () => {
       validated: false
     })
     signIn(formState)
-    .then(({responseStatus, email, jwt }) => {
-      sessionStorage.setItem('jwt', jwt)
-      sessionStorage.setItem('email', email)
-      dispatch({
-        type: 'setUser',
-        data: email
-      })
-      dispatch({
-        type: 'setToken',
-        data: jwt
-      })
-      setFormState({
-        ...formState,
-        validated: true,
-        valid: true
-      })
-      navigate('/orders')
-    })
-    .catch(error => {
-      if (error.response.status === 401) {
-        console.log("Unauthorised")
+      .then(({ email, jwt }) => {
+        sessionStorage.setItem('jwt', jwt)
+        sessionStorage.setItem('email', email)
+        setLoginCredentials(dispatch, email, jwt)
         setFormState({
           ...formState,
           validated: true,
-          valid: false
+          valid: true
         })
-      }
-    })
+        navigate('/orders')
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          console.log('Unauthorised')
+          setFormState({
+            ...formState,
+            validated: true,
+            valid: false
+          })
+        }
+      })
 
   }
 
