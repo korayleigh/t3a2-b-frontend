@@ -1,16 +1,16 @@
-import mexiquitoApi from "../config/api"
+import mexiquitoApi from '../config/api'
 
 export async function signIn({email, password}) {
 
   const response = await mexiquitoApi.post('/users/sign_in', {
-    "user": {
-      "email": email,
-      "password": password
+    'user': {
+      'email': email,
+      'password': password
     }
   })
   
   return {
-    responseStatus: response.status,
+    // responseStatus: response.status,
     email: response.data.email,
     jwt: response.headers.authorization
   }
