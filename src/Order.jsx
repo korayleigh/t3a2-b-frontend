@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const Order = () => {
   return (
     <h1>Order PAGE GOES HERE</h1>
-  )
-}
+  );
+};
 
-export default Order
+export default Order;

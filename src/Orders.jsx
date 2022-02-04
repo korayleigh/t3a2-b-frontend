@@ -1,5 +1,5 @@
-import React from 'react'
-import OrdersList from './components/OrdersList'
+import React from 'react';
+import OrdersList from './components/OrdersList';
 
 const Orders = () => {
   return (
@@ -7,7 +7,7 @@ const Orders = () => {
       <h1>Orders</h1>
       <OrdersList />
     </div>
-  )
-}
+  );
+};
 
-export default Orders
+export default Orders;

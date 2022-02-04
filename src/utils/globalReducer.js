@@ -42,7 +42,7 @@ export default function globalReducer (state, action) {
     return {
       ...state,
       loggedInUser: action.data
-    }
+    };
   }
   case 'setToken': {
     return {
@@ -51,7 +51,7 @@ export default function globalReducer (state, action) {
         ...state.auth,
         jwt: action.data
       }
-    }
+    };
   }
   // case 'setCategories': {
   // 	console.log("dispatch:setCategories", action.data)
@@ -61,6 +61,6 @@ export default function globalReducer (state, action) {
   // 	}
   // }
 
-  default: return state
+  default: return state;
   }
 }

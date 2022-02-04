@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const OrderStatus = () => {
   return (
     <h1>OrderStatus PAGE GOES HERE</h1>
-  )
-}
+  );
+};
 
-export default OrderStatus
+export default OrderStatus;
