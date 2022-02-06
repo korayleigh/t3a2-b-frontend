@@ -1,10 +1,10 @@
-import React from 'react'
-import {Form, Button, FloatingLabel, Alert} from 'react-bootstrap'
-import {useState} from 'react'
-import {signIn} from '../services/authServices'
-import {useGlobalContext} from '../utils/globalContext'
-import { useNavigate } from 'react-router-dom'
-import { setLoginCredentials } from '../services/globalContextServices'
+import React from 'react';
+import {Form, Button, FloatingLabel, Alert} from 'react-bootstrap';
+import {useState} from 'react';
+import {signIn} from '../services/authServices';
+import {useGlobalContext} from '../utils/globalContext';
+import { useNavigate } from 'react-router-dom';
+import { setLoginCredentials } from '../services/globalContextServices';
 
 const LoginForm = () => {
 
@@ -13,50 +13,50 @@ const LoginForm = () => {
     password: '',
     validated: false,
     valid: false
-  }
+  };
 
-  const [formState, setFormState] = useState(initialFormState)
-  const {dispatch} = useGlobalContext()
-  const navigate = useNavigate()
+  const [formState, setFormState] = useState(initialFormState);
+  const {dispatch} = useGlobalContext();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setFormState({
       ...formState,
       validated: false,
       [event.target.name]: event.target.value
-    })
-  }
+    });
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setFormState({
       ...formState,
       validated: false
-    })
+    });
     signIn(formState)
       .then(({ email, jwt }) => {
-        sessionStorage.setItem('jwt', jwt)
-        sessionStorage.setItem('email', email)
-        setLoginCredentials(dispatch, email, jwt)
+        sessionStorage.setItem('jwt', jwt);
+        sessionStorage.setItem('email', email);
+        setLoginCredentials(dispatch, email, jwt);
         setFormState({
           ...formState,
           validated: true,
           valid: true
-        })
-        navigate('/orders')
+        });
+        navigate('/orders');
       })
       .catch(error => {
         if (error.response.status === 401) {
-          console.log('Unauthorised')
+          console.log('Unauthorised');
           setFormState({
             ...formState,
             validated: true,
             valid: false
-          })
+          });
         }
-      })
+      });
 
-  }
+  };
 
 
   return (
@@ -78,7 +78,7 @@ const LoginForm = () => {
       </Form.Group>
       { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
     </Form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

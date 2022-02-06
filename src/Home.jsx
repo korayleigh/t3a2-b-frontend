@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const Home = () => {
   return (
     <h1>HOME PAGE GOES HERE</h1>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

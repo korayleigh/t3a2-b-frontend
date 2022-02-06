@@ -6,10 +6,10 @@ export default function ordersReducer (state, action) {
     return {
       ...state,
       orders: action.data
-    }
+    };
   }
 
-  default: return state
+  default: return state;
   }
 
 }

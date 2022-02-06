@@ -1,38 +1,38 @@
-import React from 'react'
-import { Container, Navbar, Nav } from 'react-bootstrap'
-import { Link, Outlet } from 'react-router-dom'
-import { useGlobalContext } from './utils/globalContext'
-import { signOut } from './services/authServices'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Link, Outlet } from 'react-router-dom';
+import { useGlobalContext } from './utils/globalContext';
+import { signOut } from './services/authServices';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
-  const {store} = useGlobalContext()
-  const {loggedInUser} = store
-  const {dispatch} = useGlobalContext()
-  const navigate = useNavigate()
+  const {store} = useGlobalContext();
+  const {loggedInUser} = store;
+  const {dispatch} = useGlobalContext();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
 
     signOut()
       .then(() => {
-        sessionStorage.clear()
+        sessionStorage.clear();
         dispatch({
           type: 'setUser',
           data: null
-        })
+        });
         dispatch({
           type: 'setToken',
           data: null
-        })
-        navigate('/')
+        });
+        navigate('/');
       })
       .catch(error => {
-        console.error(error)
+        console.error(error);
             
-      })
+      });
 
-  }
+  };
 
   return (
     <>
@@ -65,7 +65,7 @@ const Header = () => {
       </Container>
 
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

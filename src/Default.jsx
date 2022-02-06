@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const Default = () => {
   return (
     <h1>Default PAGE GOES HERE</h1>
-  )
-}
+  );
+};
 
-export default Default
+export default Default;
