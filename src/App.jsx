@@ -11,11 +11,12 @@ import { useReducer } from 'react';
 import { GlobalContext } from './utils/globalContext';
 import globalReducer from './utils/globalReducer';
 import Orders from './Orders';
+import Categories from '/Categories';
 
 function App() {
   
   const initialState = {
-    menuCategories: [],
+    categories: [],
     loggedInUser: sessionStorage.getItem('email') || null,
     auth: {jwt: sessionStorage.getItem('jwt') || null}
   };
@@ -25,7 +26,6 @@ function App() {
     <div>
       <GlobalContext.Provider value={{store,dispatch}}>
         <BrowserRouter>
-
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
@@ -33,6 +33,7 @@ function App() {
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
               <Route path="orders" element={<Orders />} />  
+              <Route path="categories" element={<Categories />} />
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>
