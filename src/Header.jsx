@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
@@ -45,8 +45,14 @@ const Header = () => {
 
               <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/order" href="/order">Order</Nav.Link>
-              <Nav.Link as={Link} to="/orders" href="/orders">Orders</Nav.Link>
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
+              <NavDropdown title="Admin" id="basic-nav-dropdown">
+                <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
+                <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
+                <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Nav>
               { loggedInUser

@@ -47,7 +47,6 @@ const LoginForm = () => {
       })
       .catch(error => {
         if (error.response.status === 401) {
-          console.log('Unauthorised');
           setFormState({
             ...formState,
             validated: true,

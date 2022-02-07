@@ -8,3 +8,17 @@ export function setLoginCredentials(dispatch, email, jwt) {
     data: jwt
   });
 }
+
+export function setCategories(dispatch, categories) {
+  dispatch({
+    type: 'setCategories',
+    data: categories
+  });
+}
+
+export function setOrders(dispatch, orders) {
+  dispatch({
+    type: 'setOrders',
+    data: orders
+  });
+}

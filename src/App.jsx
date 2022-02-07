@@ -11,7 +11,7 @@ import { useReducer } from 'react';
 import { GlobalContext } from './utils/globalContext';
 import globalReducer from './utils/globalReducer';
 import Orders from './Orders';
-import Categories from '/Categories';
+import Categories from './Categories';
 
 function App() {
   
