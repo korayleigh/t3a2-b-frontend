@@ -34,25 +34,6 @@ const Header = () => {
 
   };
 
-  const showToast = () => {
-
-    const newToast =  {
-      message: 'hello',
-      variant: 'warning',
-      show: true
-    };
-
-    dispatch({
-      type: 'setToasts',
-      data: [
-        ...store.toasts,
-        newToast
-      ]
-    });
-
-    console.log('toasts:', store.toasts);
-  };
-
   const handleDeleteToast = (deleteToast) => {
     dispatch({
       type: 'setToasts',
@@ -80,7 +61,6 @@ const Header = () => {
                 <NavDropdown.Divider />
                 <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
-              <Button onClick={showToast}>Toast</Button>
             </Nav>
             <Nav>
               { loggedInUser
