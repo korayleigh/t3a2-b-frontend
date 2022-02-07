@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Navbar, Nav, NavDropdown, ToastContainer, Toast , Button, Collapse} from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, ToastContainer, Toast , Collapse} from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
