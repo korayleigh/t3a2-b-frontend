@@ -12,10 +12,13 @@ import { GlobalContext } from './utils/globalContext';
 import globalReducer from './utils/globalReducer';
 import Orders from './Orders';
 import Categories from './Categories';
+import Category from './Category';
+import CategoryForm from './CategoryForm';
 
 function App() {
   
   const initialState = {
+    toasts: [],
     categories: [],
     loggedInUser: sessionStorage.getItem('email') || null,
     auth: {jwt: sessionStorage.getItem('jwt') || null}
@@ -33,7 +36,12 @@ function App() {
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
               <Route path="orders" element={<Orders />} />  
-              <Route path="categories" element={<Categories />} />
+              <Route path="categories">
+                <Route index element={<Categories />} />
+                <Route path=":id/edit" element={<CategoryForm />} />
+                <Route path=":id" element={<Category />} />
+                <Route path="new" element={<CategoryForm />} />
+              </Route>
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>

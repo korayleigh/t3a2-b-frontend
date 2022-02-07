@@ -5,6 +5,7 @@ import {signIn} from '../services/authServices';
 import {useGlobalContext} from '../utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { setLoginCredentials } from '../services/globalContextServices';
+import { ButtonRow } from '../styled/styled';
 
 const LoginForm = () => {
 
@@ -73,7 +74,9 @@ const LoginForm = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formButton">
-        <Button variant="primary" type="submit">Submit</Button>
+        <ButtonRow>
+          <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
+        </ButtonRow>
       </Form.Group>
       { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
     </Form>

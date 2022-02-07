@@ -27,6 +27,13 @@ export default function globalReducer (state, action) {
     };
   }
 
+  case 'setToasts': {
+    return {
+      ...state,
+      toasts: action.data
+    };
+  }
+
   default: return state;
   }
 }
