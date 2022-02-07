@@ -7,6 +7,7 @@ import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import Heading from './components/Heading';
 import { ButtonRow } from './styled/styled';
+import { showToast } from './services/toastServices';
 
 const Categories = () => {
 
@@ -18,7 +19,10 @@ const Categories = () => {
       .then(categories => {
         setCategories(dispatch ,categories);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        showToast(store, dispatch, error.message, 'danger');
+      });
   },[]);
 
   const navigate = useNavigate();

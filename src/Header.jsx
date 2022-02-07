@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
+import { deleteToast } from './services/toastServices';
 
 const Header = () => {
 
@@ -34,13 +35,8 @@ const Header = () => {
 
   };
 
-  const handleDeleteToast = (deleteToast) => {
-    dispatch({
-      type: 'setToasts',
-      data: store.toasts.filter((toast) => {
-        return toast !== deleteToast;
-      })
-    });
+  const handleDeleteToast = (toast) => {
+    deleteToast(store, dispatch, toast);
   };
 
   return (
@@ -90,7 +86,7 @@ const Header = () => {
         <ToastContainer position='top-end' className="p-4">
           {store.toasts.map((toast, index) => {
             return (
-              <Toast bg={toast.variant} key={index} delay={3000} show={toast.show} animation transition={Collapse} autohide={true} onClose={() => handleDeleteToast(toast)}
+              <Toast bg={toast.variant} key={index} delay={2000} show={toast.show} animation transition={Collapse} autohide={true} onClose={() => handleDeleteToast(toast)}
                 style={{
                   transitionProperty: 'opacity, visibility',
                   transitionDelay: '2s',

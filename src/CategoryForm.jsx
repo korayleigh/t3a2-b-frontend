@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Form, FloatingLabel, Alert, Button } from 'react-bootstrap';
+import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { showCategory, createUpdateCategory } from './services/categoryServices';
 import Heading from './components/Heading';
 import { ButtonBunch, ButtonRow } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
+import { showToast } from './services/toastServices';
 
 const CategoryForm = () => {
 
   const initialFormState = { 
-    validated: false,
-    valid: false,
-    message: '',
     category: {
       name: ''
+    },
+    validation: {
+      validated: false,
+      category: {
+        name: false,
+      }
     }
   };
   
@@ -39,10 +43,13 @@ const CategoryForm = () => {
   const handleChange = (event) => {
     setFormState({
       ...formState,
-      validated: false,
       category: {
         ...formState.category,
         [event.target.name]: event.target.value
+      },
+      validation: {
+        ...formState.validation,
+        validated: false
       }
     });
   };
@@ -53,37 +60,36 @@ const CategoryForm = () => {
     if (!category.name) {
       setFormState({
         ...formState,
-        validated: true,
-        valid: category.name ? true : false,
-        message: !category.name && 'Category Name is Required'
+        validation: {
+          ...formState.validation,
+          validated: true,
+          category: {
+            name: false
+          },
+        }
       });
+      showToast(store, dispatch, 'Category Name is Required', 'danger' );
     } else {
       createUpdateCategory(category)
         .then(() => {
-          const newToast =  {
-            message: `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`,
-            variant: 'success',
-            show: true
-          };
-          dispatch({
-            type: 'setToasts',
-            data: [
-              ...store.toasts,  
-              newToast
-            ]
+          setFormState({
+            ...formState,
+            validation: {
+              ...formState.validation,
+              validated: true,
+              category: {
+                name: false
+              },
+            },
           });
+          showToast(store, dispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          setFormState({
-            ...formState,
-            validated: true,
-            valid: false,
-            message: error.response.error
-          });
+          showToast(store, dispatch, error.message, 'danger');
         });
     }
   };
@@ -91,10 +97,6 @@ const CategoryForm = () => {
   const handleBackClick = () => {
     navigate(-1);
   };
-
-  console.log('name', category.name);
-  console.log('message', formState.message);
-  
   
   return (
     <>
@@ -104,7 +106,7 @@ const CategoryForm = () => {
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <FloatingLabel controlId='floatinginput' label="Category Name" className='mb-3'>
-              <Form.Control type="text" placeholder="Enter Category Name" name="name" onChange={handleChange} value={category.name} isInvalid={formState.validated && !formState.valid} isValid={formState.validated && formState.valid} />
+              <Form.Control type="text" placeholder="Enter Category Name" name="name" onChange={handleChange} value={category.name} isInvalid={formState.validation.validated && !formState.validation.category.name} isValid={formState.validation.validated && formState.validation.category.name} />
             </FloatingLabel>
           </Form.Group>
 
@@ -116,7 +118,6 @@ const CategoryForm = () => {
               </ButtonBunch>
             </ButtonRow>
           </Form.Group>
-          { (formState.validated) && <Alert variant={formState.valid ? 'success' : 'danger'}>{formState.message}</Alert> }
         </Form>
       </Container>
     </>

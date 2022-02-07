@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,18 +6,13 @@ import Heading from './components/Heading';
 import { destroyCategory, indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
 import { ButtonRow, ButtonBunch } from './styled/styled';
+import { showToast } from './services/toastServices';
 
 const Category = () => {
 
   const {store, dispatch} = useGlobalContext();
   const params = useParams();
   const navigate = useNavigate();
-
-  const initialState = {
-    messageGood: true,
-    message: ''
-  };
-  const [state, setState] = useState(initialState);
 
   useEffect(() => {
     console.log('length:', store.categories.length);
@@ -40,32 +35,14 @@ const Category = () => {
     if (event.target.name === 'delete') {
       destroyCategory(category.id)
         .then(() => {
-          // setState({
-          //   messageGood: true,
-          //   message: `${category.name} successfully deleted`
-          // });
-          const newToast =  {
-            message: `Category '${category.name}' successfully deleted`,
-            variant: 'danger',
-            show: true
-          };
-          dispatch({
-            type: 'setToasts',
-            data: [
-              ...store.toasts,  
-              newToast
-            ]
-          });
+          showToast(store, dispatch,`Category '${category.name}' successfully deleted`, 'warning' );
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          setState({
-            ...state,
-            message: error.message
-          });
+          showToast(store, dispatch, error.message, 'danger');
         });
     } else if (event.target.name === 'edit') {
       navigate('edit', );
@@ -101,7 +78,6 @@ const Category = () => {
                 <Button style={{minWidth: '6rem'}} variant="danger" name="delete" onClick={handleButtonClick}>Delete</Button>
               </ButtonBunch>
             </ButtonRow>
-            { state.message && <Alert variant={state.good ? 'success' : 'danger'}>{state.message}</Alert>}
           </>
           : 
           <>
