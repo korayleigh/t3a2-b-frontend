@@ -5,6 +5,7 @@ import Home from './Home';
 import Order from './Order';
 import OrderStatus from './OrderStatus';
 import Login from './Login';
+import CreateMenuItem from './CreateMenuItem';
 import Default from './Default';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { useReducer } from 'react';
@@ -42,6 +43,7 @@ function App() {
                 <Route path=":id/edit" element={<CategoryForm />} />
                 <Route path=":id" element={<Category />} />
               </Route>
+              <Route path="createmenuitem" element={<CreateMenuItem />} />  
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>
