@@ -38,9 +38,9 @@ function App() {
               <Route path="orders" element={<Orders />} />  
               <Route path="categories">
                 <Route index element={<Categories />} />
+                <Route path="new" element={<CategoryForm />} />
                 <Route path=":id/edit" element={<CategoryForm />} />
                 <Route path=":id" element={<Category />} />
-                <Route path="new" element={<CategoryForm />} />
               </Route>
               <Route path="*" element={<Default />} />
             </Route>
