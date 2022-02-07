@@ -82,14 +82,16 @@ const LoginForm = () => {
               ...formState,
               validation: {
                 ...formState.validation,
-                validated: false,
+                validated: true,
                 user: {
+                  ...formState.validation.user,
                   email: false,
                   password: false,
                 },
               },
-            
             });
+          } else {
+            showToast(store, dispatch, error.message, 'danger');
           }
         });
     }
