@@ -35,7 +35,6 @@ function App() {
               <Route path="order" element={<Order />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
-              <Route path="orders" element={<Orders />} />  
               <Route path="categories">
                 <Route index element={<Categories />} />
                 <Route path="new" element={<CategoryForm />} />
