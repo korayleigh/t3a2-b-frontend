@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { showCategory, createUpdateCategory } from './services/categoryServices';
 import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
+import { capitalise } from './utils/textUtils';
 
 const CategoryForm = () => {
 
@@ -25,6 +26,7 @@ const CategoryForm = () => {
   const {category} = formState;
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     if (params.id) {
@@ -77,6 +79,7 @@ const CategoryForm = () => {
               ...formState.validation,
               validated: true,
               category: {
+                ...category,
                 name: false
               },
             },
@@ -99,17 +102,17 @@ const CategoryForm = () => {
   
   return (
     <>
-      <Heading>{ category.id ? 'Edit Category' : 'New Category' }</Heading>
+      <Heading>{`${capitalise(location.pathname.split('/').pop())} Category`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Category Name" className='mb-3'>
               <Form.Control type="text" placeholder="Enter Category Name" name="name" onChange={handleChange} value={category.name} isInvalid={formState.validation.validated && !formState.validation.category.name} isValid={formState.validation.validated && formState.validation.category.name} />
             </FloatingLabel>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formButton">
+          <Form.Group className="mb-3" controlId="formGroupButtons">
             <ButtonRow>
               <ButtonBunch>
                 <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>

@@ -1,4 +1,5 @@
 import mexiquitoApi from '../config/api';
+import { formatCentsAsDollars } from '../utils/textUtils';
 
 const orders_path = '/orders';
 
@@ -31,9 +32,59 @@ export async function destroyOrder(id) {
   return response.data;
 }
 
-export function setOrders(dispatch, orders) {
+export async function indexTables() {
+  const response = await mexiquitoApi.get('/tables');
+  console.log({tables: response.data});
+  return response.data;
+}
+
+export function setOrder(dispatch, order) {
   dispatch({
-    type: 'setOrders',
-    data: orders
+    type: 'setOrder',
+    data: order
   });
+}
+
+export function setTables(dispatch, tables) {
+  dispatch({
+    type: 'setTables',
+    data: tables
+  });
+}
+
+export function setOrderValue(dispatch, name, value) {
+  dispatch({
+    type: 'setOrderValue',
+    name: name,
+    value: value
+  });
+}
+
+export function setFormValidated(dispatch, value) {
+  dispatch({
+    type: 'setFormValidated',
+    value: value
+  });
+}
+
+export function setFormValidation(dispatch, name, value) {
+  dispatch({
+    type: 'setFormValidation',
+    name: name,
+    value: value
+  });
+}
+
+export function transformOrder(order) {
+  if (order) {
+    return {
+      ...order,
+      total: formatCentsAsDollars(order.total),
+      created_at: new Date(order.created_at).toLocaleString('en-AU', {
+        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short'
+      }),
+    };
+  } else {
+    return null;
+  }
 }

@@ -14,6 +14,7 @@ import Orders from './Orders';
 import Categories from './Categories';
 import Category from './Category';
 import CategoryForm from './CategoryForm';
+import OrderForm from './OrderForm';
 
 function App() {
   
@@ -44,6 +45,7 @@ function App() {
               <Route path="orders">
                 <Route index element={<Orders />} />
                 <Route path=":id" element={<Order />} />
+                <Route path=":id/edit" element={<OrderForm />} />
               </Route>  
               <Route path="*" element={<Default />} />
             </Route>
