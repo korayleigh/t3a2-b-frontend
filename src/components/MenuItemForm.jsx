@@ -73,7 +73,7 @@ const MenuItemForm = () => {
     await mexiquitoApi.post('/menu_items', formData)
       .then(response => {
         console.log(response);
-        // navigate(`/menu_items/${response}`);
+        navigate(`/menu_items/`);
       })
       .catch(error => {
         console.log(error);
