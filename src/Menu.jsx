@@ -13,15 +13,12 @@ const Menu = () => {
 
   const {store, dispatch} = useGlobalContext();
   const {menu} = store;
-  let test;
 
   useEffect( ()=>{
     indexMenu()
       .then(menu => {
         console.log(menu);
-        console.log(menu[0].name);
-        console.log(menu[16].image.imagePath)
-        console.log(`${menu[16].image.imagePath}`)
+        console.log(menu[16].image.imagePath);
         setMenu(dispatch, menu);
       })
       .catch(error => {
@@ -35,17 +32,11 @@ const Menu = () => {
       <h1>MENU PAGE GOES HERE</h1>
       <Row xs={1} md={2} lg={4} className="g-4">
         {menu.length > 0 ? menu.map((item) => {
-          return <MenuItemCard menuItem={item}/>
+          return <MenuItemCard key={item.id} menuItem={item}/>;
         })
-        : <p>nothing yet</p>}
+          : <p>nothing yet</p>}
       </Row>
       
-
-      { menu.length > 0?
-        <img src={menu[16].image.imagePath}></img>
-        :
-        <p>NO IMAGE</p>
-        }
     </>
 
   );

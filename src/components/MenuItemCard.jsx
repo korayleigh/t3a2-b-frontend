@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Button, Col, Row, Container} from 'react-bootstrap';
+import {Card, Button, Col} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const MenuItemCard = props => {
@@ -7,8 +7,9 @@ const MenuItemCard = props => {
     <Col>
       <Card>
         {props.menuItem.image ? <Card.Img variant="top" src={props.menuItem.image.imagePath} /> 
-        : 
-        <Card.Img variant="top" src={props.menuItem.image.imagePath} /> }
+          : 
+          <Card.Text>NO IMAGE</Card.Text>
+        }
         
         <Card.Body>
           <Card.Title>{props.menuItem.name + '   -   $'+props.menuItem.price }</Card.Title>
