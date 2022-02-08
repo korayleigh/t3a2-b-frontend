@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect, useReducer } from 'react';
 import ordersReducer from '../utils/ordersReducer';
-import { getOrders, setOrders } from '../services/ordersServices';
+import { getOrders } from '../services/orderServices';
+import { setOrders } from '../services/globalContextServices';
 import {Table} from 'react-bootstrap';
 import OrdersTableRow from './OrdersTableRow';
 
