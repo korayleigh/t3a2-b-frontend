@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import Heading from './components/Heading';
-import { destroyOrder, indexOrders } from './services/orderServices';
-import { setOrders } from './services/globalContextServices';
-import { ButtonRow, ButtonBunch } from './styled/styled';
+import { destroyOrder, indexOrders, setOrders } from './services/orderServices';
+import { ButtonRow, ButtonBunch, Heading } from './styled/styled';
 import { showToast } from './services/toastServices';
 
 const Order = () => {

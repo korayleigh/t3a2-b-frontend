@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
-// import Heading from './components/Heading';
 import { useNavigate } from 'react-router-dom';
-// import { ButtonRow } from './styled/styled';
+import { ButtonRow } from '../styled/styled';
 import PropTypes from 'prop-types';
 
-const IndexTable = ({data, columns, model}) => {
+const IndexTable = ({data, columns}) => {
 
   const navigate = useNavigate();
 
@@ -40,7 +39,6 @@ const IndexTable = ({data, columns, model}) => {
 
   return (
     <>
-      <h1>{model.plural}</h1>
       <Container className="my-5">
         { dataMemo ? 
           <>
@@ -80,13 +78,12 @@ const IndexTable = ({data, columns, model}) => {
                 })}
               </tbody>
             </Table>
-            {/* <ButtonRow> */}
-            <Button style={{minWidth: '6rem'}} variant="primary" name="new" onClick={handleNewClick}>New Category</Button>
-            {/* </ButtonRow> */}
+            <ButtonRow>
+              <Button style={{minWidth: '6rem'}} variant="primary" name="new" onClick={handleNewClick}>New Category</Button>
+            </ButtonRow>
           </>
           :
-
-          <Alert variant='danger'>No {model.plural}!</Alert>
+          <Alert variant='info'>No data!</Alert>
         }
       </Container>
     </>
@@ -96,9 +93,6 @@ const IndexTable = ({data, columns, model}) => {
 IndexTable.propTypes = {
   data: PropTypes.object,
   columns: PropTypes.array,
-  model: {
-    plural: PropTypes.string
-  }
 };
 
 

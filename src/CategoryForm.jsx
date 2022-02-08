@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { showCategory, createUpdateCategory } from './services/categoryServices';
-import Heading from './components/Heading';
-import { ButtonBunch, ButtonRow } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 

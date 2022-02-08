@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useReducer } from 'react';
 import ordersReducer from './utils/ordersReducer';
-import { getOrders, setOrders } from './services/ordersServices';
+import { indexOrders, setOrders } from './services/orderServices';
 import IndexTable from './components/IndexTable';
 
 const Orders = () => {
@@ -13,7 +13,7 @@ const Orders = () => {
   const [store, dispatch] = useReducer(ordersReducer, initialState);
 
   useEffect(() => {
-    getOrders()
+    indexOrders()
       .then(orders => {
         setOrders(dispatch, orders);
       })
@@ -33,7 +33,7 @@ const Orders = () => {
   return (
     <div>
       <h1>Orders</h1>
-      <IndexTable data={store.orders} columns={columns} model={{singular: 'order', plural: 'orders'}} />
+      <IndexTable data={store.orders} columns={columns}  />
     </div>
   );
 };

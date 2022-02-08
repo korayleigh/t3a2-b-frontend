@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import Heading from './components/Heading';
 import { destroyCategory, indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
-import { ButtonRow, ButtonBunch } from './styled/styled';
+import { ButtonRow, ButtonBunch, Heading } from './styled/styled';
 import { showToast } from './services/toastServices';
 
 const Category = () => {

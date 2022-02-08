@@ -77,3 +77,10 @@ MyToast.propTypes = {
   variant: PropTypes.string,
   visible: PropTypes.bool
 };
+
+export const Heading = () => {
+  return (
+    <h1 />
+  );
+
+};

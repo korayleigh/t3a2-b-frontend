@@ -15,10 +15,3 @@ export function setCategories(dispatch, categories) {
     data: categories
   });
 }
-
-export function setOrders(dispatch, orders) {
-  dispatch({
-    type: 'setOrders',
-    data: orders
-  });
-}
