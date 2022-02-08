@@ -1,11 +1,39 @@
 import React from 'react';
-import OrdersTable from './components/OrdersTable';
+import { useEffect, useReducer } from 'react';
+import ordersReducer from './utils/ordersReducer';
+import { getOrders, setOrders } from './services/ordersServices';
+import IndexTable from './components/IndexTable';
 
 const Orders = () => {
+
+  const initialState = {
+    orders: {}
+  };
+
+  const [store, dispatch] = useReducer(ordersReducer, initialState);
+
+  useEffect(() => {
+    getOrders()
+      .then(orders => {
+        setOrders(dispatch, orders);
+      })
+      .catch(error => console.log(error));
+  },[]);
+
+  const columns = [{
+    Header: 'id',
+    accessor: 'id',
+    sortType: 'basic'
+  },{
+    Header: 'Name',
+    accessor: 'name',
+    sortType: 'alphanumeric',
+  }];
+
   return (
     <div>
       <h1>Orders</h1>
-      <OrdersTable />
+      <IndexTable data={store.orders} columns={columns} model={{singular: 'order', plural: 'orders'}} />
     </div>
   );
 };

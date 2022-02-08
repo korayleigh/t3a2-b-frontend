@@ -25,14 +25,16 @@ function App() {
     <div>
       <GlobalContext.Provider value={{store,dispatch}}>
         <BrowserRouter>
-
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
               <Route path="order" element={<Order />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
-              <Route path="orders" element={<Orders />} />  
+              <Route path="orders">
+                <Route index element={<Orders />} />
+                <Route path=":id" element={<Order />} />
+              </Route>  
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>
