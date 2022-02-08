@@ -70,9 +70,14 @@ const MenuItemForm = () => {
     formData.append('category_id', formState.category_id);
     formData.append('image', formState.image);
 
-    const response = await mexiquitoApi.post('/menu_items', formData);
-    console.log(response);
-    navigate('/menu_items/:id');
+    await mexiquitoApi.post('/menu_items', formData)
+      .then(response => {
+        console.log(response);
+        // navigate(`/menu_items/${response}`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   
   const handleImageChange = event => { 
