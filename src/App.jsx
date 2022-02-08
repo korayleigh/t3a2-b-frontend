@@ -42,6 +42,10 @@ function App() {
                 <Route path=":id/edit" element={<CategoryForm />} />
                 <Route path=":id" element={<Category />} />
               </Route>
+              <Route path="orders">
+                <Route index element={<Orders />} />
+                <Route path=":id" element={<Order />} />
+              </Route>  
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>
