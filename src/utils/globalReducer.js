@@ -33,6 +33,13 @@ export default function globalReducer (state, action) {
       toasts: action.data
     };
   }
+  
+  case 'setMenu': {
+    return {
+      ...state,
+      menu: action.data
+    };
+  }
 
   default: return state;
   }

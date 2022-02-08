@@ -30,7 +30,6 @@ const Header = () => {
       })
       .catch(error => {
         console.error(error);
-            
       });
 
   };
@@ -48,7 +47,7 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/order" href="/order">Order</Nav.Link>
+              <Nav.Link as={Link} to="/menu" href="/menu">Order</Nav.Link>
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
               <NavDropdown title="Admin" id="basic-nav-dropdown">
                 <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>

@@ -22,3 +22,10 @@ export function setOrders(dispatch, orders) {
     data: orders
   });
 }
+
+export function setMenu(dispatch, menu) {
+  dispatch({
+    type: 'setMenu',
+    data: menu
+  });
+}
