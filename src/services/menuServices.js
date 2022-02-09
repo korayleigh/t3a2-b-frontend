@@ -28,3 +28,9 @@ export async function destroyMenuItem(id) {
 
   return response.data;
 }
+
+export function menuItemOptionList(menu) {
+  return Object.values(menu).map((menu_item) => {
+    return [menu_item.id, menu_item.name];
+  });
+}
