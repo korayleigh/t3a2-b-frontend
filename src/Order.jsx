@@ -26,6 +26,7 @@ const Order = () => {
         console.log(error);
         showToast(store, dispatch, error.message, 'danger');
       });
+    console.log('refresh!');
   },[]);
 
   const transformed_order = transformOrder(order);
@@ -73,7 +74,13 @@ const Order = () => {
     setModalShow(false);
   };
 
-  console.log(modalShow);
+  const handleModalSubmit = () => {
+    showOrder(params.id)
+      .then((order) => {
+        setOrder(order);
+      });
+  };
+
   return (
     <>
       <ShowTable item={transformed_order} showDestroyButton={true} destroyCallback={destroyOrder} model={{singular: 'order', plural:'orders'}}>
@@ -91,7 +98,7 @@ const Order = () => {
           />
         </Container>
       </ShowTable>
-      <OrderItemModal id={modalId} show={modalShow} onHide={handleModalOnHide} />
+      <OrderItemModal id={modalId} show={modalShow} onHide={handleModalOnHide} onSubmit={handleModalSubmit} />
     </>
   );
 };

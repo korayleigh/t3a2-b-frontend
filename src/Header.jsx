@@ -77,7 +77,7 @@ const Header = () => {
           minHeight: '100vh',
           minWidth: '100vw',
           pointerEvents: 'none',
-          zIndex: '999',
+          zIndex: '9999',
           height: '100%',
           width: '100%',
         }}

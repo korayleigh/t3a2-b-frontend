@@ -11,11 +11,11 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { useReducer } from 'react';
 import { GlobalContext } from './utils/globalContext';
 import globalReducer from './utils/globalReducer';
-import Orders from './Orders';
-import Order from './Order';
 import Categories from './Categories';
 import Category from './Category';
 import CategoryForm from './CategoryForm';
+import Orders from './Orders';
+import Order from './Order';
 import OrderForm from './OrderForm';
 
 function App() {
