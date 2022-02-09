@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Container } from 'react-bootstrap';
 
-const nodePropTypes = {
+const childrenPropTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired
+  ])
 };
 
 export const ButtonRow = ({children}) => {
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between'
-    }}>
+    <Container className="my-5 px-0 d-flex justify-content-between">
       {children}
-    </div>
+    </Container>
   );
 };
 
 
-ButtonRow.propTypes = nodePropTypes;
+ButtonRow.propTypes = childrenPropTypes;
 
 export const ButtonBunch = ({children}) => {
   return (
@@ -33,7 +31,7 @@ export const ButtonBunch = ({children}) => {
   );
 };
 
-ButtonBunch.propTypes = nodePropTypes;
+ButtonBunch.propTypes = childrenPropTypes;
 
 export const MyToast = (({message, visible }) => {
   return (
@@ -77,3 +75,21 @@ MyToast.propTypes = {
   variant: PropTypes.string,
   visible: PropTypes.bool
 };
+
+export const Heading = ({children}) => {
+  return (
+    <h1>{children}</h1>
+  );
+
+};
+
+Heading.propTypes = childrenPropTypes;
+
+export const SubHeading = ({children}) => {
+  return (
+    <h3>{children}</h3>
+  );
+
+};
+
+SubHeading.propTypes = childrenPropTypes;
