@@ -34,7 +34,7 @@ const Menu = () => {
         {menu.length > 0 ? menu.map((item) => {
           return <MenuItemCard key={item.id} menuItem={item}/>;
         })
-          : <p>nothing yet</p>}
+          : <p>Loading...</p>}
       </Row>
       
     </>
