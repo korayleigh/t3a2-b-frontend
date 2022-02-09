@@ -2,9 +2,10 @@ import React from 'react';
 import './App.scss';
 import Header from './Header';
 import Home from './Home';
-import Order from './Order';
+import Menu from './Menu';
 import OrderStatus from './OrderStatus';
 import Login from './Login';
+import CreateMenuItem from './CreateMenuItem';
 import Default from './Default';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { useReducer } from 'react';
@@ -21,6 +22,7 @@ function App() {
   const initialState = {
     toasts: [],
     categories: [],
+    menu: [],
     loggedInUser: sessionStorage.getItem('email') || null,
     auth: {jwt: sessionStorage.getItem('jwt') || null}
   };
@@ -33,7 +35,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
-              <Route path="order" element={<Order />} />
+              <Route path="menu" element={<Menu />} />
+              <Route path="createmenuitem" element={<CreateMenuItem />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
               <Route path="categories">
@@ -46,7 +49,7 @@ function App() {
                 <Route index element={<Orders />} />
                 <Route path=":id" element={<Order />} />
                 <Route path=":id/edit" element={<OrderForm />} />
-              </Route>  
+              </Route>
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>

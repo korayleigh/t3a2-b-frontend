@@ -15,3 +15,17 @@ export function setCategories(dispatch, categories) {
     data: categories
   });
 }
+
+export function setOrders(dispatch, orders) {
+  dispatch({
+    type: 'setOrders',
+    data: orders
+  });
+}
+
+export function setMenu(dispatch, menu) {
+  dispatch({
+    type: 'setMenu',
+    data: menu
+  });
+}
