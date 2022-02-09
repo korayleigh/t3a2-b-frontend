@@ -1,0 +1,147 @@
+import React, { useEffect, useReducer } from 'react';
+import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormValidated } from './services/orderServices';
+import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
+import { useGlobalContext } from './utils/globalContext';
+import { showToast } from './services/toastServices';
+import { capitalise } from './utils/textUtils';
+import {setTables, setOrder, setOrderValue } from './services/orderServices';
+import orderReducer from './utils/orderReducer';
+
+const OrderForm = () => {
+
+  const initialFormState = { 
+    order: {
+      email: '',
+      name: '',
+      table: ''
+    },
+    validation: {
+      validated: false,
+      order: {
+        name: false,
+        email: false,
+        table: false
+      }
+    },
+    tables: {}
+  };
+
+  
+  const {store, dispatch} = useGlobalContext();
+  const [ formState, formDispatch ] = useReducer(orderReducer, initialFormState);
+  const {order} = formState;
+  const navigate = useNavigate();
+  const params = useParams();
+  const location = useLocation();
+  console.log(formState);
+
+  useEffect(() => {
+    if (params.id) {
+      indexTables()
+        .then((tables) => {
+          setTables(formDispatch, tables);
+        })
+        .then(() => {
+          return showOrder(params.id);
+        })
+        .then((order) => {
+          setOrder(formDispatch, order);
+        })
+        .catch(error => {
+          console.log(error);
+          showToast(store, dispatch, error.message, 'danger');
+        });
+    }
+  },[params.id]);
+
+  const handleChange = (event) => {
+    console.log(event);
+    setOrderValue(formDispatch, event.target.name, event.target.value);
+    setFormValidated(formDispatch, false);
+  };
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!order.name || !order.email) {
+      setFormValidated(formDispatch, true);
+      if (!order.name) {
+        setFormValidation(formDispatch, 'name', false);
+        showToast(store, dispatch, 'Order Name is Required', 'danger' );
+      }
+      if (!order.email) {
+        setFormValidation(formDispatch, 'email', false);
+        showToast(store, dispatch, 'Order Email is Required', 'danger' );
+      }
+    } else {
+      createUpdateOrder(order)
+        .then(() => {
+          setFormValidated(formDispatch, true);
+          setFormValidation(formDispatch, 'name', true);
+          setFormValidation(formDispatch, 'email', true);
+          setFormValidation(formDispatch, 'table', true);
+          showToast(store, dispatch, `successfully ${order.id ? 'updated' : 'created'}`, 'success');
+        })
+        .then(() => {
+          navigate(-1);
+        })
+        .catch((error) => {
+          console.error(error);
+          showToast(store, dispatch, error.message, 'danger');
+        });
+      
+    }
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  
+  return (
+    <>
+      <Heading>{`${capitalise(location.pathname.split('/').pop())} Order`}</Heading>
+      <Container className="my-5">
+        <Form onSubmit={handleSubmit} >
+
+          <Form.Group className="mb-3" controlId="formGroupName">
+            <FloatingLabel controlId='floatinginput' label="Order Name" className='mb-3'>
+              <Form.Control type="text" placeholder="Enter Order Name" name="name" onChange={handleChange} value={order.name} isInvalid={formState.validation.validated && !formState.validation.order.name} isValid={formState.validation.validated && formState.validation.order.name} />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupEmail">
+            <FloatingLabel controlId='floatinginput' label="Order Email" className='mb-3'>
+              <Form.Control type="email" placeholder="Enter Order Email" name="email" onChange={handleChange} value={order.email} isInvalid={formState.validation.validated && !formState.validation.order.email} isValid={formState.validation.validated && formState.validation.order.email} />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupTable">
+            <FloatingLabel controlId='floatinginput' label="Order Table" className='mb-3'>
+              <Form.Select name="table" onChange={handleChange} value={order.table} isInvalid={formState.validation.validated && !formState.validation.order.table} isValid={formState.validation.validated && formState.validation.order.table}>
+                { Object.entries(formState.tables).map(([key,], index) => {
+                  return (<option key={index} value={key}>{key}</option>);
+                })};
+              </Form.Select>
+            </FloatingLabel>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formGroupButtons">
+            <ButtonRow>
+              <ButtonBunch>
+                <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
+                <Button style={{minWidth: '6rem'}} variant="secondary" type="button" onClick={handleBackClick}>Back</Button>
+              </ButtonBunch>
+            </ButtonRow>
+          </Form.Group>
+        </Form>
+      </Container>
+    </>
+  );
+};
+
+// OrderForm.propTypes = {
+//   mode: PropTypes.string
+// };
+
+export default OrderForm;

@@ -5,8 +5,7 @@ import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
-import Heading from './components/Heading';
-import { ButtonRow } from './styled/styled';
+import { ButtonRow, Heading } from './styled/styled';
 import { showToast } from './services/toastServices';
 
 const Categories = () => {

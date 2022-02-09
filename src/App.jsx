@@ -15,6 +15,7 @@ import Orders from './Orders';
 import Categories from './Categories';
 import Category from './Category';
 import CategoryForm from './CategoryForm';
+import OrderForm from './OrderForm';
 
 function App() {
   
@@ -35,16 +36,20 @@ function App() {
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
               <Route path="menu" element={<Menu />} />
+              <Route path="createmenuitem" element={<CreateMenuItem />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
-              <Route path="orders" element={<Orders />} />  
               <Route path="categories">
                 <Route index element={<Categories />} />
                 <Route path="new" element={<CategoryForm />} />
                 <Route path=":id/edit" element={<CategoryForm />} />
                 <Route path=":id" element={<Category />} />
               </Route>
-              <Route path="createmenuitem" element={<CreateMenuItem />} />  
+              <Route path="orders">
+                <Route index element={<Orders />} />
+                <Route path=":id" element={<Order />} />
+                <Route path=":id/edit" element={<OrderForm />} />
+              </Route>
               <Route path="*" element={<Default />} />
             </Route>
           </Routes>
