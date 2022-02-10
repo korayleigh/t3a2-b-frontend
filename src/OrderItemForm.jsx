@@ -147,14 +147,6 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     modalOnHide();
   };
 
-  console.log('menu', );
-
-  // console.log('formState:', formState);
-  console.log('formStateOrderItem', formState.order_item);
-  // console.log('formStatuses;', Object.entries(formState.order_item_statuses));
-  // console.log('id:', id);
-  // console.log()
-  
   return (
     <>
       <Heading>{ order_item.id ? 'Edit' : 'Add'} Order Item</Heading>
@@ -208,6 +200,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
             </FloatingLabel>
           </Form.Group>
 
+          {/* BUTTONS */}
           <Form.Group className="mb-3" controlId="formGroupButtons">
             <ButtonRow>
               <ButtonBunch>

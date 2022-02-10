@@ -22,7 +22,7 @@ function App() {
   
   const initialState = {
     toasts: [],
-    categories: [],
+    categories: {},
     menu: [],
     loggedInUser: sessionStorage.getItem('email') || null,
     auth: {jwt: sessionStorage.getItem('jwt') || null}

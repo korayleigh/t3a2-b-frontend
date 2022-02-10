@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import { ButtonBunch, ButtonRow, StyledButton } from './styled/styled';
 
 
-const YesNoModal = (props) => {
+const YesNoModal = ({prompt, onYes, onNo, yes_variant, no_variant, yes_text, no_text , ...restProps}) => {
 
   const handleYesClick = () => {
-    props.onYes();
+    onYes();
   };
 
   const handleNoClick = () => {
-    props.onNo();
+    onNo();
   };
 
   return (
     <Modal
       onHide={handleNoClick}
-      {...props}
+      {...restProps}
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -35,16 +35,16 @@ const YesNoModal = (props) => {
             padding: '1rem 2rem',
           }}
         >
-          <span>{props.prompt}</span>
+          <span>{prompt}</span>
         </div>
       </Modal.Body>
       <Modal.Footer>
         <ButtonRow>
           <ButtonBunch>
-            <StyledButton name="no" variant={props.no_variant} onClick={handleNoClick}>{props.no_text}</StyledButton>
+            <StyledButton name="no" variant={no_variant} onClick={handleNoClick}>{no_text}</StyledButton>
           </ButtonBunch>
           <ButtonBunch>
-            <StyledButton name="yes" variant={props.yes_variant} onClick={handleYesClick}>{props.yes_text}</StyledButton>
+            <StyledButton name="yes" variant={yes_variant} onClick={handleYesClick}>{yes_text}</StyledButton>
           </ButtonBunch>
         </ButtonRow>
       </Modal.Footer>

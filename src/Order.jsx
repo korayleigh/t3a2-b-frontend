@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonRow, ButtonBunch, StyledButton } from './styled/styled';
+import { ButtonRow, ButtonBunch, StyledButton, Heading, SubHeading } from './styled/styled';
 import { Container } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -124,9 +124,11 @@ const Order = () => {
 
   return (
     <>
+      <Heading>Order Details</Heading>
       <ShowTable item={transformed_order} model={{singular: 'order', plural:'orders'}}>
         <Container className="my-5 px-0">
-          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} model={{singular: 'order item', plural:'order items'}} showNewButton={false} showFooter={true} allowRowClick={true} onRowClick={handleRowClick} subHeading={true}
+          <SubHeading>Order Items</SubHeading>
+          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true} allowRowClick={true} onRowClick={handleRowClick}
             getHeaderProps={() => {
               return { style: { textAlign: 'center' } };
             }}

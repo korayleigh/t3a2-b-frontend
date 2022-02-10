@@ -1,10 +1,8 @@
 import React from 'react';
-import { Heading } from '../styled/styled';
 import { Table, Container, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { titleise } from '../utils/textUtils';
 
-const ShowTable = ({item, model, children}) => {
+const ShowTable = ({item, children}) => {
 
   
   // strip any properties of item which are sub objects or sub arrays.  Only first level scalars are allowed through the filter.
@@ -21,7 +19,6 @@ const ShowTable = ({item, model, children}) => {
 
   return (
     <>
-      <Heading>{`${titleise(model.singular)} Details`}</Heading>
       <Container className="my-5">
         { itemTopLevelProperties ?
           <>
@@ -40,7 +37,6 @@ const ShowTable = ({item, model, children}) => {
               </tbody>
             </Table>
             {children}
-
           </>
           : 
           <>
