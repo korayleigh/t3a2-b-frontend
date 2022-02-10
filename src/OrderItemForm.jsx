@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
-import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
-import { showOrderItem, createUpdateOrderItem, indexOrderItemStatuses, setOrderItemStatuses, setOrderItem, setOrderItemValue, setMenuItemOptions} from './services/orderItemServices';
-import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
+import { Container, Form, FloatingLabel } from 'react-bootstrap';
+import { showOrderItem, createUpdateOrderItem, indexOrderItemStatuses, setOrderItemStatuses, setOrderItem, setOrderItemValue, setMenuItemOptions, destroyOrderItem} from './services/orderItemServices';
+import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { formatCentsAsDollars } from './utils/textUtils';
@@ -12,14 +12,16 @@ import PropTypes from 'prop-types';
 import { setFormValidated, setFormValidation } from './services/orderServices';
 import { capitalise } from './utils/textUtils';
 
-const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
+const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) => {
+
+  console.log('order_item_id', order_item_id);
+  console.log('order_id', order_id);
 
   const initialFormState = { 
     order_item : {
-      menu_item_id: '',
-      quantity: '',
-      price_at_order: '',
-      status: '',
+      order_id: null,
+      menu_item_id: 0,
+      quantity: '1',
       request: '',
     },
     order_item_statuses : {},
@@ -40,12 +42,15 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
 
   useEffect(() => {
     if (globalStore.menu.length) {
-      setMenuItemOptions(formDispatch, globalStore.menu);
+      setupMenuOptions(globalStore.menu);
     } else {
       indexMenu()
         .then((menu) => {
           setMenu(globalDispatch, menu);
-          setMenuItemOptions(formDispatch, menu);
+          return menu;
+        })
+        .then((menu) => {
+          setupMenuOptions(menu);
         }) 
         .catch(error => {
           console.log(error);
@@ -60,15 +65,27 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
         console.log(error);
         showToast(globalStore, globalDispatch, error.message, 'danger');
       });
-    showOrderItem(id)
-      .then((order_item) => {
-        setOrderItem(formDispatch, order_item);
-      })
-      .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
-      });
-  },[id]);
+    if (order_item_id) {
+      showOrderItem(order_item_id)
+        .then((order_item) => {
+          setOrderItem(formDispatch, order_item);
+        })
+        .catch(error => {
+          console.log(error);
+          showToast(globalStore, globalDispatch, error.message, 'danger');
+        });
+    } else {
+      console.log('setting order_id to:', order_id);
+      setOrderItemValue(formDispatch, 'order_id', order_id);
+    }
+  },[order_item_id]);
+
+  const setupMenuOptions = (menu) => {
+    // Build the array of options for the menu item select box
+    setMenuItemOptions(formDispatch, menu);
+    // set the value of the menu_item_id in form state to the first item in the options.
+    setOrderItemValue(formDispatch, 'menu_item_id', menu[0].id);
+  };
 
   const handleChange = (event) => {
     if (event.target.name === 'price_at_order') {
@@ -95,7 +112,8 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
 
     if (valid) {
       createUpdateOrderItem(order_item)
-        .then(() => {
+        .then((order_item) => {
+          console.log(order_item);
           setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'quantity', true);
           setFormValidation(formDispatch, 'price', true);
@@ -110,17 +128,28 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
     }
   };
 
+  const handleDeleteClick = (event) => {
+    event.preventDefault();
+
+    destroyOrderItem(order_item.id)
+      .then(() => {
+        modalOnSubmit();
+        modalOnHide();
+      })
+      .catch((error) => {
+        console.error(error);
+        showToast(globalStore, globalDispatch, error.message, 'danger');
+      });
+
+  };
+
   const handleBackClick = () => {
     modalOnHide();
   };
 
-  // console.log('formStateOrderItem', formState.order_item);
-  // console.log('formStatuses;', Object.entries(formState.order_item_statuses));
-  // console.log()
-  
   return (
     <>
-      <Heading>Edit Order Item</Heading>
+      <Heading>{ order_item.id ? 'Edit' : 'Add'} Order Item</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 
@@ -143,13 +172,16 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
           </Form.Group>
 
           {/* PRICE */}
+          {  order_item.id && 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Price" className='mb-3'>
               <Form.Control type="text" placeholder="Price " name="price_at_order" onChange={handleChange} value={formatCentsAsDollars(order_item.price_at_order)} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
             </FloatingLabel>
           </Form.Group>
+          }
 
           {/* STATUS */}
+          {  order_item.id && 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Status" className='mb-3'>
               <Form.Select type="text" placeholder="Status" name="status" onChange={handleChange} value={order_item.status} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name}>
@@ -159,6 +191,7 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
               </Form.Select>
             </FloatingLabel>
           </Form.Group>
+          }
 
           {/* REQUEST */}
           <Form.Group className="mb-3" controlId="formGroupName">
@@ -167,11 +200,15 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
             </FloatingLabel>
           </Form.Group>
 
+          {/* BUTTONS */}
           <Form.Group className="mb-3" controlId="formGroupButtons">
             <ButtonRow>
               <ButtonBunch>
-                <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
-                <Button style={{minWidth: '6rem'}} variant="secondary" type="button" onClick={handleBackClick}>Back</Button>
+                <StyledButton variant="primary" type="submit">Submit</StyledButton>
+                <StyledButton variant="secondary" type="button" name="back" onClick={handleBackClick}>Back</StyledButton>
+              </ButtonBunch>
+              <ButtonBunch>
+                { order_item.id && <StyledButton variant="danger" type="button" name="delete" onClick={handleDeleteClick}>Delete</StyledButton> }
               </ButtonBunch>
             </ButtonRow>
           </Form.Group>
@@ -182,9 +219,10 @@ const OrderItemForm = ({id, modalOnHide, modalOnSubmit}) => {
 };
 
 OrderItemForm.propTypes = {
-  id: PropTypes.number,
+  order_item_id: PropTypes.number,
   modalOnHide: PropTypes.func,
   modalOnSubmit: PropTypes.func,
+  order_id: PropTypes.number,
 };
 
 export default OrderItemForm;

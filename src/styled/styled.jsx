@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container } from 'react-bootstrap';
+import { Container , Button } from 'react-bootstrap';
 
 const childrenPropTypes = {
   children: PropTypes.oneOfType([
@@ -11,7 +11,10 @@ const childrenPropTypes = {
 
 export const ButtonRow = ({children}) => {
   return (
-    <Container className="my-5 px-0 d-flex justify-content-between">
+    <Container className="p-0 d-flex flex-column flex-sm-row justify-content-between"
+      style={{
+        gap: '1rem',
+      }}>
       {children}
     </Container>
   );
@@ -22,16 +25,30 @@ ButtonRow.propTypes = childrenPropTypes;
 
 export const ButtonBunch = ({children}) => {
   return (
-    <div style={{
-      display: 'flex',
-      gap: '1rem',
-    }}>
+    <Container className="m-0 d-flex flex-column flex-sm-row"
+      style={{
+        gap: '1rem',
+        width: 'unset',
+      }}>
       {children}
-    </div>
+    </Container>
   );
 };
 
 ButtonBunch.propTypes = childrenPropTypes;
+
+export const StyledButton = (props) => {
+  return (
+    <Button
+      style={{
+        minWidth: '6rem',
+      }}
+      {...props}
+    />
+  );
+};
+
+StyledButton.propTypes = childrenPropTypes;
 
 export const MyToast = (({message, visible }) => {
   return (

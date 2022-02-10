@@ -1,35 +1,20 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { Container, Table, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { ButtonRow, Heading, SubHeading } from '../styled/styled';
+import { Container, Table, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { titleise } from '../utils/textUtils';
 
 const defaultPropGetter = () => ({});
 
-const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowClick, onRowClick, subHeading,
+const defaultOnRowClick = () => {};
+
+const IndexTable = ({data, columns, showFooter,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
   getFooterProps = defaultPropGetter,
+  onRowClick = defaultOnRowClick,
 }) => {
-
-  const navigate = useNavigate();
-
-  const handleRowClick = (row) => {
-    if (onRowClick) {
-      onRowClick(row.original.id);
-    } else {
-      console.log(row);
-      navigate(String(row.original.id), {replace: false});
-    }
-  };
-
-  const handleNewClick = (() => {
-    navigate('new');
-  });
 
   const columnsMemo = useMemo(() => columns,[columns]);
   const dataMemo = useMemo(() => data, [data]);
@@ -55,10 +40,8 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
 
   return (
     <>
-
-      { subHeading ? <SubHeading>{titleise(model.plural)}</SubHeading> : <Heading>{titleise(model.plural)}</Heading>}
       <Container className="my-5">
-        { dataMemo ? 
+        { dataMemo.length ? 
           <>
             <Table striped bordered hover {...getTableProps()}>
               <thead>
@@ -87,7 +70,7 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
                 { rows.map((row, index) => {
                   prepareRow(row);
                   return (
-                    <tr key={index} onClick={() => allowRowClick && handleRowClick(row)} {...row.getRowProps([
+                    <tr key={index} onClick={() => onRowClick(row.original.id)} {...row.getRowProps([
                       getRowProps(row)
                     ])}>
                       {row.cells.map((cell, index) => {
@@ -119,12 +102,9 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
                 ))}
               </tfoot> }
             </Table>
-            <ButtonRow>
-              { showNewButton && <Button style={{minWidth: '6rem'}} variant="primary" name="new" onClick={handleNewClick}>{`New ${titleise(model.singular)}`}</Button> }
-            </ButtonRow>
           </>
           :
-          <Alert variant='info'>{`No ${titleise(model.plural)}`}</Alert>
+          <Alert variant='info'>No data...</Alert>
         }
       </Container>
     </>
@@ -135,7 +115,6 @@ IndexTable.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array,
   model: PropTypes.object,
-  showNewButton: PropTypes.bool,
   showFooter: PropTypes.bool,
   allowRowClick: PropTypes.bool,
   onRowClick: PropTypes.func,

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import OrderItemForm from './OrderItemForm';
 
 
-const OrderItemModal = (props) => {
+const OrderItemModal = ({order_item_id, order_id, onHide, onSubmit, ...restProps}) => {
 
   return (
     <Modal
-      {...props}
+      onHide={onHide}
+      {...restProps}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -18,17 +19,18 @@ const OrderItemModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <OrderItemForm id={props.id} modalOnHide={props.onHide} modalOnSubmit={props.onSubmit} />
+        <OrderItemForm order_item_id={order_item_id} order_id={order_id} modalOnHide={onHide} modalOnSubmit={onSubmit} />
       </Modal.Body>
       {/* <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={props.onHide}>Close</StyledButton>
       </Modal.Footer> */}
     </Modal>
   );
 };
 
 OrderItemModal.propTypes = {
-  id: PropTypes.number,
+  order_item_id: PropTypes.number,
+  order_id: PropTypes.number,
   onHide: PropTypes.func,
   onSubmit: PropTypes.func
 };

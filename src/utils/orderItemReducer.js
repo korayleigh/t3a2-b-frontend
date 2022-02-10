@@ -1,5 +1,7 @@
 export default function orderItemReducer (state, action) {
 
+  console.log(action);
+
   switch(action.type) {
 
   case 'setOrderItemStatuses': {

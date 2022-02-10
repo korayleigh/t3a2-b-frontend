@@ -18,7 +18,6 @@ const Menu = () => {
     indexMenu()
       .then(menu => {
         console.log(menu);
-        console.log(menu[16].image.imagePath);
         setMenu(dispatch, menu);
       })
       .catch(error => {
