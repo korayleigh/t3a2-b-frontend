@@ -25,7 +25,7 @@ const LoginForm = () => {
   };
 
   const [formState, formDispatch] = useReducer(authReducer, initialFormState);
-  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
 
   console.log('formState', formState);

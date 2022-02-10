@@ -21,7 +21,7 @@ const CategoryForm = () => {
     }
   };
   
-  const {store, dispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [ formState, setFormState ] = useState(initialFormState);
   const {category} = formState;
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ const CategoryForm = () => {
           },
         }
       });
-      showToast(store, dispatch, 'Category Name is Required', 'danger' );
+      showToast(globalStore, globalDispatch, 'Category Name is Required', 'danger' );
     } else {
       createUpdateCategory(category)
         .then(() => {
@@ -84,14 +84,14 @@ const CategoryForm = () => {
               },
             },
           });
-          showToast(store, dispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
+          showToast(globalStore, globalDispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          showToast(store, dispatch, error.message, 'danger');
+          showToast(globalStore, globalDispatch, error.message, 'danger');
         });
     }
   };

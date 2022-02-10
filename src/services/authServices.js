@@ -27,6 +27,12 @@ export async function signOut() {
   };
 }
 
+export async function getUserRole() {
+  const response = await mexiquitoApi.get('/users/show');
+
+  return response.data.role;
+}
+
 export const setUserValue = (dispatch, name, value) => {
   dispatch({
     type: 'setUserValue',

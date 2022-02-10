@@ -11,7 +11,7 @@ import YesNoModal from './YesNoModal';
 const Category = () => {
 
 
-  const {store, dispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [category, setCategory] = useState(null);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const params = useParams();
@@ -24,7 +24,7 @@ const Category = () => {
       })
       .catch((error) => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   },[]);
 
@@ -46,7 +46,7 @@ const Category = () => {
   const handleDeleteModalConfirm = () => {
     destroyCategory(params.id)
       .then(() => {
-        showToast(store, dispatch,`Category '${category.name}' successfully deleted`, 'warning' );
+        showToast(globalStore, globalDispatch,`Category '${category.name}' successfully deleted`, 'warning' );
       })
       .then(() => {
         setDeleteModalShow(false);
@@ -54,7 +54,7 @@ const Category = () => {
       })
       .catch((error) => {
         console.error(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   };
 

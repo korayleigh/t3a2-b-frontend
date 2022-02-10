@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import Header from './Header';
 import Home from './Home';
@@ -17,6 +17,8 @@ import CategoryForm from './CategoryForm';
 import Orders from './Orders';
 import Order from './Order';
 import OrderForm from './OrderForm';
+import { getUserRole } from './services/authServices';
+import { setRole } from './services/globalContextServices';
 
 function App() {
   
@@ -24,17 +26,27 @@ function App() {
     toasts: [],
     categories: {},
     menu: [],
-    user: sessionStorage.getItem('jwt') ? {
-      email: sessionStorage.getItem('email'),
+    user: {
+      email: sessionStorage.getItem('email') || null,
       role: null,
-      jwt: sessionStorage.getItem('jwt'),
-    } : null,
+      jwt: sessionStorage.getItem('jwt') || null,
+    }
   };
-  const [store, dispatch] = useReducer(globalReducer,initialState);
+  const [globalStore, globalDispatch] = useReducer(globalReducer,initialState);
+  const {user} = globalStore;
+
+  useEffect(() => {
+    if (globalStore.user.email && !globalStore.user.role) {
+      getUserRole()
+        .then((role) => {
+          setRole(globalDispatch, role);
+        });
+    }
+  }),[user.jwt];
 
   return (
     <div>
-      <GlobalContext.Provider value={{store,dispatch}}>
+      <GlobalContext.Provider value={{globalStore,globalDispatch}}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Header />}>
@@ -43,12 +55,14 @@ function App() {
               <Route path="createmenuitem" element={<CreateMenuItem />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
+              { user && user.role == 'Admin' && 
               <Route path="categories">
                 <Route index element={<Categories />} />
                 <Route path="new" element={<CategoryForm />} />
                 <Route path=":id/edit" element={<CategoryForm />} />
                 <Route path=":id" element={<Category />} />
               </Route>
+              }
               <Route path="orders">
                 <Route index element={<Orders />} />
                 <Route path=":id" element={<Order />} />

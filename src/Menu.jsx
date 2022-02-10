@@ -11,18 +11,18 @@ import { Row } from 'react-bootstrap';
 
 const Menu = () => {
 
-  const {store, dispatch} = useGlobalContext();
-  const {menu} = store;
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const {menu} = globalStore;
 
   useEffect( ()=>{
     indexMenu()
       .then(menu => {
         console.log(menu);
-        setMenu(dispatch, menu);
+        setMenu(globalDispatch, menu);
       })
       .catch(error => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   }, []);
   

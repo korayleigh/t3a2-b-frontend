@@ -13,7 +13,7 @@ import YesNoModal from './YesNoModal';
 
 const Order = () => {
 
-  const {store, dispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [order, setOrder] = useState(null);
   const [orderItemModalShow, setOrderItemModalShow] = useState(false);
   const [orderItemModalId, setOrderItemModalId] = useState(null);
@@ -28,7 +28,7 @@ const Order = () => {
       })
       .catch((error) => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
     console.log('refresh!');
   },[]);
@@ -105,14 +105,14 @@ const Order = () => {
   const handleDeleteModalConfirm = () => {
     destroyOrder(params.id)
       .then(() => {
-        showToast(store, dispatch,`Order '${transformed_order.name}' successfully deleted`, 'warning' );
+        showToast(globalStore, globalDispatch,`Order '${transformed_order.name}' successfully deleted`, 'warning' );
       })
       .then(() => {
         navigate(-1);
       })
       .catch((error) => {
         console.error(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   };
 

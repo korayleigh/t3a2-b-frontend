@@ -10,19 +10,19 @@ import IndexTable from './components/IndexTable';
 
 const Categories = () => {
 
-  const {store, dispatch} = useGlobalContext();
-  const {categories} = store;
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const {categories} = globalStore;
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     indexCategories()
       .then(categories => {
-        setCategories(dispatch ,categories);
+        setCategories(globalDispatch ,categories);
         setLoaded(true);
       })
       .catch(error => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   },[]);
 

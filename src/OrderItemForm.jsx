@@ -35,7 +35,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     }
   };
   
-  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [ formState, formDispatch ] = useReducer(orderItemReducer, initialFormState);
   const {order_item} = formState;
 

@@ -9,13 +9,12 @@ import { clearLoginCredentials } from './services/globalContextServices';
 
 const Header = () => {
 
-  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const {user} = globalStore;
   const navigate = useNavigate();
 
 
   const handleLogout = () => {
-
     signOut()
       .then((response) => {
         console.log(response);
@@ -26,6 +25,7 @@ const Header = () => {
       })
       .catch(error => {
         console.error(error);
+        showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
       });
 
   };
@@ -33,6 +33,9 @@ const Header = () => {
   const handleDeleteToast = (toast) => {
     deleteToast(globalStore, globalDispatch, toast);
   };
+
+  console.log(globalStore);
+  console.log(user);
 
   return (
     <>
@@ -56,8 +59,8 @@ const Header = () => {
               )}
             </Nav>
             <Nav>
-              { user
-                ? <>
+              { user.email?
+                <>
                   <Navbar.Text>{`${user.email} (${user.role})`}</Navbar.Text>
                   <Nav.Link as={Link} to="/logout" href="/logout" onClick={handleLogout}>Logout</Nav.Link>
                 </>
