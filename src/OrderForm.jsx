@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
-import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
+import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormValidated } from './services/orderServices';
-import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { capitalise } from './utils/textUtils';
@@ -129,8 +129,8 @@ const OrderForm = () => {
           <Form.Group className="mb-3" controlId="formGroupButtons">
             <ButtonRow>
               <ButtonBunch>
-                <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
-                <Button style={{minWidth: '6rem'}} variant="secondary" type="button" onClick={handleBackClick}>Back</Button>
+                <StyledButton variant="primary" type="submit">Submit</StyledButton>
+                <StyledButton variant="secondary" type="button" onClick={handleBackClick}>Back</StyledButton>
               </ButtonBunch>
             </ButtonRow>
           </Form.Group>

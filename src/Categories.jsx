@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { Container, Table, Button, Alert } from 'react-bootstrap';
+import { Container, Table, Alert } from 'react-bootstrap';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { ButtonRow, Heading } from './styled/styled';
+import { ButtonRow, Heading, StyledButton } from './styled/styled';
 import { showToast } from './services/toastServices';
 
 const Categories = () => {
@@ -106,7 +106,7 @@ const Categories = () => {
               </tbody>
             </Table>
             <ButtonRow>
-              <Button style={{minWidth: '6rem'}} variant="primary" name="edit" onClick={handleNewClick}>New Category</Button>
+              <StyledButton variant="primary" name="edit" onClick={handleNewClick}>New Category</StyledButton>
             </ButtonRow>
           </>
           :

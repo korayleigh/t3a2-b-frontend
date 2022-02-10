@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Button, Image, Ratio } from 'react-bootstrap';
+import { Modal, Image, Ratio } from 'react-bootstrap';
+import {StyledButton} from './styled/styled';
 import PropTypes from 'prop-types';
 import sadTaco from './sad_taco.png';
 
@@ -26,7 +27,7 @@ const MenuItemModal = (props) => {
         <p>{props.menuItem.description}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <StyledButton onClick={props.onHide}>Close</StyledButton>
       </Modal.Footer>
     </Modal>
   );

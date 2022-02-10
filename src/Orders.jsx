@@ -1,9 +1,10 @@
-import React from 'react';
-import { useEffect, useState  } from 'react';
+import React, { useEffect, useState  } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { indexOrders, transformOrder } from './services/orderServices';
 import IndexTable from './components/IndexTable';
 import { showToast } from './services/toastServices';
 import { useGlobalContext } from './utils/globalContext';
+import { ButtonRow, StyledButton } from './styled/styled';
 
 const Orders = () => {
 
@@ -14,6 +15,7 @@ const Orders = () => {
   // const [store, dispatch] = useReducer(ordersReducer, initialState);
   const [state, setState] = useState(initialState);
   const {store, dispatch} = useGlobalContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     indexOrders()
@@ -28,6 +30,12 @@ const Orders = () => {
         showToast(store, dispatch, error.message, 'danger');
       });
   },[]);
+
+
+  const handleNewClick = (() => {
+    navigate('new');
+  });
+
 
   const columns = [{
     Header: 'id',
@@ -75,6 +83,9 @@ const Orders = () => {
           return { style: { textAlign: cellInfo.column.rowAlign } };
         }}
       />
+      <ButtonRow>
+        <StyledButton variant="primary" name="new" onClick={handleNewClick}>New Order</StyledButton>
+      </ButtonRow>
     </div>
   );
 };

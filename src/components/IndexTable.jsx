@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { Container, Table, Button, Alert } from 'react-bootstrap';
+import { Container, Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ButtonRow, Heading, SubHeading } from '../styled/styled';
+import { Heading, SubHeading } from '../styled/styled';
 import PropTypes from 'prop-types';
 import { titleise } from '../utils/textUtils';
 
 const defaultPropGetter = () => ({});
 
-const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowClick, onRowClick, subHeading,
+const IndexTable = ({data, columns, model, showFooter, allowRowClick, onRowClick, subHeading,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
@@ -26,10 +26,6 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
       navigate(String(row.original.id), {replace: false});
     }
   };
-
-  const handleNewClick = (() => {
-    navigate('new');
-  });
 
   const columnsMemo = useMemo(() => columns,[columns]);
   const dataMemo = useMemo(() => data, [data]);
@@ -55,10 +51,9 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
 
   return (
     <>
-
       { subHeading ? <SubHeading>{titleise(model.plural)}</SubHeading> : <Heading>{titleise(model.plural)}</Heading>}
       <Container className="my-5">
-        { dataMemo ? 
+        { dataMemo.length ? 
           <>
             <Table striped bordered hover {...getTableProps()}>
               <thead>
@@ -119,12 +114,9 @@ const IndexTable = ({data, columns, model, showNewButton, showFooter, allowRowCl
                 ))}
               </tfoot> }
             </Table>
-            <ButtonRow>
-              { showNewButton && <Button style={{minWidth: '6rem'}} variant="primary" name="new" onClick={handleNewClick}>{`New ${titleise(model.singular)}`}</Button> }
-            </ButtonRow>
           </>
           :
-          <Alert variant='info'>{`No ${titleise(model.plural)}`}</Alert>
+          <Alert variant='info'>No data...</Alert>
         }
       </Container>
     </>
@@ -135,7 +127,6 @@ IndexTable.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array,
   model: PropTypes.object,
-  showNewButton: PropTypes.bool,
   showFooter: PropTypes.bool,
   allowRowClick: PropTypes.bool,
   onRowClick: PropTypes.func,

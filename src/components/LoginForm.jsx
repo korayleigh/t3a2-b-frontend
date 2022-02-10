@@ -1,11 +1,11 @@
 import React from 'react';
-import {Form, Button, FloatingLabel} from 'react-bootstrap';
+import {Form, FloatingLabel} from 'react-bootstrap';
 import {useState} from 'react';
 import {signIn} from '../services/authServices';
 import {useGlobalContext} from '../utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { setLoginCredentials } from '../services/globalContextServices';
-import { ButtonRow } from '../styled/styled';
+import { ButtonRow, StyledButton } from '../styled/styled';
 import { showToast } from '../services/toastServices';
 
 const LoginForm = () => {
@@ -114,7 +114,7 @@ const LoginForm = () => {
 
       <Form.Group className="mb-3" controlId="formButton">
         <ButtonRow>
-          <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
+          <StyledButton variant="primary" type="submit">Submit</StyledButton>
         </ButtonRow>
       </Form.Group>
     </Form>
