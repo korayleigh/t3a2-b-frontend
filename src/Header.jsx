@@ -1,21 +1,22 @@
 import React from 'react';
-import { Container, Navbar, Nav, NavDropdown, ToastContainer, Toast , Collapse} from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
-import { deleteToast, showToast } from './services/toastServices';
+import { showToast } from './services/toastServices';
 import { clearLoginCredentials } from './services/globalContextServices';
+import ToastArea from './components/ToastArea';
+import taco from './taco64.png';
 
 const Header = () => {
 
-  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const {user} = globalStore;
   const navigate = useNavigate();
 
 
   const handleLogout = () => {
-
     signOut()
       .then((response) => {
         console.log(response);
@@ -26,19 +27,25 @@ const Header = () => {
       })
       .catch(error => {
         console.error(error);
+        showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
       });
 
   };
 
-  const handleDeleteToast = (toast) => {
-    deleteToast(globalStore, globalDispatch, toast);
-  };
-
   return (
     <>
-      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect
+        style={{
+          borderBottom: '5px',
+          borderColor: '#6689a8',
+          borderBottomStyle: 'solid',
+        }}
+      >
         <Container>
-          <Navbar.Brand href="#home">MEXIQUITO BANNER</Navbar.Brand>
+          <Navbar.Brand href="#home" className="d-flex gap-3 align-items-center">
+            <img src={taco} alt=""/>
+            <span>MEXIQUI.TO</span>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="me-auto">
@@ -56,8 +63,8 @@ const Header = () => {
               )}
             </Nav>
             <Nav>
-              { user
-                ? <>
+              { user.email?
+                <>
                   <Navbar.Text>{`${user.email} (${user.role})`}</Navbar.Text>
                   <Nav.Link as={Link} to="/logout" href="/logout" onClick={handleLogout}>Logout</Nav.Link>
                 </>
@@ -67,43 +74,7 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        style={{
-          position: 'fixed',
-          minHeight: '100vh',
-          minWidth: '100vw',
-          pointerEvents: 'none',
-          zIndex: '9999',
-          height: '100%',
-          width: '100%',
-        }}
-      >
-        <ToastContainer position='top-end' className="p-4">
-          {globalStore.toasts.map((toast, index) => {
-            return (
-              <Toast bg={toast.variant} key={index} delay={2000} show={toast.show} animation transition={Collapse} autohide={true} onClose={() => handleDeleteToast(toast)}
-                style={{
-                  transitionProperty: 'opacity, visibility',
-                  transitionDelay: '2s',
-                }}
-              >
-                <Toast.Header>
-                  <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                  <strong className="me-auto">Mexiquito</strong>
-                  <small className="text-muted">just now</small>
-                </Toast.Header>
-                <Toast.Body
-                  style={{
-                    color: 'white',
-                  }}
-                >{toast.message}</Toast.Body>
-              </Toast>
-            );
-          })}
-        </ToastContainer>
-      </div>
+      <ToastArea />
       <Container className="my-5">
         <Outlet />
       </Container>

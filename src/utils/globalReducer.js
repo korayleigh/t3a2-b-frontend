@@ -42,7 +42,11 @@ export default function globalReducer (state, action) {
   case 'clearLoginCredentials': {
     return {
       ...state,
-      user: null
+      user: {
+        email: null,
+        role: null,
+        jwt: null,
+      }
     };
   }
 

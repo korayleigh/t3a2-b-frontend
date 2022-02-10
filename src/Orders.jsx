@@ -17,10 +17,8 @@ const Orders = () => {
   const [state, setState] = useState(initialState);
   const {orders} = state;
   const [loaded, setLoaded] = useState(false);
-  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
-
-  console.log(globalStore.user);
 
   useEffect(() => {
     indexOrders()

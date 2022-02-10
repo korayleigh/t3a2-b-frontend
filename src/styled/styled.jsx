@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container , Button } from 'react-bootstrap';
+import { Container , Button, Table } from 'react-bootstrap';
 
 const childrenPropTypes = {
   children: PropTypes.oneOfType([
@@ -42,6 +42,7 @@ export const StyledButton = (props) => {
     <Button
       style={{
         minWidth: '6rem',
+        color: 'white',
       }}
       {...props}
     />
@@ -110,3 +111,21 @@ export const SubHeading = ({children}) => {
 };
 
 SubHeading.propTypes = childrenPropTypes;
+
+export const StyledTable = (props) => {
+  return (
+    <div
+      style={{
+        backgroundColor: 'white',
+      }}
+    >
+
+      <Table
+        {...props}
+        style={{
+          margin: '0',
+        }}
+      />
+    </div>
+  );
+};

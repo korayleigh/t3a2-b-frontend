@@ -1,6 +1,7 @@
 import React from 'react';
-import { Table, Container, Alert } from 'react-bootstrap';
+import {  Container, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { StyledTable } from '../styled/styled';
 
 const ShowTable = ({item, children}) => {
 
@@ -22,7 +23,7 @@ const ShowTable = ({item, children}) => {
       <Container className="my-5">
         { itemTopLevelProperties ?
           <>
-            <Table striped bordered hover>
+            <StyledTable striped bordered hover>
               <tbody>
                 {/* Split the object into key value pairs, and then filter out the values that are
                 objects, functions, undefined, or symbols */}
@@ -35,7 +36,7 @@ const ShowTable = ({item, children}) => {
                   );
                 })}
               </tbody>
-            </Table>
+            </StyledTable>
             {children}
           </>
           : 

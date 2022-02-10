@@ -29,8 +29,8 @@ const OrderForm = () => {
   };
 
   
-  const {store, dispatch} = useGlobalContext();
-  const [ formState, formDispatch ] = useReducer(orderReducer, initialFormState);
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const [ formState, formglobalDispatch ] = useReducer(orderReducer, initialFormState);
   const {order} = formState;
   const navigate = useNavigate();
   const params = useParams();
@@ -41,55 +41,55 @@ const OrderForm = () => {
     if (params.id) {
       indexTables()
         .then((tables) => {
-          setTables(formDispatch, tables);
+          setTables(formglobalDispatch, tables);
         })
         .then(() => {
           return showOrder(params.id);
         })
         .then((order) => {
-          setOrder(formDispatch, order);
+          setOrder(formglobalDispatch, order);
         })
         .catch(error => {
           console.log(error);
-          showToast(store, dispatch, error.message, 'danger');
+          showToast(globalStore, globalDispatch, error.message, 'danger');
         });
     }
   },[params.id]);
 
   const handleChange = (event) => {
     console.log(event);
-    setOrderValue(formDispatch, event.target.name, event.target.value);
-    setFormValidated(formDispatch, false);
+    setOrderValue(formglobalDispatch, event.target.name, event.target.value);
+    setFormValidated(formglobalDispatch, false);
   };
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!order.name || !order.email) {
-      setFormValidated(formDispatch, true);
+      setFormValidated(formglobalDispatch, true);
       if (!order.name) {
-        setFormValidation(formDispatch, 'name', false);
-        showToast(store, dispatch, 'Order Name is Required', 'danger' );
+        setFormValidation(formglobalDispatch, 'name', false);
+        showToast(globalStore, globalDispatch, 'Order Name is Required', 'danger' );
       }
       if (!order.email) {
-        setFormValidation(formDispatch, 'email', false);
-        showToast(store, dispatch, 'Order Email is Required', 'danger' );
+        setFormValidation(formglobalDispatch, 'email', false);
+        showToast(globalStore, globalDispatch, 'Order Email is Required', 'danger' );
       }
     } else {
       createUpdateOrder(order)
         .then(() => {
-          setFormValidated(formDispatch, true);
-          setFormValidation(formDispatch, 'name', true);
-          setFormValidation(formDispatch, 'email', true);
-          setFormValidation(formDispatch, 'table', true);
-          showToast(store, dispatch, `successfully ${order.id ? 'updated' : 'created'}`, 'success');
+          setFormValidated(formglobalDispatch, true);
+          setFormValidation(formglobalDispatch, 'name', true);
+          setFormValidation(formglobalDispatch, 'email', true);
+          setFormValidation(formglobalDispatch, 'table', true);
+          showToast(globalStore, globalDispatch, `successfully ${order.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          showToast(store, dispatch, error.message, 'danger');
+          showToast(globalStore, globalDispatch, error.message, 'danger');
         });
       
     }
