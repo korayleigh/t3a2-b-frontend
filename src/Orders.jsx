@@ -17,8 +17,10 @@ const Orders = () => {
   const [state, setState] = useState(initialState);
   const {orders} = state;
   const [loaded, setLoaded] = useState(false);
-  const {store, dispatch} = useGlobalContext();
+  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
+
+  console.log(globalStore.user);
 
   useEffect(() => {
     indexOrders()
@@ -31,7 +33,7 @@ const Orders = () => {
       })
       .catch(error => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   },[]);
 

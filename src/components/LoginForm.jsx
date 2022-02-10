@@ -1,7 +1,7 @@
-import React from 'react';
-import {Form, FloatingLabel} from 'react-bootstrap';
-import {useState} from 'react';
-import {signIn} from '../services/authServices';
+import React, {useReducer} from 'react';
+import {Container, Form, FloatingLabel} from 'react-bootstrap';
+import {setFormValidated, setFormValidation, setUserValue, signIn} from '../services/authServices';
+import authReducer from '../utils/authReducer';
 import {useGlobalContext} from '../utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { setLoginCredentials } from '../services/globalContextServices';
@@ -24,100 +24,69 @@ const LoginForm = () => {
     }
   };
 
-  const [formState, setFormState] = useState(initialFormState);
-  const {store, dispatch} = useGlobalContext();
+  const [formState, formDispatch] = useReducer(authReducer, initialFormState);
+  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
 
+  console.log('formState', formState);
+
   const handleChange = (event) => {
-    setFormState({
-      ...formState,
-      user: {
-        ...formState.user,
-        [event.target.name]: event.target.value
-      },
-      validation: {
-        ...formState.validation,
-        validated: false,
-      }
-    });
+    setUserValue(formDispatch, event.target.name, event.target.value );
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!formState.user.email || !formState.user.password) {
-      setFormState({
-        ...formState,
-        validation: {
-          ...formState.validation,
-          validated: true,
-          user: {
-            ...formState.validation.user,
-            email: !!formState.user.email,
-            password: !!formState.user.password
-          }
-        }
-      });
-      showToast(store, dispatch, 'email and password are required', 'danger');
+      setFormValidated(formDispatch, true);
+      setFormValidation(formDispatch, 'email', !!formState.user.email);
+      setFormValidation(formDispatch, 'password', !!formState.user.password);
+      showToast(globalStore, globalDispatch, 'email and password are required', 'danger');
     } else {
-
-      setFormState({
-        ...formState,
-        validation: {
-          ...formState.validation,
-          validated: false
-        },
-      });
+      setFormValidated(formDispatch, false);
       signIn(formState.user)
-        .then(({ email, jwt }) => {
+        .then(({ email, jwt, role, message }) => {
           sessionStorage.setItem('jwt', jwt);
           sessionStorage.setItem('email', email);
-          setLoginCredentials(dispatch, email, jwt);
-          showToast(store, dispatch, 'Successfully logged in', 'success');
+          setLoginCredentials(globalDispatch, email, jwt, role);
+          showToast(globalStore, globalDispatch, message, 'success');
           navigate('/orders');
         })
         .catch(error => {
-          if (error.response.status === 401) {
-            showToast(store, dispatch, 'Incorrect email or password', 'danger');
-            setFormState({
-              ...formState,
-              validation: {
-                ...formState.validation,
-                validated: true,
-                user: {
-                  ...formState.validation.user,
-                  email: false,
-                  password: false,
-                },
-              },
-            });
-          } else {
-            showToast(store, dispatch, error.message, 'danger');
-          }
+          console.log(error.response);
+          showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+          setFormValidated(formDispatch, true);
+          setFormValidation(formDispatch, 'email', false);
+          setFormValidation(formDispatch, 'password', false);
         });
     }
   };
 
 
   return (
-    <Form onSubmit={handleSubmit} noValidate >
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <FloatingLabel controlId='floatinginput' label="Email address" className='mb-3'>
-          <Form.Control type="email" placeholder="Enter email" name="email" onChange={handleChange} value={formState.user.email} isInvalid={formState.validation.validated && !formState.validation.user.email} isValid={formState.validation.validated && formState.validation.user.email} />
-        </FloatingLabel>
-      </Form.Group>
+    <Container className="my-5 p-0">
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <FloatingLabel controlId='floadingPassword' label="Password" className='mb-3'>
-          <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange}  value={formState.user.password} isInvalid={formState.validation.validated && !formState.validation.user.password} isValid={formState.validation.validated && formState.validation.user.password}  />
-        </FloatingLabel>
-      </Form.Group>
+      <Form onSubmit={handleSubmit} noValidate >
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <FloatingLabel controlId='floatinginput' label="Email address" className='mb-3'>
+            <Form.Control type="email" placeholder="Enter email" name="email" onChange={handleChange} value={formState.user.email} isInvalid={formState.validation.validated && !formState.validation.user.email} isValid={formState.validation.validated && formState.validation.user.email} />
+          </FloatingLabel>
+        </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formButton">
-        <ButtonRow>
-          <StyledButton variant="primary" type="submit">Submit</StyledButton>
-        </ButtonRow>
-      </Form.Group>
-    </Form>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <FloatingLabel controlId='floadingPassword' label="Password" className='mb-3'>
+            <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange}  value={formState.user.password} isInvalid={formState.validation.validated && !formState.validation.user.password} isValid={formState.validation.validated && formState.validation.user.password}  />
+          </FloatingLabel>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formButton">
+          <Container className="my-5 p-0">
+            <ButtonRow>
+              <StyledButton variant="primary" type="submit">Submit</StyledButton>
+            </ButtonRow>
+          </Container>
+        </Form.Group>
+      </Form>
+    </Container>
   );
 };
 

@@ -4,19 +4,45 @@ export default function globalReducer (state, action) {
 
   switch(action.type) {
 
-  case 'setUser': {
+  case 'setEmail': {
     return {
       ...state,
-      loggedInUser: action.data
+      user: {
+        ...state.user,
+        email: action.data
+      }
     };
   }
   case 'setToken': {
     return {
       ...state,
-      auth: {
-        ...state.auth,
+      user: {
+        ...state.user,
         jwt: action.data
       }
+    };
+  }
+  case 'setRole': {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        role: action.data
+      }
+    };
+  }
+
+  case 'setLoginCredentials': {
+    return {
+      ...state,
+      user: action.data
+    };
+  }
+
+  case 'clearLoginCredentials': {
+    return {
+      ...state,
+      user: null
     };
   }
 

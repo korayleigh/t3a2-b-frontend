@@ -24,8 +24,11 @@ function App() {
     toasts: [],
     categories: {},
     menu: [],
-    loggedInUser: sessionStorage.getItem('email') || null,
-    auth: {jwt: sessionStorage.getItem('jwt') || null}
+    user: sessionStorage.getItem('jwt') ? {
+      email: sessionStorage.getItem('email'),
+      role: null,
+      jwt: sessionStorage.getItem('jwt'),
+    } : null,
   };
   const [store, dispatch] = useReducer(globalReducer,initialState);
 
