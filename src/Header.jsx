@@ -4,28 +4,24 @@ import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
-import { deleteToast } from './services/toastServices';
+import { deleteToast, showToast } from './services/toastServices';
+import { clearLoginCredentials } from './services/globalContextServices';
 
 const Header = () => {
 
-  const {store, dispatch} = useGlobalContext();
-  const {loggedInUser} = store;
+  const {store: globalStore, dispatch: globalDispatch} = useGlobalContext();
+  const {user} = globalStore;
   const navigate = useNavigate();
 
 
   const handleLogout = () => {
 
     signOut()
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         sessionStorage.clear();
-        dispatch({
-          type: 'setUser',
-          data: null
-        });
-        dispatch({
-          type: 'setToken',
-          data: null
-        });
+        clearLoginCredentials(globalDispatch);
+        showToast(globalStore, globalDispatch, response.message, 'primary');
         navigate('/');
       })
       .catch(error => {
@@ -35,7 +31,7 @@ const Header = () => {
   };
 
   const handleDeleteToast = (toast) => {
-    deleteToast(store, dispatch, toast);
+    deleteToast(globalStore, globalDispatch, toast);
   };
 
   return (
@@ -49,18 +45,20 @@ const Header = () => {
               <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/menu" href="/menu">Order</Nav.Link>
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
-              <NavDropdown title="Admin" id="basic-nav-dropdown">
-                <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
-                <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
-                <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
-              </NavDropdown>
+              { user && user.role == 'Admin' && (
+                <NavDropdown title="Admin" id="basic-nav-dropdown">
+                  <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
+                  <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
+                  <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
+                </NavDropdown>
+              )}
             </Nav>
             <Nav>
-              { loggedInUser
+              { user
                 ? <>
-                  <Navbar.Text>{loggedInUser}</Navbar.Text>
+                  <Navbar.Text>{`${user.email} (${user.role})`}</Navbar.Text>
                   <Nav.Link as={Link} to="/logout" href="/logout" onClick={handleLogout}>Logout</Nav.Link>
                 </>
                 : <Nav.Link as={Link} to="/login" href="/login">Login</Nav.Link>
@@ -83,7 +81,7 @@ const Header = () => {
         }}
       >
         <ToastContainer position='top-end' className="p-4">
-          {store.toasts.map((toast, index) => {
+          {globalStore.toasts.map((toast, index) => {
             return (
               <Toast bg={toast.variant} key={index} delay={2000} show={toast.show} animation transition={Collapse} autohide={true} onClose={() => handleDeleteToast(toast)}
                 style={{

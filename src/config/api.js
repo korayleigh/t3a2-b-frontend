@@ -21,6 +21,7 @@ const mexiquitoApi = axios.create({
 mexiquitoApi.interceptors.request.use((request) => {
   const jwt = sessionStorage.getItem('jwt');
   if (jwt) {
+    console.log('jwt', jwt);
     request.headers['Authorization'] = jwt;
   }
   return request;

@@ -10,18 +10,42 @@ export async function signIn({email, password}) {
   });
   
   return {
-    // responseStatus: response.status,
     email: response.data.email,
+    role: response.data.role,
+    message: response.data.message,
     jwt: response.headers.authorization
   };
 }
 
 export async function signOut() {
 
-  const response = await mexiquitoApi.delete('/users/sign_out', {});
+  const response = await mexiquitoApi.delete('/users/sign_out');
 
   return {
     responseStatus: response.status,
     message: response.data.message
   };
 }
+
+export const setUserValue = (dispatch, name, value) => {
+  dispatch({
+    type: 'setUserValue',
+    name: name,
+    value: value,
+  });
+};
+
+export const setFormValidated = (dispatch, data) => {
+  dispatch({
+    type: 'setFormValidated',
+    data: data,
+  });
+};
+
+export const setFormValidation = (dispatch, name, value) => {
+  dispatch({
+    type: 'setFormValidation',
+    name: name,
+    value: value,
+  });
+};

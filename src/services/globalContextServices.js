@@ -1,11 +1,17 @@
-export function setLoginCredentials(dispatch, email, jwt) {
+export function setLoginCredentials(dispatch, email, jwt, role) {
   dispatch({
-    type: 'setUser',
-    data: email
+    type: 'setLoginCredentials',
+    data: {
+      email: email,
+      role: role,
+      jwt: jwt,
+    }
   });
+}
+
+export function clearLoginCredentials(dispatch) {
   dispatch({
-    type: 'setToken',
-    data: jwt
+    type: 'clearLoginCredentials',
   });
 }
 
