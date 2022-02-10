@@ -11,7 +11,10 @@ const childrenPropTypes = {
 
 export const ButtonRow = ({children}) => {
   return (
-    <Container className="d-flex justify-content-between">
+    <Container className="p-0 d-flex flex-column flex-sm-row justify-content-between"
+      style={{
+        gap: '1rem',
+      }}>
       {children}
     </Container>
   );
@@ -22,12 +25,13 @@ ButtonRow.propTypes = childrenPropTypes;
 
 export const ButtonBunch = ({children}) => {
   return (
-    <div style={{
-      display: 'flex',
-      gap: '1rem',
-    }}>
+    <Container className="m-0 d-flex flex-column flex-sm-row"
+      style={{
+        gap: '1rem',
+        width: 'unset',
+      }}>
       {children}
-    </div>
+    </Container>
   );
 };
 
