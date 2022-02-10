@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { Container, Table, Alert } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { StyledTable } from '../styled/styled';
 
 const defaultPropGetter = () => ({});
 
@@ -43,7 +44,7 @@ const IndexTable = ({data, columns, showFooter,
       <Container className="my-5">
         { dataMemo.length ? 
           <>
-            <Table striped bordered hover {...getTableProps()}>
+            <StyledTable striped bordered hover {...getTableProps()}>
               <thead>
                 {headerGroups.map((headerGroup, index) => {
                   return (
@@ -101,7 +102,7 @@ const IndexTable = ({data, columns, showFooter,
                   </tr>
                 ))}
               </tfoot> }
-            </Table>
+            </StyledTable>
           </>
           :
           <Alert variant='info'>No data...</Alert>

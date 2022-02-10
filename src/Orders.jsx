@@ -20,8 +20,6 @@ const Orders = () => {
   const {globalStore, globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
 
-  console.log(globalStore.user);
-
   useEffect(() => {
     indexOrders()
       .then(orders => {

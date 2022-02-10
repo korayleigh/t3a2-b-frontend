@@ -3,7 +3,8 @@ import { ButtonRow, ButtonBunch, StyledButton, Heading, SubHeading } from './sty
 import { Container } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
-import { showOrder, destroyOrder, transformOrder } from './services/orderServices';
+import { showOrder, transformOrder } from './services/orderServices';
+import { destroyOrder } from './services/orderServices';
 import { transformOrderItems } from './services/orderItemServices';
 import { showToast } from './services/toastServices';
 import ShowTable from './components/ShowTable';
@@ -49,8 +50,6 @@ const Order = () => {
       navigate(-1);
     }
   };
-
-
 
   const order_items_columns = [{
     Header: 'id',
@@ -121,14 +120,14 @@ const Order = () => {
   };
 
   console.log('order.id', order?.id);
-
+  console.log('order_items', transformOrderItems(order?.order_items));
   return (
     <>
       <Heading>Order Details</Heading>
       <ShowTable item={transformed_order} model={{singular: 'order', plural:'orders'}}>
         <Container className="my-5 px-0">
           <SubHeading>Order Items</SubHeading>
-          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true} allowRowClick={true} onRowClick={handleRowClick}
+          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true} onRowClick={handleRowClick}
             getHeaderProps={() => {
               return { style: { textAlign: 'center' } };
             }}
@@ -138,7 +137,7 @@ const Order = () => {
             getFooterProps={(column) => {
               return { style: { textAlign: column.footerAlign } };
             }}
-          />
+          /> 
         </Container>
       </ShowTable>
       <ButtonRow>
