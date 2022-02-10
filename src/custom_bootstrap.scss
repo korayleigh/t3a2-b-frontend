@@ -1,8 +1,24 @@
-// $theme-colors: (
-//     "primary": green
-//     // "dark" : black
-//     );
 
-$primary: green;
+$primary: #0c4d37;
+
+.card {
+    height: 100%;
+    img{
+        width: 100%;
+        height: 60%;
+        object-fit: contain;
+    }
+    .card-body{
+        .card-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0;
+            .flex-left{
+                align-self: flex-start;
+            }
+        }
+    }
+  }
     
 @import "~bootstrap/scss/bootstrap";

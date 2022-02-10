@@ -1,35 +1,45 @@
 import React from 'react';
-import {Card, Button, Col} from 'react-bootstrap';
+import {Card, Button, Col, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import sadTaco from '../sad_taco.png';
-import { useState } from 'react';
-import MenuItemModal from '../MenuItemModal';
+import imageNotFound from '../assets/taco_image_not_found_smaller.png';
 
 const MenuItemCard = props => {
-  const [modalShow, setModalShow] = useState(false);
 
   const handleClick = () => {
-    setModalShow(true);
+    props.setModalShow(true);
   };
-  
-  const handleModalOnHide = () => {
-    setModalShow(false);
-  };
-  
+    
   return (
     <Col>
-      <Card>
-        {props.menuItem.image ? null : <Card.Text className='text-center'>No image found</Card.Text>}
-        <Card.Img variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : sadTaco} />        
+      <Card border={'dark'}>
+        <Card.Img variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
         <Card.Body>
-          <Card.Title >{props.menuItem.name}</Card.Title>
-          <Card.Title >{'$'+props.menuItem.price }</Card.Title>
+          <div className='card-container'>
+            <Card.Title >{props.menuItem.name}</Card.Title>
+            <Card.Title >{'$'+props.menuItem.price }</Card.Title>
+
+          </div>
           
-          
-          <Card.Text>{props.menuItem.description}</Card.Text>
-          <Button onClick={handleClick} variant="primary">View</Button>
+          {/* <Card.Text>{props.menuItem.description}</Card.Text> */}
         </Card.Body>
-        <MenuItemModal show={modalShow} onHide={handleModalOnHide} menuItem={props.menuItem} />
+
+        <Card.Footer border={'dark'}>
+          <ButtonToolbar className="justify-content-between" >
+            <Button onClick={handleClick} variant="primary">View</Button>
+            <ButtonGroup>
+              <Button variant='danger'
+                onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
+              >
+                -
+              </Button>
+              <Button disabled variant='light'>0</Button>
+              <Button variant='primary'
+                onClick={() => updateItemQuantity(item.id, item.quantity + 1)} >
+                  +
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </Card.Footer>
       </Card>
     </Col>
   );
