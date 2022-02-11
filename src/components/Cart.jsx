@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import { useCart } from 'react-use-cart';
 
 function Cart(props) {
@@ -21,17 +22,11 @@ function Cart(props) {
         {items.map((item) => (
           <li key={item.id}>
             {item.quantity} x {item.name} &mdash;
-            <button
-              onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
-            >
-              -
-            </button>
-            <button
-              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
-            >
-              +
-            </button>
-            <button onClick={() => removeItem(item.id)}>&times;</button>
+            <ButtonGroup>
+              <Button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</Button>
+              <Button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</Button>
+              <Button variant='danger' onClick={() => removeItem(item.id)}>&times;</Button>
+            </ButtonGroup>
           </li>
         ))}
       </ul>
