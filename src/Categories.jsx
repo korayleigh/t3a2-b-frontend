@@ -62,12 +62,12 @@ const Categories = () => {
   return (
     Object.values(categories).length ? 
       <>
-        <Heading>Categories</Heading>
-        <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
-        <ButtonRow>
-          <ButtonBunch>
-            <StyledButton variant="primary" name="edit" onClick={handleButtonClick}>New Category</StyledButton>
-            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+        <Heading data-testid="categories_heading">Categories</Heading>
+        <IndexTable data-testid="categories_index" data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
+        <ButtonRow data-testid="categories_button_row">
+          <ButtonBunch data-testid="categories_button_bunch_left">
+            <StyledButton data-testid="categories_styled_button_edit" variant="primary" name="edit" onClick={handleButtonClick}>New Category</StyledButton>
+            <StyledButton data-testid="categories_styled_button_back" variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>
       </>

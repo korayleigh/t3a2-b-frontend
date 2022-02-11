@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders MEXIQUITO BANNER', () => {
+test('renders MEXIQUI.TO BANNER', () => {
   render(<App />);
-  const linkElement = screen.getByText(/MEXIQUITO BANNER/i);
+  const linkElement = screen.getByText(/MEXIQUI.TO/i);
   expect(linkElement).toBeInTheDocument();
 });
