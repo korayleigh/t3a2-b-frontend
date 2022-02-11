@@ -2,6 +2,7 @@ import React from 'react';
 import { ToastContainer, Toast, Fade } from 'react-bootstrap';
 import { deleteToast } from '../services/toastServices';
 import { useGlobalContext } from '../utils/globalContext';
+import taco32 from '../logo32.png';
 
 const ToastArea = () => {
 
@@ -38,7 +39,7 @@ const ToastArea = () => {
               }}
             >
               <Toast.Header>
-                <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+                <img src={taco32} className="rounded me-2" alt="" />
                 <strong className="me-auto">Mexiquito</strong>
                 <small className="text-muted">just now</small>
               </Toast.Header>
