@@ -25,9 +25,13 @@ const MenuItemModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Ratio>
-        <Image variant="top" src={imageNotFound} />
+        {menuItem && menuItem.image ?
+          <Image variant="top" src={menuItem.image.imagePath} />
+          : 
+          <Image variant="top" src={imageNotFound} />
+        }
         
-        {/* <Image variant="top" src={props.menuItem ? props.menuItem.image.imagePath : imageNotFound} /> */}
+        {/* <Image variant="top" src={menuItem ? menuItem.image.imagePath : imageNotFound} /> */}
       </Ratio>
       <Modal.Body>
         <h4>{menuItem ? menuItem.name : 'Loading...'}</h4>
@@ -40,7 +44,7 @@ const MenuItemModal = (props) => {
     </Modal> 
   );
 
-  return ( modalContent);
+  return (modalContent);
 };
 
 MenuItemModal.propTypes = {

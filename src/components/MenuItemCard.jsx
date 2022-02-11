@@ -16,10 +16,7 @@ const MenuItemCard = props => {
           <div className='card-container'>
             <Card.Title >{props.menuItem.name}</Card.Title>
             <Card.Title >{'$'+props.menuItem.price }</Card.Title>
-
           </div>
-          
-          {/* <Card.Text>{props.menuItem.description}</Card.Text> */}
         </Card.Body>
 
         <Card.Footer border={'dark'}>
@@ -46,7 +43,8 @@ const MenuItemCard = props => {
 
 MenuItemCard.propTypes = {
   menuItem: PropTypes.object,
-  setModalShow: PropTypes.func
+  setModalShow: PropTypes.func,
+  handleViewButtonClick: PropTypes.func
 };
 
 export default MenuItemCard;

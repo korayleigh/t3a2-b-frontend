@@ -5,10 +5,10 @@ $primary: #0c4d37;
     height: 100%;
     img{
         width: 100%;
-        height: 60%;
-        object-fit: contain;
+        object-fit: cover;
     }
     .card-body{
+        height: auto;
         .card-container{
             display: flex;
             flex-direction: row;
@@ -18,6 +18,9 @@ $primary: #0c4d37;
                 align-self: flex-start;
             }
         }
+    }
+    .card-footer{
+        height: fit-content;
     }
   }
     
