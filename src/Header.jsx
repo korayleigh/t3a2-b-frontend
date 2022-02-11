@@ -5,6 +5,7 @@ import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
 import { deleteToast } from './services/toastServices';
+import CartSidebar from './components/CartSidebar';
 
 const Header = () => {
 
@@ -58,6 +59,7 @@ const Header = () => {
               </NavDropdown>
             </Nav>
             <Nav>
+              <CartSidebar as={Nav.Link}></CartSidebar>
               { loggedInUser
                 ? <>
                   <Navbar.Text>{loggedInUser}</Navbar.Text>
