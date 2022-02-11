@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import imageNotFound from '../assets/taco_image_not_found_smaller.png';
 
 const MenuItemCard = props => {
-
-  const handleClick = () => {
-    props.setModalShow(true);
+  const handleViewButtonClick = () => {
+    props.handleViewButtonClick(props.menuItem.id);
   };
-    
+
   return (
     <Col>
       <Card border={'dark'}>
@@ -25,7 +24,7 @@ const MenuItemCard = props => {
 
         <Card.Footer border={'dark'}>
           <ButtonToolbar className="justify-content-between" >
-            <Button onClick={handleClick} variant="primary">View</Button>
+            <Button onClick={handleViewButtonClick} variant="primary">View</Button>
             <ButtonGroup>
               <Button variant='danger'
                 onClick={() => updateItemQuantity(item.id, item.quantity - 1)}

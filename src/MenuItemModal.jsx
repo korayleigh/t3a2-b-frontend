@@ -2,10 +2,17 @@ import React from 'react';
 import { Modal, Button, Image, Ratio } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import imageNotFound from './assets/taco_image_not_found_smaller.png';
+import { useGlobalContext } from './utils/globalContext';
 
 const MenuItemModal = (props) => {
 
-  return (
+  const {store} = useGlobalContext();
+  const {menu} = store;
+
+  const menuItem = menu.find(menuItem => menuItem.id === props.menuItemId);
+  console.log(menuItem);
+
+  const modalContent = (
     <Modal
       {...props}
       size="lg"
@@ -14,27 +21,31 @@ const MenuItemModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {'props.menuItem.name'}
+          {menuItem ? menuItem.name : 'Loading...'}
         </Modal.Title>
       </Modal.Header>
       <Ratio>
         <Image variant="top" src={imageNotFound} />
-        {/* <Image variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} /> */}
+        
+        {/* <Image variant="top" src={props.menuItem ? props.menuItem.image.imagePath : imageNotFound} /> */}
       </Ratio>
       <Modal.Body>
-        <h4>{'props.menuItem.name'}</h4>
-        <h5>{'$'+'props.menuItem.price'}</h5>
-        <p>{'props.menuItem.description'}</p>
+        <h4>{menuItem ? menuItem.name : 'Loading...'}</h4>
+        <h5>{menuItem ? '$'+menuItem.price : 'Loading...'}</h5>
+        <p>{menuItem ? menuItem.description : 'Loading...'}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
-    </Modal>
+    </Modal> 
   );
+
+  return ( modalContent);
 };
 
 MenuItemModal.propTypes = {
-  onHide: PropTypes.func
+  onHide: PropTypes.func,
+  menuItemId: PropTypes.number
 };
 
 export default MenuItemModal;

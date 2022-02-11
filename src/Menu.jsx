@@ -14,6 +14,7 @@ const Menu = () => {
   const {store, dispatch} = useGlobalContext();
   const {menu} = store;
   const [modalShow, setModalShow] = useState(false);
+  const [modalId, setModalId] = useState(null);
 
   useEffect( ()=>{
     indexMenu()
@@ -27,6 +28,11 @@ const Menu = () => {
       });
   }, []);
 
+  const handleViewButtonClick = (id) => {
+    setModalId(id);
+    setModalShow(true);
+  };
+
   const handleModalOnHide = () => {
     setModalShow(false);
   };
@@ -36,11 +42,11 @@ const Menu = () => {
       <h1>MENU PAGE GOES HERE</h1>
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {menu.length > 0 ? menu.map((item) => {
-          return <MenuItemCard key={item.id} menuItem={item} setModalShow={setModalShow}/>;
+          return <MenuItemCard key={item.id} menuItem={item} handleViewButtonClick={handleViewButtonClick}/>;
         })
           : <p>Loading...</p>}
       </Row>
-      <MenuItemModal show={modalShow} onHide={handleModalOnHide}></MenuItemModal>
+      <MenuItemModal show={modalShow} onHide={handleModalOnHide} menuItemId={modalId}></MenuItemModal>
     </>
 
   );
