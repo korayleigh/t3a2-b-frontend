@@ -28,8 +28,6 @@ const LoginForm = () => {
   const {globalStore, globalDispatch} = useGlobalContext();
   const navigate = useNavigate();
 
-  console.log('formState', formState);
-
   const handleChange = (event) => {
     setUserValue(formDispatch, event.target.name, event.target.value );
   };

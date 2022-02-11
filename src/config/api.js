@@ -1,18 +1,12 @@
 import axios from 'axios';
 
-console.log(window.location.hostname);
-const location_regex = /^https?:\/\/deploy-preview-(\d+)--korayleigh.netlify.app(\/.*)$/;
-const hostname_regex = /^deploy-preview-(\d+)--korayleigh.netlify.app$/;
+const deploy_preview_hostname_regex = /^deploy-preview-(\d+)--korayleigh.netlify.app$/;
 
-if (window.location.hostname.match(location_regex)) {
-  console.log('matched deploy preview location');
-}
+// if (window.location.hostname.match(hostname_regex)) {
+//   console.log('matched deploy preview hostname');
+// }
 
-if (window.location.hostname.match(hostname_regex)) {
-  console.log('matched deploy preview hostname');
-}
-
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : 'https://mexiquito.herokuapp.com/api';
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : window.location.hostname.match(deploy_preview_hostname_regex) ? 'https://mexiquito-staging.herokuapp.com/api' : 'https://mexiquito.herokuapp.com/api';
 
 const mexiquitoApi = axios.create({
   baseURL: API_URL
