@@ -19,6 +19,7 @@ import Order from './Order';
 import OrderForm from './OrderForm';
 import { getUserRole } from './services/authServices';
 import { setRole } from './services/globalContextServices';
+import Checkout from './Checkout';
 
 function App() {
   
@@ -54,6 +55,7 @@ function App() {
               <Route path="menu" element={<Menu />} />
               <Route path="orderstatus" element={<OrderStatus />} />
               <Route path="login" element={<Login />} />
+              <Route path="checkout" element={<Checkout />} />
               { user && user.role == 'Admin' && 
               <>
                 <Route path="createmenuitem" element={<CreateMenuItem />} />
