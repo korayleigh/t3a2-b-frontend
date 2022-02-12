@@ -109,7 +109,7 @@ const Orders = () => {
         </ButtonRow>
       </>
       :
-      loaded && <Alert variant='info'>No Categories!</Alert>
+      loaded && <Alert variant='info'>No Orders!</Alert>
   );
 };
 
