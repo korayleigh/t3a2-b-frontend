@@ -81,7 +81,8 @@ export function transformOrder(order) {
     return {
       ...order,
       total: formatCentsAsDollars(order.total),
-      created_at: formatDate(order.created_at) ,
+      created_at: formatDate(order.created_at),
+      updated_at: formatDate(order.updated_at),
     };
   } else {
     return null;

@@ -10,12 +10,9 @@ import { setMenu } from './services/globalContextServices';
 import orderItemReducer from './utils/orderItemReducer';
 import PropTypes from 'prop-types';
 import { setFormValidated, setFormValidation } from './services/orderServices';
-import { capitalise } from './utils/textUtils';
+import { sentenceCase } from 'change-case';
 
 const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) => {
-
-  console.log('order_item_id', order_item_id);
-  console.log('order_id', order_id);
 
   const initialFormState = { 
     order_item : {
@@ -72,7 +69,6 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           globalStore.globalErrorHandler(error);
         });
     } else {
-      console.log('setting order_id to:', order_id);
       setOrderItemValue(formDispatch, 'order_id', order_id);
     }
   },[order_item_id]);
@@ -102,7 +98,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     ['quantity', 'price'].forEach((field) => {
       if (order_item[field] < 1) {
         setFormValidation(formDispatch, field, false );
-        showToast(globalStore, globalDispatch, `${capitalise(field)} must be > 0`, 'danger' );
+        showToast(globalStore, globalDispatch, `${sentenceCase(field)} must be > 0`, 'danger' );
         valid=false;
       }
     });
@@ -162,7 +158,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           {/* QUANTITY */}
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Quantity" className='mb-3'>
-              <StyledFormControl type="number" placeholder="Quantity " name="quantity" onChange={handleChange} value={order_item.quantity} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
+              <StyledFormControl type="number" placeholder="Quantity " name="quantity" onChange={handleChange} value={order_item.quantity} min={1} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
             </FloatingLabel>
           </Form.Group>
 

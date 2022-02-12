@@ -30,7 +30,6 @@ const Order = () => {
       .catch((error) => {
         globalStore.globalErrorHandler(error);
       });
-    console.log('refresh!');
   },[]);
 
   const transformed_order = transformOrder(order);
@@ -117,8 +116,6 @@ const Order = () => {
     setDeleteModalShow(false);
   };
 
-  console.log('order.id', order?.id);
-  console.log('order_items', transformOrderItems(order?.order_items));
   return (
     <>
       <Heading>Order Details</Heading>
