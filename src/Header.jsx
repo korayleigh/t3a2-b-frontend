@@ -27,8 +27,14 @@ const Header = () => {
         navigate('/');
       })
       .catch(error => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+        if (error.response) {
+          console.error(error.response.data.error);
+          showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+        } else {
+          console.error(error.message);
+          showToast(globalStore, globalDispatch, error.message, 'danger');
+        }
+        sessionStorage.clear();
       });
 
   };

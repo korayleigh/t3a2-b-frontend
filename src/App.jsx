@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import Header from './Header';
 import Home from './Home';
@@ -19,6 +19,7 @@ import Order from './Order';
 import OrderForm from './OrderForm';
 import { getUserRole } from './services/authServices';
 import { setRole } from './services/globalContextServices';
+import { showToast } from './services/toastServices';
 
 function App() {
   
@@ -34,13 +35,28 @@ function App() {
   };
   const [globalStore, globalDispatch] = useReducer(globalReducer,initialState);
   const {user} = globalStore;
+  const [roleRequested, setRoleRequested] = useState(false);
 
   useEffect(() => {
     if (globalStore.user.email && !globalStore.user.role) {
-      getUserRole()
-        .then((role) => {
-          setRole(globalDispatch, role);
-        });
+      if (!roleRequested) {
+
+        getUserRole()
+          .then((role) => {
+            setRole(globalDispatch, role);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response.data.error);
+              showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+            } else {
+              console.log(error.message);
+              showToast(globalStore, globalDispatch, error.message, 'danger');
+            }
+          });
+        setRoleRequested(true);
+      }
+
     }
   }),[user.jwt];
 

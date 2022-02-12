@@ -34,3 +34,24 @@ export function menuItemOptionList(menu) {
     return [menu_item.id, menu_item.name];
   });
 }
+
+export function setSearchText(dispatch, search_text) {
+  dispatch({
+    type: 'setSearch',
+    data: search_text,
+  });
+}
+
+export function setCategoryFilter(dispatch, category_id) {
+  dispatch({
+    type: 'setCategoryId',
+    data: category_id,
+  });
+}
+
+export const setFilteredMenu = (dispatch, filtered_menu) => {
+  dispatch({
+    type: 'setFilteredMenu',
+    data: filtered_menu,
+  });
+};
