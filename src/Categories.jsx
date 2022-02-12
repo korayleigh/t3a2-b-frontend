@@ -64,7 +64,7 @@ const Categories = () => {
         <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
         <ButtonRow>
           <ButtonBunch>
-            <StyledButton variant="primary" name="edit" onClick={handleButtonClick}>New Category</StyledButton>
+            <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Category</StyledButton>
             <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>
