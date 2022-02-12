@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import {Offcanvas, Button, NavLink} from 'react-bootstrap';
+import {Offcanvas, NavLink} from 'react-bootstrap';
 import Cart from './Cart';
 
 

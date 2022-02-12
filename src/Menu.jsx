@@ -14,7 +14,7 @@ const Menu = () => {
 
   const [modalShow, setModalShow] = useState(false);
   const [modalId, setModalId] = useState(null);
-  const { inCart, addItem, getItem, items, updateItemQuantity } = useCart();
+  const { addItem, items, updateItemQuantity } = useCart();
   const {globalStore, globalDispatch} = useGlobalContext();
   const {menu} = globalStore;
 

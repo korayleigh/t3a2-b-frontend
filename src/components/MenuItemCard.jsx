@@ -16,15 +16,15 @@ const MenuItemCard = props => {
   };
   
   const decreaseCartQuantity = () => {
-    const id = props.menuItem.id
+    const id = props.menuItem.id;
     props.decreaseCartQuantity(id);
     setCartQuantity(inCart(id) ? getItem(id).quantity : 0 );
   };
   
-  const { inCart, addItem, getItem, items, updateItemQuantity } = useCart();
+  const { inCart, getItem } = useCart();
 
   useEffect( ()=>{
-    const id = props.menuItem.id
+    const id = props.menuItem.id;
     setCartQuantity(inCart(id) ? getItem(id).quantity : 0 );
   });
 

@@ -7,8 +7,8 @@ import { useGlobalContext } from './utils/globalContext';
 
 const MenuItemModal = (props) => {
 
-  const {store} = useGlobalContext();
-  const {menu} = store;
+  const {globalStore} = useGlobalContext();
+  const {menu} = globalStore;
 
   const menuItem = menu.find(menuItem => menuItem.id === props.menuItemId);
   console.log(menuItem);

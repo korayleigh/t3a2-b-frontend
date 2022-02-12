@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { useCart } from 'react-use-cart';
 
-function Cart(props) {
+function Cart() {
   const {
     isEmpty,
     totalUniqueItems,
