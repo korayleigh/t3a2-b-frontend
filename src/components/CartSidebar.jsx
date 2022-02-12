@@ -15,7 +15,7 @@ function CartSidebar() {
 
       <Offcanvas show={show} onHide={handleClose} placement={'end'}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Mexiqui.to</Offcanvas.Title>
+          <Offcanvas.Title>mexiqui.to </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Cart></Cart>

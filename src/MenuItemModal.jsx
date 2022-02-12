@@ -4,6 +4,7 @@ import {StyledButton} from './styled/styled';
 import PropTypes from 'prop-types';
 import imageNotFound from './assets/taco_image_not_found_smaller.png';
 import { useGlobalContext } from './utils/globalContext';
+import { formatCentsAsDollars } from './utils/textUtils';
 
 const MenuItemModal = (props) => {
 
@@ -36,7 +37,7 @@ const MenuItemModal = (props) => {
       </Ratio>
       <Modal.Body>
         <h4>{menuItem ? menuItem.name : 'Loading...'}</h4>
-        <h5>{menuItem ? '$'+menuItem.price : 'Loading...'}</h5>
+        <h5>{menuItem ? '$'+formatCentsAsDollars(menuItem.price) : 'Loading...'}</h5>
         <p>{menuItem ? menuItem.description : 'Loading...'}</p>
       </Modal.Body>
       <Modal.Footer>
