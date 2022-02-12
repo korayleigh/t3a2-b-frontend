@@ -144,27 +144,25 @@ const OrderStatus = () => {
           </ButtonRow>
         </Form.Group>
       </Form>
-      <Container className="my-5">
 
 
-        { order && <ShowTable item={transformedOrderStatus} model={{singular: 'order', plural:'orders'}}>
-          <Container className="my-5 px-0">
-            <SubHeading>Order Items</SubHeading>
-            <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true}
-              getHeaderProps={() => {
-                return { style: { textAlign: 'center' } };
-              }}
-              getCellProps={(cellInfo) => {
-                return { style: { textAlign: cellInfo.column.rowAlign } };
-              }}
-              getFooterProps={(column) => {
-                return { style: { textAlign: column.footerAlign } };
-              }}
-            /> 
-          </Container>
-        </ShowTable>
-        }
-      </Container>
+      { order && <ShowTable item={transformedOrderStatus} model={{singular: 'order', plural:'orders'}}>
+        <Container className="my-5 px-0">
+          <SubHeading>Order Items</SubHeading>
+          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true}
+            getHeaderProps={() => {
+              return { style: { textAlign: 'center' } };
+            }}
+            getCellProps={(cellInfo) => {
+              return { style: { textAlign: cellInfo.column.rowAlign } };
+            }}
+            getFooterProps={(column) => {
+              return { style: { textAlign: column.footerAlign } };
+            }}
+          /> 
+        </Container>
+      </ShowTable>
+      }
     </>
   );
 };

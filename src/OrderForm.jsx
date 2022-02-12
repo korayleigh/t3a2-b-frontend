@@ -5,7 +5,7 @@ import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormVa
 import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { capitalise } from './utils/textUtils';
+import { capitalCase } from 'change-case';
 import {setTables, setOrder, setOrderValue } from './services/orderServices';
 import orderReducer from './utils/orderReducer';
 
@@ -100,7 +100,7 @@ const OrderForm = () => {
   
   return (
     <>
-      <Heading>{`${capitalise(location.pathname.split('/').pop())} Order`}</Heading>
+      <Heading>{`${capitalCase(location.pathname.split('/').pop())} Order`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 

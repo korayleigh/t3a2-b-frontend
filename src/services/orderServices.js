@@ -1,5 +1,6 @@
 import mexiquitoApi from '../config/api';
 import { formatCentsAsDollars } from '../utils/textUtils';
+import { formatDate } from '../utils/textUtils';
 
 // API HELPERS
 
