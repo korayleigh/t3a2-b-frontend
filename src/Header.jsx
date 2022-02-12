@@ -43,9 +43,9 @@ const Header = () => {
         }}
       >
         <Container>
-          <Navbar.Brand href="#home" className="d-flex gap-3 align-items-center">
+          <Navbar.Brand as={Link} to="/" href="/" className="d-flex gap-3 align-items-center">
             <img src={taco} alt=""/>
-            <span>MEXIQUI.TO</span>
+            <span >mexiqui.to</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
@@ -53,7 +53,7 @@ const Header = () => {
               <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/menu" href="/menu">Order</Nav.Link>
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
-              { user && user.role == 'Admin' && (
+              { user && user.role === 'Admin' && (
                 <NavDropdown title="Admin" id="basic-nav-dropdown">
                   <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
