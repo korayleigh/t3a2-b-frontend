@@ -48,10 +48,3 @@ export function setCategoryFilter(dispatch, category_id) {
     data: category_id,
   });
 }
-
-export const setFilteredMenu = (dispatch, filtered_menu) => {
-  dispatch({
-    type: 'setFilteredMenu',
-    data: filtered_menu,
-  });
-};

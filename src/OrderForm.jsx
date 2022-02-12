@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormValidated } from './services/orderServices';
-import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { capitalise } from './utils/textUtils';
@@ -108,21 +108,21 @@ const OrderForm = () => {
 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Order Name" className='mb-3'>
-              <Form.Control type="text" placeholder="Enter Order Name" name="name" onChange={handleChange} value={order.name} isInvalid={formState.validation.validated && !formState.validation.order.name} isValid={formState.validation.validated && formState.validation.order.name} />
+              <StyledFormControl type="text" placeholder="Enter Order Name" name="name" onChange={handleChange} value={order.name} isInvalid={formState.validation.validated && !formState.validation.order.name} isValid={formState.validation.validated && formState.validation.order.name} />
             </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <FloatingLabel controlId='floatinginput' label="Order Email" className='mb-3'>
-              <Form.Control type="email" placeholder="Enter Order Email" name="email" onChange={handleChange} value={order.email} isInvalid={formState.validation.validated && !formState.validation.order.email} isValid={formState.validation.validated && formState.validation.order.email} />
+              <StyledFormControl type="email" placeholder="Enter Order Email" name="email" onChange={handleChange} value={order.email} isInvalid={formState.validation.validated && !formState.validation.order.email} isValid={formState.validation.validated && formState.validation.order.email} />
             </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupTable">
             <FloatingLabel controlId='floatinginput' label="Order Table" className='mb-3'>
-              <Form.Select name="table" onChange={handleChange} value={order.table} isInvalid={formState.validation.validated && !formState.validation.order.table} isValid={formState.validation.validated && formState.validation.order.table}>
+              <StyledFormSelect name="table" onChange={handleChange} value={order.table} isInvalid={formState.validation.validated && !formState.validation.order.table} isValid={formState.validation.validated && formState.validation.order.table}>
                 { Object.entries(formState.tables).map(([key,], index) => {
                   return (<option key={index} value={key}>{key}</option>);
                 })};
-              </Form.Select>
+              </StyledFormSelect>
             </FloatingLabel>
           </Form.Group>
 

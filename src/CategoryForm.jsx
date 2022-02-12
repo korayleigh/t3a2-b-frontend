@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { showCategory, createUpdateCategory } from './services/categoryServices';
-import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { capitalise } from './utils/textUtils';
@@ -108,7 +108,7 @@ const CategoryForm = () => {
 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Category Name" className='mb-3'>
-              <Form.Control type="text" placeholder="Enter Category Name" name="name" onChange={handleChange} value={category.name} isInvalid={formState.validation.validated && !formState.validation.category.name} isValid={formState.validation.validated && formState.validation.category.name} />
+              <StyledFormControl type="text" placeholder="Enter Category Name" name="name" onChange={handleChange} value={category.name} isInvalid={formState.validation.validated && !formState.validation.category.name} isValid={formState.validation.validated && formState.validation.category.name} />
             </FloatingLabel>
           </Form.Group>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container , Button, Table } from 'react-bootstrap';
+import { Container , Button, Table, Form } from 'react-bootstrap';
 
 const childrenPropTypes = {
   children: PropTypes.oneOfType([
@@ -127,5 +127,27 @@ export const StyledTable = (props) => {
         }}
       />
     </div>
+  );
+};
+
+export const StyledFormControl = (props) => {
+  return (
+    <Form.Control
+      style={{
+        backgroundColor: 'white',
+      }}
+      {...props}
+    />
+  );
+};
+
+export const StyledFormSelect = (props) => {
+  return (
+    <Form.Select
+      style={{
+        backgroundColor: 'white',
+      }}
+      {...props}
+    />
   );
 };
