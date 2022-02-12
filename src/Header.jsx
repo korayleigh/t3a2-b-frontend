@@ -9,6 +9,7 @@ import { showToast } from './services/toastServices';
 import { clearLoginCredentials } from './services/globalContextServices';
 import ToastArea from './components/ToastArea';
 import taco from './taco64.png';
+import { Footer } from './styled/styled';
 
 const Header = () => {
 
@@ -41,7 +42,7 @@ const Header = () => {
 
   return (
     <>
-      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect
+      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect fixed="top"
         style={{
           borderBottom: '5px',
           borderColor: '#6689a8',
@@ -83,9 +84,14 @@ const Header = () => {
         </Container>
       </Navbar>
       <ToastArea />
-      <Container className="my-5">
+      <Container className="my-5"
+        style={{
+          padding: '3rem 0',
+        }}
+      >
         <Outlet />
       </Container>
+      <Footer />
 
     </>
   );
