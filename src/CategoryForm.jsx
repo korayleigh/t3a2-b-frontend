@@ -37,7 +37,9 @@ const CategoryForm = () => {
             category: category
           });
         })
-        .catch(error => console.log(error));
+        .catch((error) => {
+          globalStore.globalErrorHandler(error);
+        });
     }
   },[params.id]);
 
@@ -90,8 +92,7 @@ const CategoryForm = () => {
           navigate(-1);
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   };

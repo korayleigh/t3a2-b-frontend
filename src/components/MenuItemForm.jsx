@@ -4,6 +4,7 @@ import {useState} from 'react';
 import { StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
 import { useNavigate } from 'react-router-dom';
 import mexiquitoApi from '../config/api';
+import { useGlobalContext } from '../utils/globalContext';
 
 
 const MenuItemForm = () => {
@@ -20,6 +21,7 @@ const MenuItemForm = () => {
 
   const [formState, setFormState] = useState(initialFormState);
   const navigate = useNavigate();
+  const {globalStore} = useGlobalContext();
 
   const handleChange = (event) => {
     console.log('BEFORE:');
@@ -77,7 +79,7 @@ const MenuItemForm = () => {
         navigate('/menu_items/');
       })
       .catch(error => {
-        console.log(error);
+        globalStore.globalErrorHandler(error);
       });
   };
   

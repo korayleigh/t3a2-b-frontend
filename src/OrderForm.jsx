@@ -50,8 +50,7 @@ const OrderForm = () => {
           setOrder(formDispatch, order);
         })
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   },[params.id]);
@@ -88,8 +87,7 @@ const OrderForm = () => {
           navigate(-1);
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
       
     }

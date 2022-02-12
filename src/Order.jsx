@@ -28,8 +28,7 @@ const Order = () => {
         setOrder(order);
       })
       .catch((error) => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
     console.log('refresh!');
   },[]);
@@ -110,8 +109,7 @@ const Order = () => {
         navigate(-1);
       })
       .catch((error) => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   };
 

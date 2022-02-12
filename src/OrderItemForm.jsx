@@ -53,8 +53,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           setupMenuOptions(menu);
         }) 
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
     indexOrderItemStatuses()
@@ -62,8 +61,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
         setOrderItemStatuses(formDispatch, statuses);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
     if (order_item_id) {
       showOrderItem(order_item_id)
@@ -71,8 +69,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           setOrderItem(formDispatch, order_item);
         })
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     } else {
       console.log('setting order_id to:', order_id);
@@ -122,8 +119,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           modalOnHide();
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   };
@@ -137,8 +133,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
         modalOnHide();
       })
       .catch((error) => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
 
   };

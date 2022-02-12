@@ -1,5 +1,6 @@
 import mexiquitoApi from '../config/api';
 import { formatCentsAsDollars } from '../utils/textUtils';
+import { formatDate } from '../utils/textUtils';
 
 const orders_path = '/orders';
 
@@ -80,9 +81,7 @@ export function transformOrder(order) {
     return {
       ...order,
       total: formatCentsAsDollars(order.total),
-      created_at: new Date(order.created_at).toLocaleString('en-AU', {
-        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short'
-      }),
+      created_at: formatDate(order.created_at) ,
     };
   } else {
     return null;

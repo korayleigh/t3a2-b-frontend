@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState, useReducer } from 'react';
 import { setMenu } from './services/globalContextServices';
 import { indexMenu, setCategoryFilter, setSearchText } from './services/menuServices';
-import { showToast } from './services/toastServices';
 import { useGlobalContext } from './utils/globalContext';
 import MenuItemCard from './components/MenuItemCard';
 import { Row, Col } from 'react-bootstrap';
@@ -35,8 +34,7 @@ const Menu = () => {
         setMenu(globalDispatch, menu);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
     console.log('globalStore.categories.length:',globalStore.categories.length);
     if (!globalStore.categories.length) {
@@ -45,8 +43,7 @@ const Menu = () => {
           setCategories(globalDispatch ,categories);
         })
         .catch((error) => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   }, []);
