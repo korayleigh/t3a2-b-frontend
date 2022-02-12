@@ -1,6 +1,7 @@
 import React from 'react';
-import {Form, Button, FloatingLabel, Alert} from 'react-bootstrap';
+import {Form, FloatingLabel, Alert} from 'react-bootstrap';
 import {useState} from 'react';
+import { StyledButton } from '../styled/styled';
 import { useNavigate } from 'react-router-dom';
 import mexiquitoApi from '../config/api';
 
@@ -124,7 +125,7 @@ const MenuItemForm = () => {
 
 
       <Form.Group className="mb-3" controlId="formButton">
-        <Button variant="primary" type="submit">Submit</Button>
+        <StyledButton variant="primary" type="submit">Submit</StyledButton>
       </Form.Group>
       { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
 

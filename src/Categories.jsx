@@ -1,38 +1,49 @@
-import React, { useEffect, useMemo } from 'react';
-import { useTable, useSortBy } from 'react-table';
-import { Container, Table, Button, Alert } from 'react-bootstrap';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Alert } from 'react-bootstrap';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { ButtonRow, Heading } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
 import { showToast } from './services/toastServices';
+import IndexTable from './components/IndexTable';
 
 const Categories = () => {
 
-  const {store, dispatch} = useGlobalContext();
-  const {categories} = store;
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const {categories} = globalStore;
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     indexCategories()
       .then(categories => {
-        setCategories(dispatch ,categories);
+        setCategories(globalDispatch ,categories);
+        setLoaded(true);
       })
       .catch(error => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   },[]);
 
   const navigate = useNavigate();
 
-  const handleRowClick = (row) => {
-    navigate(String(row.original.id), {replace: false});
+  const handleRowClick = (row_id) => {
+    navigate(String(row_id));
   };
 
-  const handleNewClick = (() => {
-    navigate('new');
-  });
+
+
+  
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (event.target.name === 'new') {
+      navigate('new');
+    } else if (event.target.name === 'back') {
+      navigate(-1);
+    }
+  };
+
 
 
   const categories_data = useMemo(() => Object.values(categories), [categories]);
@@ -48,73 +59,21 @@ const Categories = () => {
     }];
   },[categories]);
 
-  const categoriesTableInstance = useTable(
-    { 
-      columns: categories_columns,
-      data: categories_data 
-    },
-    useSortBy
-  );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = categoriesTableInstance;
-
   return (
-    <>
-      <Heading>Categories</Heading>
-      <Container className="my-5">
-        { categories ? 
-          <>
-            <Table striped bordered hover {...getTableProps()}>
-              <thead>
-                {headerGroups.map((headerGroup, index) => {
-                  return (
-                    <tr key={index} {...headerGroup.getHeaderGroupProps()}>
-                      { headerGroup.headers.map((column, index) => {
-                        return (
-                          <th  key={index} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                            {column.render('Header')}
-                            <span>
-                              {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
-                            </span>
-                          </th>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                { rows.map((row, index) => {
-                  prepareRow(row);
-                  return (
-                    <tr key={index} onClick={() => handleRowClick(row)} {...row.getRowProps()}>
-                      {row.cells.map((cell, index) => {
-                        return (
-                          <td key={index} {...cell.getCellProps()}>
-                            {cell.render('Cell')}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-            <ButtonRow>
-              <Button style={{minWidth: '6rem'}} variant="primary" name="edit" onClick={handleNewClick}>New Category</Button>
-            </ButtonRow>
-          </>
-          :
-          
-          <Alert variant='danger'>No Categories!</Alert>
-        }
-      </Container>
-    </>
+    Object.values(categories).length ? 
+      <>
+        <Heading>Categories</Heading>
+        <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
+        <ButtonRow>
+          <ButtonBunch>
+            <StyledButton variant="primary" name="edit" onClick={handleButtonClick}>New Category</StyledButton>
+            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+          </ButtonBunch>
+        </ButtonRow>
+      </>
+      :
+      loaded && <Alert variant='info'>No Categories!</Alert>
+  
   );
 
 };

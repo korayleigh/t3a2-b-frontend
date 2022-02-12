@@ -12,24 +12,21 @@ import { useCart } from 'react-use-cart';
 
 const Menu = () => {
 
-  const {store, dispatch} = useGlobalContext();
-  const {menu} = store;
   const [modalShow, setModalShow] = useState(false);
   const [modalId, setModalId] = useState(null);
   const { inCart, addItem, getItem, items, updateItemQuantity } = useCart();
-
-  console.log(items);
-  console.log(inCart(15) ? items.find(item => item.id === 15).quantity : 0);
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const {menu} = globalStore;
 
   useEffect( ()=>{
     indexMenu()
       .then(menu => {
         console.log(menu);
-        setMenu(dispatch, menu);
+        setMenu(globalDispatch, menu);
       })
       .catch(error => {
         console.log(error);
-        showToast(store, dispatch, error.message, 'danger');
+        showToast(globalStore, globalDispatch, error.message, 'danger');
       });
   }, []);
 

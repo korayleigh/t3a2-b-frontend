@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
+import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { showCategory, createUpdateCategory } from './services/categoryServices';
-import { ButtonBunch, ButtonRow, Heading } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { capitalise } from './utils/textUtils';
@@ -21,7 +21,7 @@ const CategoryForm = () => {
     }
   };
   
-  const {store, dispatch} = useGlobalContext();
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [ formState, setFormState ] = useState(initialFormState);
   const {category} = formState;
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ const CategoryForm = () => {
           },
         }
       });
-      showToast(store, dispatch, 'Category Name is Required', 'danger' );
+      showToast(globalStore, globalDispatch, 'Category Name is Required', 'danger' );
     } else {
       createUpdateCategory(category)
         .then(() => {
@@ -84,14 +84,14 @@ const CategoryForm = () => {
               },
             },
           });
-          showToast(store, dispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
+          showToast(globalStore, globalDispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          showToast(store, dispatch, error.message, 'danger');
+          showToast(globalStore, globalDispatch, error.message, 'danger');
         });
     }
   };
@@ -115,8 +115,8 @@ const CategoryForm = () => {
           <Form.Group className="mb-3" controlId="formGroupButtons">
             <ButtonRow>
               <ButtonBunch>
-                <Button style={{minWidth: '6rem'}} variant="primary" type="submit">Submit</Button>
-                <Button style={{minWidth: '6rem'}} variant="secondary" type="button" onClick={handleBackClick}>Back</Button>
+                <StyledButton variant="primary" type="submit">Submit</StyledButton>
+                <StyledButton variant="secondary" type="button" onClick={handleBackClick}>Back</StyledButton>
               </ButtonBunch>
             </ButtonRow>
           </Form.Group>

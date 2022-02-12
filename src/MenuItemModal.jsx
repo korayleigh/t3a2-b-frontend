@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Button, Image, Ratio } from 'react-bootstrap';
+import { Modal, Image, Ratio } from 'react-bootstrap';
+import {StyledButton} from './styled/styled';
 import PropTypes from 'prop-types';
 import imageNotFound from './assets/taco_image_not_found_smaller.png';
 import { useGlobalContext } from './utils/globalContext';
@@ -39,7 +40,7 @@ const MenuItemModal = (props) => {
         <p>{menuItem ? menuItem.description : 'Loading...'}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <StyledButton onClick={props.onHide}>Close</StyledButton>
       </Modal.Footer>
     </Modal> 
   );

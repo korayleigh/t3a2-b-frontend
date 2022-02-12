@@ -1,6 +1,4 @@
 
-$primary: #0c4d37;
-
 .card {
     height: 100%;
     img{
@@ -23,5 +21,23 @@ $primary: #0c4d37;
         height: fit-content;
     }
 }
+$blue: #10597b;
+$blue2: #6689a8;
+$green: #507041;
+$green2: #66a878;
+$blue-green: #107b42;
+$red: #e45152;
+$red2: #bf5032;
+$yellow: #fab440;
+$yellow2: #eeb323;
+$pink: #9266a8;
+$purple: #4c59a0;
+
+$mexican-flag-green: #006341;
+
+$primary: $green2;
+$danger: $red2;
+$success: $blue-green;
+$info: $blue2;
     
 @import "~bootstrap/scss/bootstrap";
