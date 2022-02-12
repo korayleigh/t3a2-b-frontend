@@ -16,6 +16,7 @@ const Order = () => {
 
   const {globalStore, globalDispatch} = useGlobalContext();
   const [order, setOrder] = useState(null);
+  const [transformedOrder, setTransformedOrder] = useState(null);
   const [orderItemModalShow, setOrderItemModalShow] = useState(false);
   const [orderItemModalId, setOrderItemModalId] = useState(null);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
@@ -26,6 +27,7 @@ const Order = () => {
     showOrder(params.id)
       .then((order) => {
         setOrder(order);
+        setTransformedOrder(transformOrder(order));
       })
       .catch((error) => {
         console.log(error);
@@ -34,7 +36,6 @@ const Order = () => {
     console.log('refresh!');
   },[]);
 
-  const transformed_order = transformOrder(order);
 
   
   const handleButtonClick = (event) => {
@@ -82,7 +83,7 @@ const Order = () => {
     sortType: 'basic',
     rowAlign: 'right',
     footerAlign: 'right',
-    Footer: transformed_order?.total
+    Footer: transformedOrder?.total
   }];
 
   const handleRowClick = (id) => {
@@ -104,7 +105,7 @@ const Order = () => {
   const handleDeleteModalConfirm = () => {
     destroyOrder(params.id)
       .then(() => {
-        showToast(globalStore, globalDispatch,`Order '${transformed_order.name}' successfully deleted`, 'warning' );
+        showToast(globalStore, globalDispatch,`Order '${transformedOrder.name}' successfully deleted`, 'warning' );
       })
       .then(() => {
         navigate(-1);
@@ -124,7 +125,7 @@ const Order = () => {
   return (
     <>
       <Heading>Order Details</Heading>
-      <ShowTable item={transformed_order} model={{singular: 'order', plural:'orders'}}>
+      <ShowTable item={transformedOrder} model={{singular: 'order', plural:'orders'}}>
         <Container className="my-5 px-0">
           <SubHeading>Order Items</SubHeading>
           <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true} onRowClick={handleRowClick}

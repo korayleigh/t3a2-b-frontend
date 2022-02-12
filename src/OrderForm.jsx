@@ -57,7 +57,6 @@ const OrderForm = () => {
   },[params.id]);
 
   const handleChange = (event) => {
-    console.log(event);
     setOrderValue(formDispatch, event.target.name, event.target.value);
     setFormValidated(formDispatch, false);
   };
@@ -65,8 +64,8 @@ const OrderForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setFormValidated(formDispatch, true);
     if (!order.name || !order.email) {
-      setFormValidated(formDispatch, true);
       if (!order.name) {
         setFormValidation(formDispatch, 'name', false);
         showToast(globalStore, globalDispatch, 'Order Name is Required', 'danger' );
@@ -78,11 +77,10 @@ const OrderForm = () => {
     } else {
       createUpdateOrder(order)
         .then(() => {
-          setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'name', true);
           setFormValidation(formDispatch, 'email', true);
           setFormValidation(formDispatch, 'table', true);
-          showToast(globalStore, globalDispatch, `successfully ${order.id ? 'updated' : 'created'}`, 'success');
+          showToast(globalStore, globalDispatch, `Order successfully ${order.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
