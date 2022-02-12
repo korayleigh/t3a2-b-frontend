@@ -2,11 +2,18 @@ import React from 'react';
 import { Modal, Image, Ratio } from 'react-bootstrap';
 import {StyledButton} from './styled/styled';
 import PropTypes from 'prop-types';
-import sadTaco from './sad_taco.png';
+import imageNotFound from './assets/taco_image_not_found_smaller.png';
+import { useGlobalContext } from './utils/globalContext';
 
 const MenuItemModal = (props) => {
 
-  return (
+  const {globalStore} = useGlobalContext();
+  const {menu} = globalStore;
+
+  const menuItem = menu.find(menuItem => menuItem.id === props.menuItemId);
+  console.log(menuItem);
+
+  const modalContent = (
     <Modal
       {...props}
       size="lg"
@@ -15,27 +22,35 @@ const MenuItemModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props.menuItem.name}
+          {menuItem ? menuItem.name : 'Loading...'}
         </Modal.Title>
       </Modal.Header>
-      <Ratio aspectRatio={50}>
-        <Image variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : sadTaco} />
+      <Ratio>
+        {menuItem && menuItem.image ?
+          <Image variant="top" src={menuItem.image.imagePath} />
+          : 
+          <Image variant="top" src={imageNotFound} />
+        }
+        
+        {/* <Image variant="top" src={menuItem ? menuItem.image.imagePath : imageNotFound} /> */}
       </Ratio>
       <Modal.Body>
-        <h4>{props.menuItem.name}</h4>
-        <h5>{'$'+props.menuItem.price}</h5>
-        <p>{props.menuItem.description}</p>
+        <h4>{menuItem ? menuItem.name : 'Loading...'}</h4>
+        <h5>{menuItem ? '$'+menuItem.price : 'Loading...'}</h5>
+        <p>{menuItem ? menuItem.description : 'Loading...'}</p>
       </Modal.Body>
       <Modal.Footer>
         <StyledButton onClick={props.onHide}>Close</StyledButton>
       </Modal.Footer>
-    </Modal>
+    </Modal> 
   );
+
+  return (modalContent);
 };
 
 MenuItemModal.propTypes = {
   onHide: PropTypes.func,
-  menuItem: PropTypes.object
+  menuItemId: PropTypes.number
 };
 
 export default MenuItemModal;

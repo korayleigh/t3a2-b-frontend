@@ -1,8 +1,26 @@
-// $theme-colors: (
-//     "primary": green
-//     // "dark" : black
-//     );
 
+.card {
+    height: 100%;
+    img{
+        width: 100%;
+        object-fit: cover;
+    }
+    .card-body{
+        height: auto;
+        .card-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0;
+            .flex-left{
+                align-self: flex-start;
+            }
+        }
+    }
+    .card-footer{
+        height: fit-content;
+    }
+}
 $blue: #10597b;
 $blue2: #6689a8;
 $green: #507041;

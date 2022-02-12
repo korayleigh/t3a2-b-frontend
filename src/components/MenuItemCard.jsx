@@ -1,35 +1,63 @@
-import React from 'react';
-import {Card, Button, Col} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import {Card, Button, Col, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import sadTaco from '../sad_taco.png';
-import { useState } from 'react';
-import MenuItemModal from '../MenuItemModal';
+import imageNotFound from '../assets/taco_image_not_found_smaller.png';
+import { useCart } from 'react-use-cart';
+
 
 const MenuItemCard = props => {
-  const [modalShow, setModalShow] = useState(false);
+  const handleViewButtonClick = () => {
+    props.handleViewButtonClick(props.menuItem.id);
+  };
+  
+  const increaseCartQuantity = () => {
+    props.increaseCartQuantity(props.menuItem);
+    setCartQuantity(cartQuantity + 1);
+  };
+  
+  const decreaseCartQuantity = () => {
+    const id = props.menuItem.id;
+    props.decreaseCartQuantity(id);
+    setCartQuantity(inCart(id) ? getItem(id).quantity : 0 );
+  };
+  
+  const { inCart, getItem } = useCart();
 
-  const handleClick = () => {
-    setModalShow(true);
-  };
-  
-  const handleModalOnHide = () => {
-    setModalShow(false);
-  };
-  
+  useEffect( ()=>{
+    const id = props.menuItem.id;
+    setCartQuantity(inCart(id) ? getItem(id).quantity : 0 );
+  });
+
+  const [cartQuantity, setCartQuantity] = useState(0);
+
   return (
     <Col>
-      <Card>
-        {props.menuItem.image ? null : <Card.Text className='text-center'>No image found</Card.Text>}
-        <Card.Img variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : sadTaco} />        
+      <Card border={'dark'}>
+        <Card.Img className={'img-fluid'} variant="top" src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
         <Card.Body>
-          <Card.Title >{props.menuItem.name}</Card.Title>
-          <Card.Title >{'$'+props.menuItem.price }</Card.Title>
-          
-          
-          <Card.Text>{props.menuItem.description}</Card.Text>
-          <Button onClick={handleClick} variant="primary">View</Button>
+          <div className='card-container'>
+            <Card.Title >{props.menuItem.name}</Card.Title>
+            <Card.Title >{'$'+props.menuItem.price }</Card.Title>
+          </div>
         </Card.Body>
-        <MenuItemModal show={modalShow} onHide={handleModalOnHide} menuItem={props.menuItem} />
+
+        <Card.Footer border={'dark'}>
+          <ButtonToolbar className="justify-content-between" >
+            <Button onClick={handleViewButtonClick} variant="primary">View</Button>
+            <ButtonGroup>
+              <Button variant='danger'
+                onClick={decreaseCartQuantity}
+              >
+                -
+              </Button>
+              <Button disabled variant='light'>{cartQuantity}</Button>
+              <Button variant='primary'
+                onClick={increaseCartQuantity} >
+                  +
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </Card.Footer>
       </Card>
     </Col>
   );
@@ -37,7 +65,10 @@ const MenuItemCard = props => {
 
 MenuItemCard.propTypes = {
   menuItem: PropTypes.object,
-  setModalShow: PropTypes.func
+  setModalShow: PropTypes.func,
+  handleViewButtonClick: PropTypes.func,
+  increaseCartQuantity: PropTypes.func,
+  decreaseCartQuantity: PropTypes.func
 };
 
 export default MenuItemCard;

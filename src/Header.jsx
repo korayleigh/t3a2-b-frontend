@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
 import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
+import CartSidebar from './components/CartSidebar';
 import { showToast } from './services/toastServices';
 import { clearLoginCredentials } from './services/globalContextServices';
 import ToastArea from './components/ToastArea';
@@ -63,6 +64,7 @@ const Header = () => {
               )}
             </Nav>
             <Nav>
+              <CartSidebar as={Nav.Link}></CartSidebar>
               { user.email?
                 <>
                   <Navbar.Text>{`${user.email} (${user.role})`}</Navbar.Text>
