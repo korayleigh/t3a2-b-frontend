@@ -8,6 +8,7 @@ import { setLoginCredentials } from '../services/globalContextServices';
 import { ButtonRow, StyledButton } from '../styled/styled';
 import { showToast } from '../services/toastServices';
 
+
 const LoginForm = () => {
 
   const initialFormState = {
@@ -50,15 +51,14 @@ const LoginForm = () => {
           navigate('/orders');
         })
         .catch(error => {
-          console.log(error.response);
-          showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+          console.log(error.message);
+          showToast(globalStore, globalDispatch, error.message, 'danger');
           setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'email', false);
           setFormValidation(formDispatch, 'password', false);
         });
     }
-  };
-
+  };  
 
   return (
     <Container className="my-5 p-0">
