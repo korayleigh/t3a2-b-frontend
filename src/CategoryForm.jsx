@@ -5,7 +5,7 @@ import { showCategory, createUpdateCategory } from './services/categoryServices'
 import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { capitalise } from './utils/textUtils';
+import { sentenceCase } from 'change-case';
 
 const CategoryForm = () => {
 
@@ -37,7 +37,9 @@ const CategoryForm = () => {
             category: category
           });
         })
-        .catch(error => console.log(error));
+        .catch((error) => {
+          globalStore.globalErrorHandler(error);
+        });
     }
   },[params.id]);
 
@@ -90,8 +92,7 @@ const CategoryForm = () => {
           navigate(-1);
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   };
@@ -102,7 +103,7 @@ const CategoryForm = () => {
   
   return (
     <>
-      <Heading>{`${capitalise(location.pathname.split('/').pop())} Category`}</Heading>
+      <Heading>{`${sentenceCase(location.pathname.split('/').pop())} Category`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 

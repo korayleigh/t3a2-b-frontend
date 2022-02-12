@@ -23,8 +23,7 @@ const Category = () => {
         setCategory(category);
       })
       .catch((error) => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   },[]);
 
@@ -53,8 +52,7 @@ const Category = () => {
         navigate(-1);
       })
       .catch((error) => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   };
 
