@@ -1,14 +1,16 @@
 import React from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, ButtonToolbar, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
+import { formatCentsAsDollars } from '../utils/textUtils';
 
 function Cart() {
   const {
     isEmpty,
-    totalUniqueItems,
     items,
     updateItemQuantity,
     removeItem,
+    cartTotal
   } = useCart();
   
   
@@ -16,17 +18,30 @@ function Cart() {
 
   return (
     <>
-      <h1>Cart ({totalUniqueItems})</h1>
+      <h1>Total ${formatCentsAsDollars(cartTotal)}</h1>
+      <Button as={Link} to="/checkout" href="/checkout" size={'lg'}>Checkout</Button>
+      <br />
+      <br />
 
-      <ul>
+      <ul style={{'list-style-type' : 'none', 'padding':'0%'}} >
         {items.map((item) => (
-          <li key={item.id}>
-            {item.quantity} x {item.name} &mdash;
-            <ButtonGroup>
-              <Button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</Button>
-              <Button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</Button>
-              <Button variant='danger' onClick={() => removeItem(item.id)}>&times;</Button>
-            </ButtonGroup>
+          <li style={{'padding':'4%'}} key={item.id}>
+            <Row>
+              <div style={{'display':'flex', 'justifyContent':'space-between'}} className='container flex'>
+                <h4>{item.name}</h4>
+                <h4>${formatCentsAsDollars(item.price * item.quantity)}</h4>
+              </div>
+              <p>(${formatCentsAsDollars(item.price)}ea)</p>
+              <ButtonToolbar className="gap-2 w-fit">
+                <ButtonGroup>
+                  <Button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</Button>
+                  <Button disabled variant='light'>{item.quantity}</Button>
+                  <Button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</Button>
+                </ButtonGroup>
+
+                <Button variant='danger' onClick={() => removeItem(item.id)}>&times;</Button>
+              </ButtonToolbar>
+            </Row>
           </li>
         ))}
       </ul>

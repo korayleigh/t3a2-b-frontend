@@ -15,12 +15,10 @@ function CartSidebar() {
 
       <Offcanvas show={show} onHide={handleClose} placement={'end'}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Mexiqui.to</Offcanvas.Title>
+          <Offcanvas.Title>mexiqui.to </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Cart></Cart>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
         </Offcanvas.Body>
       </Offcanvas>
     </>

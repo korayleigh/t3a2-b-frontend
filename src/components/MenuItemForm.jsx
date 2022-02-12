@@ -32,36 +32,6 @@ const MenuItemForm = () => {
       [event.target.name]: event.target.value
     });
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setFormState({
-  //     ...formState,
-  //     validated: false
-  //   });
-  //   signIn(formState)
-  //     .then(({ email, jwt }) => {
-  //       sessionStorage.setItem('jwt', jwt);
-  //       sessionStorage.setItem('email', email);
-  //       setLoginCredentials(dispatch, email, jwt);
-  //       setFormState({
-  //         ...formState,
-  //         validated: true,
-  //         valid: true
-  //       });
-  //     })
-  //     .catch(error => {
-  //       if (error.response.status === 401) {
-  //         console.log('Unauthorised');
-  //         setFormState({
-  //           ...formState,
-  //           validated: true,
-  //           valid: false
-  //         });
-  //       }
-  //     });
-
-  // };
   
   const handleSubmit = async (event) => {
     event.preventDefault();

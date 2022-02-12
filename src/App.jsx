@@ -17,6 +17,9 @@ import CategoryForm from './CategoryForm';
 import Orders from './Orders';
 import Order from './Order';
 import OrderForm from './OrderForm';
+import { getUserRole } from './services/authServices';
+import { setRole } from './services/globalContextServices';
+import Checkout from './Checkout';
 import Pending from './Pending';
 import { showToast } from './services/toastServices';
 import { clearLoginCredentials } from './services/globalContextServices';
@@ -60,30 +63,31 @@ function App() {
   return (
     <div >
       <GlobalContext.Provider value={{globalStore,globalDispatch}}>
-        <Routes>
+          <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
             <Route path="menu" element={<Menu />} />
             <Route path="orderstatus" element={<OrderStatus />} />
             <Route path="login" element={<Login />} />
+            <Route path="checkout" element={<Checkout />} />
             { user && user.role == 'Admin' && 
-              <>
-                <Route path="createmenuitem" element={<CreateMenuItem />} />
-                <Route path="categories">
-                  <Route index element={<Categories />} />
-                  <Route path="new" element={<CategoryForm />} />
-                  <Route path=":id/edit" element={<CategoryForm />} />
-                  <Route path=":id" element={<Category />} />
-                </Route>
-                <Route path="orders">
-                  <Route index element={<Orders />} />
-                  <Route path=":id/edit" element={<OrderForm />} />
-                  <Route path=":id" element={<Order />} />
-                </Route>
-                <Route path="pending" element={<Pending />} />
-              </>
-            }
-            <Route path="*" element={<Default />} />
+            <>
+              <Route path="createmenuitem" element={<CreateMenuItem />} />
+              <Route path="categories">
+                <Route index element={<Categories />} />
+                <Route path="new" element={<CategoryForm />} />
+                <Route path=":id/edit" element={<CategoryForm />} />
+                <Route path=":id" element={<Category />} />
+              </Route>
+              <Route path="orders">
+                <Route index element={<Orders />} />
+                <Route path=":id/edit" element={<OrderForm />} />
+                <Route path=":id" element={<Order />} />
+              </Route>
+              <Route path="pending" element={<Pending />} />
+            </>
+          }
+          <Route path="*" element={<Default />} />
           </Route>
         </Routes>
       </GlobalContext.Provider>      

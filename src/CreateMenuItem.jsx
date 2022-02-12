@@ -4,7 +4,7 @@ import MenuItemForm from './components/MenuItemForm';
 const CreateMenuItem = () => {
   return (
     <>
-      <h1>NEW MENU ITEM</h1>
+      <h1>New Menu Item</h1>
       <MenuItemForm />
     </>
   );
