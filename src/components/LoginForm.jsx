@@ -5,8 +5,9 @@ import authReducer from '../utils/authReducer';
 import {useGlobalContext} from '../utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { setLoginCredentials } from '../services/globalContextServices';
-import { ButtonRow, StyledButton } from '../styled/styled';
+import { ButtonRow, StyledButton, StyledFormControl } from '../styled/styled';
 import { showToast } from '../services/toastServices';
+
 
 const LoginForm = () => {
 
@@ -50,15 +51,13 @@ const LoginForm = () => {
           navigate('/orders');
         })
         .catch(error => {
-          console.log(error.response);
-          showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+          globalStore.globalErrorHandler(error);
           setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'email', false);
           setFormValidation(formDispatch, 'password', false);
         });
     }
-  };
-
+  };  
 
   return (
     <Container className="my-5 p-0">
@@ -66,13 +65,13 @@ const LoginForm = () => {
       <Form onSubmit={handleSubmit} noValidate >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <FloatingLabel controlId='floatinginput' label="Email address" className='mb-3'>
-            <Form.Control type="email" placeholder="Enter email" name="email" onChange={handleChange} value={formState.user.email} isInvalid={formState.validation.validated && !formState.validation.user.email} isValid={formState.validation.validated && formState.validation.user.email} />
+            <StyledFormControl type="email" placeholder="Enter email" name="email" onChange={handleChange} value={formState.user.email} isInvalid={formState.validation.validated && !formState.validation.user.email} isValid={formState.validation.validated && formState.validation.user.email} />
           </FloatingLabel>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <FloatingLabel controlId='floadingPassword' label="Password" className='mb-3'>
-            <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange}  value={formState.user.password} isInvalid={formState.validation.validated && !formState.validation.user.password} isValid={formState.validation.validated && formState.validation.user.password}  />
+            <StyledFormControl type="password" placeholder="Password" name="password" onChange={handleChange}  value={formState.user.password} isInvalid={formState.validation.validated && !formState.validation.user.password} isValid={formState.validation.validated && formState.validation.user.password}  />
           </FloatingLabel>
         </Form.Group>
 

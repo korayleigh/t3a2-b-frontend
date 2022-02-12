@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Container, Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import { useGlobalContext } from './utils/globalContext';
@@ -6,9 +6,11 @@ import { signOut } from './services/authServices';
 import { useNavigate } from 'react-router-dom';
 import CartSidebar from './components/CartSidebar';
 import { showToast } from './services/toastServices';
-import { clearLoginCredentials } from './services/globalContextServices';
 import ToastArea from './components/ToastArea';
 import taco from './taco64.png';
+import { Footer } from './styled/styled';
+import { getUserRole } from './services/authServices';
+import { clearLoginCredentials, setRole } from './services/globalContextServices';
 
 const Header = () => {
 
@@ -16,6 +18,7 @@ const Header = () => {
   const {user} = globalStore;
   const navigate = useNavigate();
 
+  const [roleRequested, setRoleRequested] = useState(false);
 
   const handleLogout = () => {
     signOut()
@@ -27,15 +30,32 @@ const Header = () => {
         navigate('/');
       })
       .catch(error => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+        globalStore.globalErrorHandler(error);
+        sessionStorage.clear();
       });
 
   };
 
+
+  useEffect(() => {
+    if (globalStore.user.email && !globalStore.user.role) {
+      if (!roleRequested) {
+        getUserRole()
+          .then((role) => {
+            setRole(globalDispatch, role);
+          })
+          .catch((error) => {
+            globalStore.globalErrorHandler(error);
+          });
+        setRoleRequested(true);
+      }
+
+    }
+  }),[user.jwt];
+
   return (
     <>
-      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect
+      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect fixed="top"
         style={{
           borderBottom: '5px',
           borderColor: '#6689a8',
@@ -57,7 +77,7 @@ const Header = () => {
                 <NavDropdown title="Admin" id="basic-nav-dropdown">
                   <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
-                  <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Item  as={Link} to="/pending" href="/pending">Pending Items</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
@@ -77,9 +97,14 @@ const Header = () => {
         </Container>
       </Navbar>
       <ToastArea />
-      <Container className="my-5">
+      <Container className="my-5"
+        style={{
+          padding: '3rem 0',
+        }}
+      >
         <Outlet />
       </Container>
+      <Footer />
 
     </>
   );

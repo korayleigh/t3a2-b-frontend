@@ -3,7 +3,6 @@ import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { indexOrders, transformOrder } from './services/orderServices';
 import IndexTable from './components/IndexTable';
-import { showToast } from './services/toastServices';
 import { useGlobalContext } from './utils/globalContext';
 import { ButtonRow, ButtonBunch, StyledButton, Heading } from './styled/styled';
 
@@ -17,7 +16,7 @@ const Orders = () => {
   const [state, setState] = useState(initialState);
   const {orders} = state;
   const [loaded, setLoaded] = useState(false);
-  const {globalStore, globalDispatch} = useGlobalContext();
+  const {globalStore} = useGlobalContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,8 +29,7 @@ const Orders = () => {
         setLoaded(true);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   },[]);
 
@@ -109,7 +107,7 @@ const Orders = () => {
         </ButtonRow>
       </>
       :
-      loaded && <Alert variant='info'>No Categories!</Alert>
+      loaded && <Alert variant='info'>No Orders!</Alert>
   );
 };
 

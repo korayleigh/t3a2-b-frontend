@@ -1,9 +1,10 @@
 import React from 'react';
 import {Form, FloatingLabel, Alert} from 'react-bootstrap';
 import {useState} from 'react';
-import { StyledButton } from '../styled/styled';
+import { StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
 import { useNavigate } from 'react-router-dom';
 import mexiquitoApi from '../config/api';
+import { useGlobalContext } from '../utils/globalContext';
 
 
 const MenuItemForm = () => {
@@ -20,6 +21,7 @@ const MenuItemForm = () => {
 
   const [formState, setFormState] = useState(initialFormState);
   const navigate = useNavigate();
+  const {globalStore} = useGlobalContext();
 
   const handleChange = (event) => {
     console.log('BEFORE:');
@@ -47,7 +49,7 @@ const MenuItemForm = () => {
         navigate('/menu_items/');
       })
       .catch(error => {
-        console.log(error);
+        globalStore.globalErrorHandler(error);
       });
   };
   
@@ -59,38 +61,38 @@ const MenuItemForm = () => {
     <Form onSubmit={handleSubmit} noValidate >
       <Form.Group className="mb-3" controlId="formBasicName">
         <FloatingLabel controlId='floatinginput' label="Name" className='mb-3'>
-          <Form.Control type="text" placeholder="Enter name" name="name" onChange={handleChange} value={formState.name} isInvalid={formState.validated && !formState.valid} isValid={formState.validated && formState.valid} />
+          <StyledFormControl type="text" placeholder="Enter name" name="name" onChange={handleChange} value={formState.name} isInvalid={formState.validated && !formState.valid} isValid={formState.validated && formState.valid} />
         </FloatingLabel>
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="formBasicNumber">
         <FloatingLabel controlId='floatingPrice' label="Price" className='mb-3'>
-          <Form.Control type="number" placeholder="Price" name="price" onChange={handleChange}  value={formState.price} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
+          <StyledFormControl type="number" placeholder="Price" name="price" onChange={handleChange}  value={formState.price} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
         </FloatingLabel>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <FloatingLabel controlId="floatingSelect" label="Category">
-          <Form.Select aria-label="Default select example" name="category_id" onChange={handleChange}  value={formState.category_id}>
+          <StyledFormSelect aria-label="Default select example" name="category_id" onChange={handleChange}  value={formState.category_id}>
             <option>Select a category</option>
             <option value="1">Entrees</option>
             <option value="2">Tacos</option>
             <option value="3">Mains</option>
             <option value="4">Postres</option>
             <option value="5">Drinks</option>
-          </Form.Select>
+          </StyledFormSelect>
         </FloatingLabel>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicDescription">
         <FloatingLabel controlId='floatingDescription' label="Description" className='mb-3'>
-          <Form.Control as="textarea" placeholder="Description" name="description" onChange={handleChange}  value={formState.description} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
+          <StyledFormControl as="textarea" placeholder="Description" name="description" onChange={handleChange}  value={formState.description} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
         </FloatingLabel>
       </Form.Group>
 
       <Form.Group controlId="formImage" className="mb-3">
         <Form.Label>Image</Form.Label>
-        <Form.Control type="file" accept='image/*' multiple={false} onChange={handleImageChange}/>
+        <StyledFormControl type="file" accept='image/*' multiple={false} onChange={handleImageChange}/>
       </Form.Group>
 
 

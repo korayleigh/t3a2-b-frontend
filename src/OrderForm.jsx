@@ -2,10 +2,10 @@ import React, { useEffect, useReducer } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormValidated } from './services/orderServices';
-import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { capitalise } from './utils/textUtils';
+import { capitalCase } from 'change-case';
 import {setTables, setOrder, setOrderValue } from './services/orderServices';
 import orderReducer from './utils/orderReducer';
 
@@ -30,7 +30,7 @@ const OrderForm = () => {
 
   
   const {globalStore, globalDispatch} = useGlobalContext();
-  const [ formState, formglobalDispatch ] = useReducer(orderReducer, initialFormState);
+  const [ formState, formDispatch ] = useReducer(orderReducer, initialFormState);
   const {order} = formState;
   const navigate = useNavigate();
   const params = useParams();
@@ -41,55 +41,51 @@ const OrderForm = () => {
     if (params.id) {
       indexTables()
         .then((tables) => {
-          setTables(formglobalDispatch, tables);
+          setTables(formDispatch, tables);
         })
         .then(() => {
           return showOrder(params.id);
         })
         .then((order) => {
-          setOrder(formglobalDispatch, order);
+          setOrder(formDispatch, order);
         })
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   },[params.id]);
 
   const handleChange = (event) => {
-    console.log(event);
-    setOrderValue(formglobalDispatch, event.target.name, event.target.value);
-    setFormValidated(formglobalDispatch, false);
+    setOrderValue(formDispatch, event.target.name, event.target.value);
+    setFormValidated(formDispatch, false);
   };
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setFormValidated(formDispatch, true);
     if (!order.name || !order.email) {
-      setFormValidated(formglobalDispatch, true);
       if (!order.name) {
-        setFormValidation(formglobalDispatch, 'name', false);
+        setFormValidation(formDispatch, 'name', false);
         showToast(globalStore, globalDispatch, 'Order Name is Required', 'danger' );
       }
       if (!order.email) {
-        setFormValidation(formglobalDispatch, 'email', false);
+        setFormValidation(formDispatch, 'email', false);
         showToast(globalStore, globalDispatch, 'Order Email is Required', 'danger' );
       }
     } else {
       createUpdateOrder(order)
         .then(() => {
-          setFormValidated(formglobalDispatch, true);
-          setFormValidation(formglobalDispatch, 'name', true);
-          setFormValidation(formglobalDispatch, 'email', true);
-          setFormValidation(formglobalDispatch, 'table', true);
-          showToast(globalStore, globalDispatch, `successfully ${order.id ? 'updated' : 'created'}`, 'success');
+          setFormValidation(formDispatch, 'name', true);
+          setFormValidation(formDispatch, 'email', true);
+          setFormValidation(formDispatch, 'table', true);
+          showToast(globalStore, globalDispatch, `Order successfully ${order.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
       
     }
@@ -102,27 +98,27 @@ const OrderForm = () => {
   
   return (
     <>
-      <Heading>{`${capitalise(location.pathname.split('/').pop())} Order`}</Heading>
+      <Heading>{`${capitalCase(location.pathname.split('/').pop())} Order`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Order Name" className='mb-3'>
-              <Form.Control type="text" placeholder="Enter Order Name" name="name" onChange={handleChange} value={order.name} isInvalid={formState.validation.validated && !formState.validation.order.name} isValid={formState.validation.validated && formState.validation.order.name} />
+              <StyledFormControl type="text" placeholder="Enter Order Name" name="name" onChange={handleChange} value={order.name} isInvalid={formState.validation.validated && !formState.validation.order.name} isValid={formState.validation.validated && formState.validation.order.name} />
             </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <FloatingLabel controlId='floatinginput' label="Order Email" className='mb-3'>
-              <Form.Control type="email" placeholder="Enter Order Email" name="email" onChange={handleChange} value={order.email} isInvalid={formState.validation.validated && !formState.validation.order.email} isValid={formState.validation.validated && formState.validation.order.email} />
+              <StyledFormControl type="email" placeholder="Enter Order Email" name="email" onChange={handleChange} value={order.email} isInvalid={formState.validation.validated && !formState.validation.order.email} isValid={formState.validation.validated && formState.validation.order.email} />
             </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formGroupTable">
             <FloatingLabel controlId='floatinginput' label="Order Table" className='mb-3'>
-              <Form.Select name="table" onChange={handleChange} value={order.table} isInvalid={formState.validation.validated && !formState.validation.order.table} isValid={formState.validation.validated && formState.validation.order.table}>
+              <StyledFormSelect name="table" onChange={handleChange} value={order.table} isInvalid={formState.validation.validated && !formState.validation.order.table} isValid={formState.validation.validated && formState.validation.order.table}>
                 { Object.entries(formState.tables).map(([key,], index) => {
                   return (<option key={index} value={key}>{key}</option>);
                 })};
-              </Form.Select>
+              </StyledFormSelect>
             </FloatingLabel>
           </Form.Group>
 

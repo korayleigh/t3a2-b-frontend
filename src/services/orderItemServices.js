@@ -29,12 +29,22 @@ export async function createUpdateOrderItem(order) {
 
 export async function destroyOrderItem(id) {
   const response = await mexiquitoApi.delete(`${order_items_path}/${id}`);
-
   return response.data;
 }
 
 export async function indexOrderItemStatuses() {
   const response = await mexiquitoApi.get('/statuses');
+  return response.data;
+}
+
+
+export async function indexPendingOrderItems() {
+  const response = await mexiquitoApi.get(`${order_items_path}/pending`);
+  return response.data;
+}
+
+export async function advancePendingOrderItem(order_item_id) {
+  const response = await mexiquitoApi.post(`${order_items_path}/pending_advance/${order_item_id}`);
   return response.data;
 }
 

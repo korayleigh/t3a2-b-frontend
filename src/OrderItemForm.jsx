@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { showOrderItem, createUpdateOrderItem, indexOrderItemStatuses, setOrderItemStatuses, setOrderItem, setOrderItemValue, setMenuItemOptions, destroyOrderItem} from './services/orderItemServices';
-import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { formatCentsAsDollars } from './utils/textUtils';
@@ -10,12 +10,9 @@ import { setMenu } from './services/globalContextServices';
 import orderItemReducer from './utils/orderItemReducer';
 import PropTypes from 'prop-types';
 import { setFormValidated, setFormValidation } from './services/orderServices';
-import { capitalise } from './utils/textUtils';
+import { capitalCase } from 'change-case';
 
 const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) => {
-
-  console.log('order_item_id', order_item_id);
-  console.log('order_id', order_id);
 
   const initialFormState = { 
     order_item : {
@@ -53,8 +50,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           setupMenuOptions(menu);
         }) 
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
     indexOrderItemStatuses()
@@ -62,8 +58,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
         setOrderItemStatuses(formDispatch, statuses);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
     if (order_item_id) {
       showOrderItem(order_item_id)
@@ -71,11 +66,9 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           setOrderItem(formDispatch, order_item);
         })
         .catch(error => {
-          console.log(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     } else {
-      console.log('setting order_id to:', order_id);
       setOrderItemValue(formDispatch, 'order_id', order_id);
     }
   },[order_item_id]);
@@ -105,7 +98,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     ['quantity', 'price'].forEach((field) => {
       if (order_item[field] < 1) {
         setFormValidation(formDispatch, field, false );
-        showToast(globalStore, globalDispatch, `${capitalise(field)} must be > 0`, 'danger' );
+        showToast(globalStore, globalDispatch, `${capitalCase(field)} must be > 0`, 'danger' );
         valid=false;
       }
     });
@@ -122,8 +115,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           modalOnHide();
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   };
@@ -137,8 +129,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
         modalOnHide();
       })
       .catch((error) => {
-        console.error(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
 
   };
@@ -156,18 +147,18 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           {/* MENU ITEM */}
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Menu Item" className='mb-3'>
-              <Form.Select type="text" placeholder="Enter Menu Item " name="menu_item_id" onChange={handleChange} value={order_item.menu_item_id} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name}>
+              <StyledFormSelect type="text" placeholder="Enter Menu Item " name="menu_item_id" onChange={handleChange} value={order_item.menu_item_id} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name}>
                 {formState.menu_item_options.map(([menu_item_id, menu_item_name]) => {
                   return (<option key={menu_item_id} value={menu_item_id}>{menu_item_name}</option>);
                 })}
-              </Form.Select>
+              </StyledFormSelect>
             </FloatingLabel>
           </Form.Group>
 
           {/* QUANTITY */}
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Quantity" className='mb-3'>
-              <Form.Control type="number" placeholder="Quantity " name="quantity" onChange={handleChange} value={order_item.quantity} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
+              <StyledFormControl type="number" placeholder="Quantity " name="quantity" onChange={handleChange} value={order_item.quantity} min={1} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
             </FloatingLabel>
           </Form.Group>
 
@@ -175,7 +166,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           {  order_item.id && 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Price" className='mb-3'>
-              <Form.Control type="text" placeholder="Price " name="price_at_order" onChange={handleChange} value={formatCentsAsDollars(order_item.price_at_order)} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
+              <StyledFormControl type="text" placeholder="Price " name="price_at_order" onChange={handleChange} value={formatCentsAsDollars(order_item.price_at_order)} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
             </FloatingLabel>
           </Form.Group>
           }
@@ -184,11 +175,11 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           {  order_item.id && 
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Status" className='mb-3'>
-              <Form.Select type="text" placeholder="Status" name="status" onChange={handleChange} value={order_item.status} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name}>
+              <StyledFormSelect type="text" placeholder="Status" name="status" onChange={handleChange} value={order_item.status} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name}>
                 {order_item.status && Object.entries(formState.order_item_statuses).map(([status, id]) => {
                   return (<option key={id} value={status}>{status}</option>);
                 })}
-              </Form.Select>
+              </StyledFormSelect>
             </FloatingLabel>
           </Form.Group>
           }
@@ -196,7 +187,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
           {/* REQUEST */}
           <Form.Group className="mb-3" controlId="formGroupName">
             <FloatingLabel controlId='floatinginput' label="Any Requests?" className='mb-3'>
-              <Form.Control as="textarea" rows={3} placeholder="Request a modification" name="request" onChange={handleChange} value={order_item.request} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
+              <StyledFormControl as="textarea" rows={3} placeholder="Request a modification" name="request" onChange={handleChange} value={order_item.request} isInvalid={formState.validation.validated && !formState.validation.order_item.name} isValid={formState.validation.validated && formState.validation.order_item.name} />
             </FloatingLabel>
           </Form.Group>
 

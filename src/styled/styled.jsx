@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container , Button, Table } from 'react-bootstrap';
+import { Container , Button, Table, Form, Navbar } from 'react-bootstrap';
 
 const childrenPropTypes = {
   children: PropTypes.oneOfType([
@@ -25,7 +25,7 @@ ButtonRow.propTypes = childrenPropTypes;
 
 export const ButtonBunch = ({children}) => {
   return (
-    <Container className="m-0 d-flex flex-column flex-sm-row"
+    <Container className="m-0 p-0 d-flex flex-column flex-sm-row"
       style={{
         gap: '1rem',
         width: 'unset',
@@ -126,6 +126,64 @@ export const StyledTable = (props) => {
           margin: '0',
         }}
       />
+    </div>
+  );
+};
+
+export const StyledFormControl = (props) => {
+  return (
+    <Form.Control
+      style={{
+        backgroundColor: 'white',
+      }}
+      {...props}
+    />
+  );
+};
+
+export const StyledFormSelect = (props) => {
+  return (
+    <Form.Select
+      style={{
+        backgroundColor: 'white',
+      }}
+      {...props}
+    />
+  );
+};
+
+export const Footer = () => {
+  return (
+    <div
+      className="fixed-bottom"
+      // style={{
+      //   borderTop: '5px',
+      //   borderTopStyle: 'solid',
+      //   borderTopColor: '#6689a8',
+      //   backgroundColor: '#66a878',
+      //   color: 'white',
+      // }}
+    >  
+      <Navbar
+        bg="primary" variant="dark"
+        style={{
+          borderTop: '5px',
+          borderTopStyle: 'solid',
+          borderTopColor: '#6689a8',
+          height: '3rem',
+        }}
+      >
+        <Container>
+          <span
+            style={{
+              color: 'white',
+              fontSize:'smaller',
+            }}
+          >Taco icon copyright 2020 Twitter, Inc and other contributors, licensed under CC-BY 4.0</span>
+          {/* <NavbarBrand className="dark"
+          >Taco icon copyright 2020 Twitter, Inc and other contributors, licensed under CC-BY 4.0</NavbarBrand> */}
+        </Container>
+      </Navbar>
     </div>
   );
 };

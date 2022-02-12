@@ -5,7 +5,6 @@ import { setCategories } from './services/globalContextServices';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
-import { showToast } from './services/toastServices';
 import IndexTable from './components/IndexTable';
 
 const Categories = () => {
@@ -21,8 +20,7 @@ const Categories = () => {
         setLoaded(true);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   },[]);
 
@@ -66,7 +64,7 @@ const Categories = () => {
         <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
         <ButtonRow>
           <ButtonBunch>
-            <StyledButton variant="primary" name="edit" onClick={handleButtonClick}>New Category</StyledButton>
+            <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Category</StyledButton>
             <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>
