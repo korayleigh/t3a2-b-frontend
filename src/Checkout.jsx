@@ -5,7 +5,7 @@ import { useCart } from 'react-use-cart';
 import mexiquitoApi from './config/api';
 import { indexTables } from './services/orderServices';
 import { showToast } from './services/toastServices';
-import { StyledButton } from './styled/styled';
+import { StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { formatCentsAsDollars } from './utils/textUtils';
 
@@ -25,7 +25,7 @@ function Checkout() {
   const initialFormState = {
     name: '',
     email: '',
-    table: '',
+    table: 0,
     validated: false,
     valid: false
   };
@@ -44,31 +44,46 @@ function Checkout() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-        
-    const itemAttributes = items.map(item => {
-      return {menu_item_id: item.id, quantity: item.quantity};
+    setFormState({
+      ...formState,
+      validated: true,
     });
-
-    const formData = {
-      order: {
-        name: formState.name,
-        email: formState.email,
-        table: formState.table,
-        order_items_attributes: itemAttributes
-      }     
-    };
-
-    console.log(`DATA: ${itemAttributes}`);
-
-    await mexiquitoApi.post('/orders', formData)
-      .then(response => {
-        navigate('/orders/'+response.data.id);
-        emptyCart();
-        showToast(globalStore, globalDispatch, 'Order confirmed!', 'success');
-      })
-      .catch(error => {
-        console.log(error);
+    if (!formState.name || !formState.email) {
+      if (!formState.name) {
+        showToast(globalStore, globalDispatch, 'Order Name is Required', 'danger' );
+      }
+      if (!formState.email) {
+        showToast(globalStore, globalDispatch, 'Order Email is Required', 'danger' );
+      }
+    } else {
+        
+      const itemAttributes = items.map(item => {
+        return {menu_item_id: item.id, quantity: item.quantity};
       });
+
+      const formData = {
+        order: {
+          name: formState.name,
+          email: formState.email,
+          table: formState.table,
+          order_items_attributes: itemAttributes
+        }     
+      };
+
+      console.log(`DATA: ${itemAttributes}`);
+
+      await mexiquitoApi.post('/orders', formData)
+        .then(response => {
+          // navigate('/orders/'+response.data.id);
+          emptyCart();
+          showToast(globalStore, globalDispatch, 'Order confirmed!', 'success');
+          navigate(`/orderstatus?id=${response.data.id}&email=${response.data.email}`);
+        })
+        .catch(error => {
+          console.log(error);
+          globalStore.globalErrorHandler(error);
+        });
+    }
   };
   
   useEffect(() => {
@@ -96,23 +111,23 @@ function Checkout() {
         <Form onSubmit={handleSubmit} noValidate >
           <Form.Group className='mb-3' controlId='formBasicName'>
             <FloatingLabel controlId='floatinginput' label='Name' className='mb-3'>
-              <Form.Control type='text' variant='light' placeholder='Enter name' name='name' onChange={handleChange} value={formState.name} />
+              <StyledFormControl type='text' variant='light' placeholder='Enter name' name='name' onChange={handleChange} value={formState.name} />
             </FloatingLabel>
           </Form.Group>
           
           <Form.Group className='mb-3' controlId='formEmail'>
             <FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
-              <Form.Control type='text' placeholder='Email' name='email' onChange={handleChange}  value={formState.email} />
+              <StyledFormControl type='text' placeholder='Email' name='email' onChange={handleChange}  value={formState.email} />
             </FloatingLabel>
           </Form.Group>
           
           <Form.Group className="mb-3" controlId="formGroupTable">
             <FloatingLabel controlId='floatinginput' label="Order Table" className='mb-3'>
-              <Form.Select name="table" onChange={handleChange} value={formState.table} >
+              <StyledFormSelect name="table" onChange={handleChange} value={formState.table} >
                 { tables ? Object.entries(tables).map(([key,], index) => {
                   return (<option key={index} value={key}>{key}</option>);
                 }) : null };
-              </Form.Select>
+              </StyledFormSelect>
             </FloatingLabel>
           </Form.Group>
           

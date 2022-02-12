@@ -17,8 +17,6 @@ import CategoryForm from './CategoryForm';
 import Orders from './Orders';
 import Order from './Order';
 import OrderForm from './OrderForm';
-import { getUserRole } from './services/authServices';
-import { setRole } from './services/globalContextServices';
 import Checkout from './Checkout';
 import Pending from './Pending';
 import { showToast } from './services/toastServices';
@@ -30,18 +28,31 @@ function App() {
   const navigate = useNavigate();
     
   const globalErrorHandler = (error) => {
+    console.dir(error);
     if (error.response) {
-      console.log(error.response.data.error);
-      showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
-      // Login expired
-      if (error.response.status === 401 ) {
-        sessionStorage.clear();
-        clearLoginCredentials(globalDispatch);
-        navigate('/');
+      if (error.response.data.error) {
+        console.log(error.response.data.error);
+        showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
+        // Login expired
+        if (error.response.status === 401 ) {
+          sessionStorage.clear();
+          clearLoginCredentials(globalDispatch);
+          navigate('/');
+        }
+      } else if (error.response.data) {
+        console.dir(error.response.data);
+        showToast(globalStore, globalDispatch, JSON.stringify(error.response.data), 'danger');
+
+      } else {
+        console.dir(error.response.statusText);
+        showToast(globalStore, globalDispatch, error.response.statusText, 'danger');
       }
-    } else {
+    } else if (error.message) {
       console.log(error.message);
       showToast(globalStore, globalDispatch, error.message, 'danger');
+    } else {
+      console.dir(error);
+      showToast(globalStore, globalDispatch, 'Unkown error', 'danger');
     }
   };
 
@@ -63,7 +74,7 @@ function App() {
   return (
     <div >
       <GlobalContext.Provider value={{globalStore,globalDispatch}}>
-          <Routes>
+        <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
             <Route path="menu" element={<Menu />} />
@@ -86,8 +97,8 @@ function App() {
               </Route>
               <Route path="pending" element={<Pending />} />
             </>
-          }
-          <Route path="*" element={<Default />} />
+            }
+            <Route path="*" element={<Default />} />
           </Route>
         </Routes>
       </GlobalContext.Provider>      

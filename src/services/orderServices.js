@@ -40,7 +40,7 @@ export async function indexTables() {
 }
 
 export async function showOrderStatus(id, email) {
-  const response = await mexiquitoApi.post(`${orders_path}/status/${id}`, {email: email});
+  const response = await mexiquitoApi.get(`${orders_path}/status/${id}?email=${email}`);
   return response.data;
 }
 
