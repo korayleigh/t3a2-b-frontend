@@ -69,6 +69,7 @@ const Header = () => {
               { loggedInUser
                 ? <>
                   <Navbar.Text>{loggedInUser}</Navbar.Text>
+                  </> : null}
               { user.email?
                 <>
                   <Navbar.Text>{`${user.email} (${user.role})`}</Navbar.Text>
