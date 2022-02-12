@@ -45,7 +45,7 @@ function App() {
   }),[user.jwt];
 
   return (
-    <div>
+    <div >
       <GlobalContext.Provider value={{globalStore,globalDispatch}}>
         <BrowserRouter>
           <Routes>

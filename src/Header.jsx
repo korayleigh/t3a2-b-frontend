@@ -43,9 +43,9 @@ const Header = () => {
         }}
       >
         <Container>
-          <Navbar.Brand href="#home" className="d-flex gap-3 align-items-center">
+          <Navbar.Brand as={Link} to="/" href="/" className="d-flex gap-3 align-items-center">
             <img src={taco} alt=""/>
-            <span>MEXIQUI.TO</span>
+            <span >mexiqui.to</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
