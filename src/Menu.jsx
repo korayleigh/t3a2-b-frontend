@@ -1,15 +1,15 @@
 import React from 'react';
 import { useEffect, useState, useReducer } from 'react';
 import { setMenu } from './services/globalContextServices';
-import { indexMenu, setCategoryFilter, setSearchText, setFilteredMenu } from './services/menuServices';
+import { indexMenu, setCategoryFilter, setSearchText } from './services/menuServices';
 import { showToast } from './services/toastServices';
 import { useGlobalContext } from './utils/globalContext';
 import MenuItemCard from './components/MenuItemCard';
 import { Row, Col } from 'react-bootstrap';
 import MenuItemModal from './MenuItemModal';
 import { useCart } from 'react-use-cart';
-import { Form, FloatingLabel} from 'react-bootstrap';
-import { Heading } from './styled/styled';
+import { FloatingLabel} from 'react-bootstrap';
+import { Heading, StyledFormControl, StyledFormSelect } from './styled/styled';
 import menuReducer from './utils/menuReducer';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
@@ -33,7 +33,6 @@ const Menu = () => {
       .then(menu => {
         console.log(menu);
         setMenu(globalDispatch, menu);
-        setFilteredMenu(formDispatch, menu);
       })
       .catch(error => {
         console.log(error);
@@ -87,16 +86,16 @@ const Menu = () => {
       <Row xs={1} md={2}>
         <Col>
           <FloatingLabel controlId='floatinginput' label="Search" className='mb-3'>
-            <Form.Control type="text" placeholder="Search" name="search" onChange={handleMenuSearchChange} value={formState.search} />
+            <StyledFormControl type="text" placeholder="Search" name="search" onChange={handleMenuSearchChange} value={formState.search} />
           </FloatingLabel>
         </Col>
         <FloatingLabel controlId='floatinginput' label="Category" className='mb-3'>
-          <Form.Select type="text" placeholder="Category" name="category" onChange={handleMenuFilterChange} value={formState.category_id} >
+          <StyledFormSelect type="text" placeholder="Category" name="category" onChange={handleMenuFilterChange} value={formState.category_id} >
             { [{id:0,name:'All'}].concat(Object.values(globalStore.categories)).map((category) => {
               return (<option key={category.id} value={category.id}>{category.name}</option>);
             })
             }
-          </Form.Select>
+          </StyledFormSelect>
         </FloatingLabel>
         <Col>
         </Col>
@@ -107,8 +106,8 @@ const Menu = () => {
             return item.name.toLowerCase().includes(formState.search.toLowerCase());
           })
           .filter((item) => {
-            console.log('item', item.category_id);
-            console.log('filter', parseInt(formState.category_id));
+            // console.log('item', item.category_id);
+            // console.log('filter', parseInt(formState.category_id));
             if (parseInt(formState.category_id) === 0) {
               return true;
             } else {

@@ -18,13 +18,6 @@ export default function menuReducer (state, action) {
     };
   }
 
-  case 'setFilteredMenu': {
-    return {
-      ...state,
-      filtered_menu: action.data
-    };
-  }
-
   default: return state;
   }
 
