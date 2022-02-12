@@ -5,8 +5,9 @@ import { showCategory, createUpdateCategory, setCategory, setCategoryValue, setF
 import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { sentenceCase } from 'change-case';
+import { capitalCase } from 'change-case';
 import categoryReducer from './utils/categoryReducer';
+
 
 const CategoryForm = () => {
 
@@ -74,7 +75,7 @@ const CategoryForm = () => {
   
   return (
     <>
-      <Heading>{`${sentenceCase(location.pathname.split('/').pop())} Category`}</Heading>
+      <Heading>{`${capitalCase(location.pathname.split('/').pop())} Category`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 

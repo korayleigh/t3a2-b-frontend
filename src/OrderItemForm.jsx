@@ -10,7 +10,7 @@ import { setMenu } from './services/globalContextServices';
 import orderItemReducer from './utils/orderItemReducer';
 import PropTypes from 'prop-types';
 import { setFormValidated, setFormValidation } from './services/orderServices';
-import { sentenceCase } from 'change-case';
+import { capitalCase } from 'change-case';
 
 const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) => {
 
@@ -98,7 +98,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     ['quantity', 'price'].forEach((field) => {
       if (order_item[field] < 1) {
         setFormValidation(formDispatch, field, false );
-        showToast(globalStore, globalDispatch, `${sentenceCase(field)} must be > 0`, 'danger' );
+        showToast(globalStore, globalDispatch, `${capitalCase(field)} must be > 0`, 'danger' );
         valid=false;
       }
     });
