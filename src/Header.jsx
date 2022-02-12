@@ -53,7 +53,7 @@ const Header = () => {
               <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/menu" href="/menu">Order</Nav.Link>
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
-              { user && user.role == 'Admin' && (
+              { user && user.role === 'Admin' && (
                 <NavDropdown title="Admin" id="basic-nav-dropdown">
                   <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>

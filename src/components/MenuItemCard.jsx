@@ -3,7 +3,7 @@ import {Card, Button, Col, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import imageNotFound from '../assets/taco_image_not_found_smaller.png';
 import { useCart } from 'react-use-cart';
-
+import { formatCentsAsDollars } from '../utils/textUtils';
 
 const MenuItemCard = props => {
   const handleViewButtonClick = () => {
@@ -37,7 +37,7 @@ const MenuItemCard = props => {
         <Card.Body>
           <div className='card-container'>
             <Card.Title >{props.menuItem.name}</Card.Title>
-            <Card.Title >{'$'+props.menuItem.price }</Card.Title>
+            <Card.Title >{'$'+formatCentsAsDollars(props.menuItem.price) }</Card.Title>
           </div>
         </Card.Body>
 
