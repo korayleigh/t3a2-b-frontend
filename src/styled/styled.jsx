@@ -25,7 +25,7 @@ ButtonRow.propTypes = childrenPropTypes;
 
 export const ButtonBunch = ({children}) => {
   return (
-    <Container className="m-0 d-flex flex-column flex-sm-row"
+    <Container className="m-0 p-0 d-flex flex-column flex-sm-row"
       style={{
         gap: '1rem',
         width: 'unset',

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { showCategory, createUpdateCategory } from './services/categoryServices';
+import { showCategory, createUpdateCategory, setCategory, setCategoryValue, setFormValidated, setFormValidation } from './services/categoryServices';
 import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { capitalise } from './utils/textUtils';
+import { capitalCase } from 'change-case';
+import categoryReducer from './utils/categoryReducer';
+
 
 const CategoryForm = () => {
 
@@ -22,7 +24,7 @@ const CategoryForm = () => {
   };
   
   const {globalStore, globalDispatch} = useGlobalContext();
-  const [ formState, setFormState ] = useState(initialFormState);
+  const [ formState, formDispatch ] = useReducer(categoryReducer, initialFormState);
   const {category} = formState;
   const navigate = useNavigate();
   const params = useParams();
@@ -32,66 +34,37 @@ const CategoryForm = () => {
     if (params.id) {
       showCategory(params.id)
         .then((category) => {
-          setFormState({
-            ...formState,
-            category: category
-          });
+          setCategory(formDispatch, category);
         })
-        .catch(error => console.log(error));
+        .catch((error) => {
+          globalStore.globalErrorHandler(error);
+        });
     }
   },[params.id]);
 
   const handleChange = (event) => {
-    setFormState({
-      ...formState,
-      category: {
-        ...formState.category,
-        [event.target.name]: event.target.value
-      },
-      validation: {
-        ...formState.validation,
-        validated: false
-      }
-    });
+    setCategoryValue(formDispatch, event.target.name, event.target.value);
+    setFormValidated(formDispatch, false);
   };
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setFormValidated(formDispatch, true);
     if (!category.name) {
-      setFormState({
-        ...formState,
-        validation: {
-          ...formState.validation,
-          validated: true,
-          category: {
-            name: false
-          },
-        }
-      });
+      setFormValidation(formDispatch, 'name', false);
       showToast(globalStore, globalDispatch, 'Category Name is Required', 'danger' );
     } else {
       createUpdateCategory(category)
         .then(() => {
-          setFormState({
-            ...formState,
-            validation: {
-              ...formState.validation,
-              validated: true,
-              category: {
-                ...category,
-                name: false
-              },
-            },
-          });
-          showToast(globalStore, globalDispatch, `Category '${category.name}' successfully ${category.id ? 'updated' : 'created'}`, 'success');
+          setFormValidation(formDispatch, 'name', true);
+          showToast(globalStore, globalDispatch, `Category '${category.name} 'successfully ${category.id ? 'updated' : 'created'}`, 'success');
         })
         .then(() => {
           navigate(-1);
         })
         .catch((error) => {
-          console.error(error);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
         });
     }
   };
@@ -102,7 +75,7 @@ const CategoryForm = () => {
   
   return (
     <>
-      <Heading>{`${capitalise(location.pathname.split('/').pop())} Category`}</Heading>
+      <Heading>{`${capitalCase(location.pathname.split('/').pop())} Category`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
 
@@ -125,9 +98,5 @@ const CategoryForm = () => {
     </>
   );
 };
-
-// CategoryForm.propTypes = {
-//   mode: PropTypes.string
-// };
 
 export default CategoryForm;

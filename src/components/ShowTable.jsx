@@ -2,6 +2,7 @@ import React from 'react';
 import {  Container, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { StyledTable } from '../styled/styled';
+import { capitalCase } from 'change-case';
 
 const ShowTable = ({item, children}) => {
 
@@ -30,7 +31,7 @@ const ShowTable = ({item, children}) => {
                 { itemTopLevelProperties.map(([key, value]) => {
                   return (
                     <tr key={value}>
-                      <th>{key}</th>
+                      <th>{capitalCase(key)}</th>
                       <td>{value}</td>
                     </tr>
                   );

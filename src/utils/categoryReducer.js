@@ -1,12 +1,12 @@
-export default function orderReducer (state, action) {
+export default function categoryReducer (state, action) {
 
   switch(action.type) {
 
 
-  case 'setOrder': {
+  case 'setCategory': {
     return {
       ...state,
-      order: action.data
+      category: action.data
     };
   }
 
@@ -17,11 +17,11 @@ export default function orderReducer (state, action) {
     };
   }
 
-  case 'setOrderValue': {
+  case 'setCategoryValue': {
     return {
       ...state,
-      order: {
-        ...state.order,
+      category: {
+        ...state.category,
         [action.name]: action.value
       }
     };
@@ -42,24 +42,13 @@ export default function orderReducer (state, action) {
       ...state,
       validation: {
         ...state.validation,
-        order: {
-          ...state.validation.order,
+        category: {
+          ...state.validation.category,
           [action.name]: action.value
         }
       }
     };
   }
-
-  case 'setOrderStatusValue': {
-    return {
-      ...state,
-      order: {
-        ...state.order,
-        [action.name]: action.value,
-      }
-    };
-  }
-
 
   default: return state;
   }

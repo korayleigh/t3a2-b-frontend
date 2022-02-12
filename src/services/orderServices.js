@@ -1,5 +1,8 @@
 import mexiquitoApi from '../config/api';
 import { formatCentsAsDollars } from '../utils/textUtils';
+import { formatDate } from '../utils/textUtils';
+
+// API HELPERS
 
 const orders_path = '/orders';
 
@@ -28,15 +31,21 @@ export async function createUpdateOrder(order) {
 
 export async function destroyOrder(id) {
   const response = await mexiquitoApi.delete(`${orders_path}/${id}`);
-
   return response.data;
 }
 
 export async function indexTables() {
   const response = await mexiquitoApi.get('/tables');
-  console.log({tables: response.data});
   return response.data;
 }
+
+export async function showOrderStatus(id, email) {
+  const response = await mexiquitoApi.post(`${orders_path}/status/${id}`, {email: email});
+  return response.data;
+}
+
+
+// DISPATCHERS
 
 export function setOrder(dispatch, order) {
   dispatch({
@@ -80,11 +89,26 @@ export function transformOrder(order) {
     return {
       ...order,
       total: formatCentsAsDollars(order.total),
-      created_at: new Date(order.created_at).toLocaleString('en-AU', {
-        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short'
-      }),
+      created_at: formatDate(order.created_at),
+      updated_at: formatDate(order.updated_at),
     };
   } else {
     return null;
   }
 }
+
+
+export function transformOrderStatus(order) {
+  if (order) {
+    return {
+      table: order.table,
+      name: order.name,
+      items: order.items,
+      total: formatCentsAsDollars(order.total),
+      created_at: formatDate(order.created_at),
+    };
+  } else {
+    return null;
+  }
+}
+

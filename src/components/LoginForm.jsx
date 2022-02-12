@@ -51,8 +51,7 @@ const LoginForm = () => {
           navigate('/orders');
         })
         .catch(error => {
-          console.log(error.message);
-          showToast(globalStore, globalDispatch, error.message, 'danger');
+          globalStore.globalErrorHandler(error);
           setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'email', false);
           setFormValidation(formDispatch, 'password', false);
