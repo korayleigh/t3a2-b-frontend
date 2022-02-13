@@ -77,7 +77,6 @@ const Menu = (props) => {
   return (
     <PageContainer>
       {props.hideHeading ? null : <Heading>Menu</Heading>}
-      <Heading>Menu</Heading>
       <Row xs={1} md={2}>
         <Col>
           <FloatingLabel controlId='floatinginput' label="Search" className='mb-3'>
