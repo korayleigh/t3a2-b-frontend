@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Web Application for 'Mexiquito' Mexican Restaurant
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository holds the front end resources for a web application for a fictional Mexican restaurant called 'Mexiquito'.  This website is hosted at
+[https://mexiqui.to](https://mexiqui.to), on Netlify infrastructure.
+
+This web application was developed as part of a project for a web development course.  The front end is developed in React and the backend, hosted in a [https://github.com/korayleigh/t3a2-b-backend](different repository) is developed with Ruby on Rails, and is hosted at Heroku.
+
+
+
+
+## Getting Started with this web app
+
+This project was created with [Create React App](https://github.com/facebook/create-react-app).  If you would like to install a locally hosted copy of this web app, you will also need to locally host the ruby on rails backend serve.
+
+## Installation
+
+
 
 ## Available Scripts
 
