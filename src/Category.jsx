@@ -59,6 +59,9 @@ const Category = () => {
   const handleDeleteModalCancel = () => {
     setDeleteModalShow(false);
   };
+
+  console.dir(category);
+
   return (
     <PageContainer>
       <Heading>Category Details</Heading>
@@ -71,7 +74,7 @@ const Category = () => {
           <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
         </ButtonBunch>
         <ButtonBunch>
-          <StyledButton variant='danger' name="delete" onClick={handleButtonClick}>Delete</StyledButton>
+          { category?.menu_items_count === 0 && <StyledButton variant='danger' name="delete" onClick={handleButtonClick}>Delete</StyledButton> }
         </ButtonBunch>
       </ButtonRow>
       <YesNoModal show={deleteModalShow} prompt="Are you sure?" onYes={handleDeleteModalConfirm} onNo={handleDeleteModalCancel} yes_text="Delete" no_text="Cancel" yes_variant="danger" no_variant="secondary" />

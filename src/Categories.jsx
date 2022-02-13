@@ -54,6 +54,10 @@ const Categories = () => {
       Header: 'Name',
       accessor: 'name',
       sortType: 'alphanumeric',
+    },{
+      Header: 'Menu Items',
+      accessor: 'menu_items_count',
+      sortType: 'basic',
     }];
   },[categories]);
 
