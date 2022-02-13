@@ -30,7 +30,7 @@ const ShowTable = ({item, children}) => {
                 objects, functions, undefined, or symbols */}
                 { itemTopLevelProperties.map(([key, value]) => {
                   return (
-                    <tr key={value}>
+                    <tr key={key}>
                       <th>{capitalCase(key)}</th>
                       <td>{value}</td>
                     </tr>

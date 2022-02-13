@@ -89,18 +89,20 @@ const IndexTable = ({data, columns, showFooter,
                 })}
               </tbody>
               {showFooter && <tfoot>
-                {footerGroups.map((group, index) => (
-                  <tr key={index} {...group.getFooterGroupProps()}>
-                    {group.headers.map((column, index) => (
-                      <td key={index} {...column.getFooterProps([
-                        getColumnProps(column),
-                        getFooterProps(column)
-                      ])}>
-                        {column.render('Footer')}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {footerGroups.map((group, index) => {
+                  return (
+                    <tr key={index} {...group.getFooterGroupProps()}>
+                      {group.headers.map((column, index) => (
+                        <td key={index} {...column.getFooterProps([
+                          getColumnProps(column),
+                          getFooterProps(column)
+                        ])}>
+                          {column.render('Footer')}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
               </tfoot> }
             </StyledTable>
           </>

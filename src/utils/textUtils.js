@@ -9,13 +9,24 @@
 // };
 
 export const formatCentsAsDollars = (priceCents) => {
-  // return (priceCents / 100).toFixed(2);
-  const stringPriceCents = String(priceCents);
+  let stringPriceCents = String(priceCents).replace(/\D/g, '');
   while (stringPriceCents.length < 3) {
-    '0'.concat(stringPriceCents);
+    stringPriceCents = '0'.concat(stringPriceCents);
+
   } 
   // Insert a . at a position 2 characters from the right
   return stringPriceCents.substring(0, stringPriceCents.length - 2) + '.' + stringPriceCents.substring(stringPriceCents.length -2);
+};
+
+export const formatDollarsAsCents = (priceDollars) => {
+  // expect a string with digits and a '.' in a position 3rd form the right'
+  return parseInt(priceDollars.replace(/\D/g, ''));
+
+};
+
+export const reformatDollarsAsDollars = (priceDollars) => {
+  // expect a string with a '.' in the wrong place due to editing in a text field
+  return formatCentsAsDollars(formatDollarsAsCents(priceDollars));
 };
 
 export const formatDate = (isoDate, format='full' ) => {
