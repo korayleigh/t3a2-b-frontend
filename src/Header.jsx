@@ -80,8 +80,6 @@ const Header = () => {
                   <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/pending" href="/pending">Pending Items</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item  as={Link} to="#action/3.3" href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
               )}
             </Nav>
