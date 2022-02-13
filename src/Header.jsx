@@ -53,6 +53,7 @@ const Header = () => {
     }
   }),[user.jwt];
 
+
   return (
     <>
       <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect fixed="top"
@@ -97,13 +98,7 @@ const Header = () => {
         </Container>
       </Navbar>
       <ToastArea />
-      <Container className="my-5"
-        style={{
-          padding: '3rem 0',
-        }}
-      >
-        <Outlet />
-      </Container>
+      <Outlet />
       <Footer />
 
     </>

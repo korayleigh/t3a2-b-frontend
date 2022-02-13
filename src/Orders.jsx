@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { indexOrders, transformOrder } from './services/orderServices';
 import IndexTable from './components/IndexTable';
 import { useGlobalContext } from './utils/globalContext';
-import { ButtonRow, ButtonBunch, StyledButton, Heading } from './styled/styled';
+import { ButtonRow, ButtonBunch, StyledButton, Heading, PageContainer } from './styled/styled';
 
 const Orders = () => {
 
@@ -89,7 +89,7 @@ const Orders = () => {
 
   return (
     orders.length ? 
-      <>
+      <PageContainer>
         <Heading>Orders</Heading>
         <IndexTable data={transformed_orders} columns={columns} onRowClick={handleRowClick}
           getHeaderProps={() => {
@@ -105,7 +105,7 @@ const Orders = () => {
             <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>
-      </>
+      </PageContainer>
       :
       loaded && <Alert variant='info'>No Orders!</Alert>
   );

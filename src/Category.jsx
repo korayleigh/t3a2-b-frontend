@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {useGlobalContext} from './utils/globalContext';
 import {  useParams, useNavigate } from 'react-router-dom';
 import { showCategory, destroyCategory } from './services/categoryServices';
-import { ButtonRow, ButtonBunch, Heading, StyledButton } from './styled/styled';
+import { ButtonRow, ButtonBunch, Heading, StyledButton, PageContainer} from './styled/styled';
 import { showToast } from './services/toastServices';
 import ShowTable from './components/ShowTable';
 import YesNoModal from './YesNoModal';
@@ -60,7 +60,7 @@ const Category = () => {
     setDeleteModalShow(false);
   };
   return (
-    <>
+    <PageContainer>
       <Heading>Category Details</Heading>
       <ShowTable item={category} />
       <ButtonRow>
@@ -75,7 +75,7 @@ const Category = () => {
         </ButtonBunch>
       </ButtonRow>
       <YesNoModal show={deleteModalShow} prompt="Are you sure?" onYes={handleDeleteModalConfirm} onNo={handleDeleteModalCancel} yes_text="Delete" no_text="Cancel" yes_variant="danger" no_variant="secondary" />
-    </>
+    </PageContainer>
 
   );
 

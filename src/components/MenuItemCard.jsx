@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import imageNotFound from '../assets/taco_image_not_found_smaller.png';
 import { useCart } from 'react-use-cart';
 import { formatCentsAsDollars } from '../utils/textUtils';
+import { StyledButton } from '../styled/styled';
 
 const MenuItemCard = props => {
   const handleViewButtonClick = () => {
@@ -43,7 +44,7 @@ const MenuItemCard = props => {
 
         <Card.Footer border={'dark'}>
           <ButtonToolbar className="justify-content-between" >
-            <Button onClick={handleViewButtonClick} variant="primary">View</Button>
+            <StyledButton onClick={handleViewButtonClick} variant="primary">View</StyledButton>
             <ButtonGroup>
               <Button variant='danger'
                 onClick={decreaseCartQuantity}
@@ -52,7 +53,10 @@ const MenuItemCard = props => {
               </Button>
               <Button disabled variant='light'>{cartQuantity}</Button>
               <Button variant='primary'
-                onClick={increaseCartQuantity} >
+                onClick={increaseCartQuantity}
+                style={{
+                  color: 'white',
+                }} >
                   +
               </Button>
             </ButtonGroup>

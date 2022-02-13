@@ -1,7 +1,7 @@
 import React, {  useEffect, useMemo, useState } from 'react';
 import IndexTable from './components/IndexTable';
 import { indexPendingOrderItems, advancePendingOrderItem } from './services/orderItemServices';
-import {Heading} from './styled/styled';
+import {Heading, PageContainer} from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { formatDate } from './utils/textUtils';
 import { Alert } from 'react-bootstrap';
@@ -73,11 +73,11 @@ const Pending = () => {
   };
 
   return (
-    <>
+    <PageContainer>
       <Heading>Pending Items</Heading>
       <IndexTable data={pendingItems} columns={pending_items_columns} showFooter={false} onRowClick={handleRowClick} />
       { pendingItems.length ? <Alert variant='info'>Click a row to advance status</Alert> : null}
-    </>
+    </PageContainer>
   );
 
 };
