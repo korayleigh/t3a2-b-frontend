@@ -9,9 +9,13 @@ import { CartProvider } from 'react-use-cart';
 ReactDOM.render(
   <React.StrictMode>
     <CartProvider>
-      <BrowserRouter>
+      <HashRouter
+        basename={optionalString}
+        getUserConfirmation={optionalFunc}
+        hashType={optionalString}
+      >
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </CartProvider>
   </React.StrictMode>,
   document.getElementById('root')
