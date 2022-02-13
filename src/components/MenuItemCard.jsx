@@ -31,6 +31,9 @@ const MenuItemCard = props => {
   
   const increaseCartQuantity = () => {
     props.increaseCartQuantity(props.menuItem);
+    if (cartQuantity === 0) {
+      showToast(globalStore, globalDispatch, `Added ${props.menuItem.name} to cart`, 'success');
+    }
     setCartQuantity(cartQuantity + 1);
   };
   
@@ -95,7 +98,7 @@ const MenuItemCard = props => {
   return (
     <Col>
       <Card border={'dark'}>
-        <Card.Img onClick={handleViewButtonClick} className={'img-fluid'} variant='top' src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
+        <Card.Img onClick={handleViewButtonClick} className={'img-fluid'} style={{cursor: 'pointer'}} variant='top' src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
         <Card.Body>
           <div className='card-container'>
             <Card.Title >{props.menuItem.name}</Card.Title>
