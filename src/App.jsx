@@ -74,7 +74,7 @@ function App() {
   return (
     <div >
       <GlobalContext.Provider value={{globalStore,globalDispatch}}>
-        <Routes>
+        <Routes history={hashHistory}>
           <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
             <Route path="menu" element={<Menu />} />

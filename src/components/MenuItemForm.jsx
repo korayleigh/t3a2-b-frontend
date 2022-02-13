@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {Form, FloatingLabel, Alert} from 'react-bootstrap';
 import {useState} from 'react';
-import { ButtonBunch, ButtonRow, StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
+import { ButtonBunch, ButtonRow, PageContainer, StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGlobalContext } from '../utils/globalContext';
 import { createUpdateMenuItem, showMenuItem } from '../services/menuServices';
@@ -92,52 +92,55 @@ const MenuItemForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} noValidate >
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <FloatingLabel controlId='floatinginput' label="Name" className='mb-3'>
-          <StyledFormControl type="text" placeholder="Enter name" name="name" onChange={handleChange} value={formState.name} isInvalid={formState.validated && !formState.valid} isValid={formState.validated && formState.valid} />
-        </FloatingLabel>
-      </Form.Group>
-      
-      <Form.Group className="mb-3" controlId="formBasicNumber">
-        <FloatingLabel controlId='floatingPrice' label="Price" className='mb-3'>
-          <StyledFormControl type="number" placeholder="Price" name="price" onChange={handleChange}  value={formState.price} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
-        </FloatingLabel>
-      </Form.Group>
+    <PageContainer>
 
-      <Form.Group className="mb-3" controlId="formBasicCategory">
-        <FloatingLabel controlId="floatingSelect" label="Category">
-          <StyledFormSelect aria-label="Default select example" name="category_id" onChange={handleChange}  value={formState.category_id}>
-            { categories ? Object.entries(categories).map(([key,value], index) => {
-              return (<option key={index} value={key}>{value.name}</option>);
-            }) : null };
-          </StyledFormSelect>
-        </FloatingLabel>
-      </Form.Group>
+      <Form onSubmit={handleSubmit} noValidate >
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <FloatingLabel controlId='floatinginput' label="Name" className='mb-3'>
+            <StyledFormControl type="text" placeholder="Enter name" name="name" onChange={handleChange} value={formState.name} isInvalid={formState.validated && !formState.valid} isValid={formState.validated && formState.valid} />
+          </FloatingLabel>
+        </Form.Group>
+        
+        <Form.Group className="mb-3" controlId="formBasicNumber">
+          <FloatingLabel controlId='floatingPrice' label="Price" className='mb-3'>
+            <StyledFormControl type="number" placeholder="Price" name="price" onChange={handleChange}  value={formState.price} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
+          </FloatingLabel>
+        </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicDescription">
-        <FloatingLabel controlId='floatingDescription' label="Description" className='mb-3'>
-          <StyledFormControl as="textarea" placeholder="Description" name="description" onChange={handleChange}  value={formState.description} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
-        </FloatingLabel>
-      </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCategory">
+          <FloatingLabel controlId="floatingSelect" label="Category">
+            <StyledFormSelect aria-label="Default select example" name="category_id" onChange={handleChange}  value={formState.category_id}>
+              { categories ? Object.entries(categories).map(([key,value], index) => {
+                return (<option key={index} value={key}>{value.name}</option>);
+              }) : null };
+            </StyledFormSelect>
+          </FloatingLabel>
+        </Form.Group>
 
-      <Form.Group controlId="formImage" className="mb-3">
-        <Form.Label>Image</Form.Label>
-        <StyledFormControl type="file" accept='image/*' multiple={false} onChange={handleImageChange}/>
-      </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicDescription">
+          <FloatingLabel controlId='floatingDescription' label="Description" className='mb-3'>
+            <StyledFormControl as="textarea" placeholder="Description" name="description" onChange={handleChange}  value={formState.description} isInvalid={formState.validated && !formState.valid}isValid={formState.validated && formState.valid}  />
+          </FloatingLabel>
+        </Form.Group>
+
+        <Form.Group controlId="formImage" className="mb-3">
+          <Form.Label>Image</Form.Label>
+          <StyledFormControl type="file" accept='image/*' multiple={false} onChange={handleImageChange}/>
+        </Form.Group>
 
 
-      <Form.Group className="mb-3" controlId="formButton">
-        <ButtonRow>
-          <ButtonBunch>
-            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
-            <StyledButton variant="primary" type="submit">Submit</StyledButton>
-          </ButtonBunch>
-        </ButtonRow>
-      </Form.Group>
-      { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
+        <Form.Group className="mb-3" controlId="formButton">
+          <ButtonRow>
+            <ButtonBunch>
+              <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+              <StyledButton variant="primary" type="submit">Submit</StyledButton>
+            </ButtonBunch>
+          </ButtonRow>
+        </Form.Group>
+        { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
 
-    </Form>
+      </Form>
+    </PageContainer>
   );
 };
 
