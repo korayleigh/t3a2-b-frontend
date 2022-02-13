@@ -6,7 +6,6 @@ import Menu from './Menu';
 import OrderStatus from './OrderStatus';
 import Login from './Login';
 import CreateMenuItem from './CreateMenuItem';
-import Default from './Default';
 import { Route, Routes} from 'react-router-dom';
 import { useReducer } from 'react';
 import { GlobalContext } from './utils/globalContext';
@@ -98,7 +97,7 @@ function App() {
               <Route path="pending" element={<Pending />} />
             </>
             }
-            <Route path="*" element={<Default />} />
+            <Route path="*" element={<Home />} />
           </Route>
         </Routes>
       </GlobalContext.Provider>      

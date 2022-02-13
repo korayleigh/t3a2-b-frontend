@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, ButtonToolbar, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
+import { StyledButton } from '../styled/styled';
 import { formatCentsAsDollars } from '../utils/textUtils';
 
 function Cart() {
@@ -19,7 +20,7 @@ function Cart() {
   return (
     <>
       <h1>Total ${formatCentsAsDollars(cartTotal)}</h1>
-      <Button as={Link} to="/checkout" href="/checkout" size={'lg'}>Checkout</Button>
+      <StyledButton as={Link} to="/checkout" href="/checkout" size={'lg'}>Checkout</StyledButton>
       <br />
       <br />
 
@@ -34,9 +35,9 @@ function Cart() {
               <p>(${formatCentsAsDollars(item.price)}ea)</p>
               <ButtonToolbar className="gap-2 w-fit">
                 <ButtonGroup>
-                  <Button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</Button>
+                  <Button style={{color: 'white'}} onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</Button>
                   <Button disabled variant='light'>{item.quantity}</Button>
-                  <Button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</Button>
+                  <Button style={{color: 'white'}} onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</Button>
                 </ButtonGroup>
 
                 <Button variant='danger' onClick={() => removeItem(item.id)}>&times;</Button>
