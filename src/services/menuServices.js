@@ -25,7 +25,6 @@ export async function createUpdateMenuItem(menu_item) {
 
 export async function destroyMenuItem(id) {
   const response = await mexiquitoApi.delete(`/menu_items/${id}`);
-
   return response.data;
 }
 

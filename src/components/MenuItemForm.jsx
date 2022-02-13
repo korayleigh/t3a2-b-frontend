@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, FloatingLabel, Alert} from 'react-bootstrap';
 import {useState} from 'react';
-import { StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
+import { ButtonBunch, ButtonRow, StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
 import { useNavigate } from 'react-router-dom';
 import mexiquitoApi from '../config/api';
 import { useGlobalContext } from '../utils/globalContext';
@@ -22,6 +22,13 @@ const MenuItemForm = () => {
   const [formState, setFormState] = useState(initialFormState);
   const navigate = useNavigate();
   const {globalStore} = useGlobalContext();
+
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (event.target.name === 'back') {
+      navigate(-1);
+    }
+  };
 
   const handleChange = (event) => {
     console.log('BEFORE:');
@@ -97,7 +104,12 @@ const MenuItemForm = () => {
 
 
       <Form.Group className="mb-3" controlId="formButton">
-        <StyledButton variant="primary" type="submit">Submit</StyledButton>
+        <ButtonRow>
+          <ButtonBunch>
+            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+            <StyledButton variant="primary" type="submit">Submit</StyledButton>
+          </ButtonBunch>
+        </ButtonRow>
       </Form.Group>
       { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
 

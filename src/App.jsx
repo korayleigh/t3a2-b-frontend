@@ -22,6 +22,7 @@ import Pending from './Pending';
 import { showToast } from './services/toastServices';
 import { clearLoginCredentials } from './services/globalContextServices';
 import { useNavigate } from 'react-router-dom';
+import EditMenu from './EditMenu';
 
 function App() {
 
@@ -83,7 +84,10 @@ function App() {
             <Route path="checkout" element={<Checkout />} />
             { user && user.role == 'Admin' && 
             <>
-              <Route path="createmenuitem" element={<CreateMenuItem />} />
+              <Route path="editmenu">
+                <Route index element={<EditMenu />} />
+                <Route path="newitem" element={<CreateMenuItem />} />
+              </Route>
               <Route path="categories">
                 <Route index element={<Categories />} />
                 <Route path="new" element={<CategoryForm />} />

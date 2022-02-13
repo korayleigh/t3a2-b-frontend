@@ -12,8 +12,9 @@ import { Heading, StyledFormControl, StyledFormSelect } from './styled/styled';
 import menuReducer from './utils/menuReducer';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
+import PropTypes from 'prop-types';
 
-const Menu = () => {
+const Menu = (props) => {
 
   const initialFormState = {
     search: '',
@@ -79,7 +80,7 @@ const Menu = () => {
 
   return (
     <>
-      <Heading>Menu</Heading>
+      {props.hideHeading ? null : <Heading>Menu</Heading>}
       <Row xs={1} md={2}>
         <Col>
           <FloatingLabel controlId='floatinginput' label="Search" className='mb-3'>
@@ -112,7 +113,7 @@ const Menu = () => {
             }
           })
           .map((item) => {
-            return <MenuItemCard key={item.id} menuItem={item} handleViewButtonClick={handleViewButtonClick}
+            return <MenuItemCard key={item.id} variant={props.variant} menuItem={item} handleViewButtonClick={handleViewButtonClick}
               increaseCartQuantity={increaseCartQuantity} decreaseCartQuantity={decreaseCartQuantity}/>;
           })
           : <p>Loading...</p>}
@@ -120,6 +121,11 @@ const Menu = () => {
       <MenuItemModal show={modalShow} onHide={handleModalOnHide} menuItemId={modalId}></MenuItemModal>
     </>
   );
+};
+
+Menu.propTypes = {
+  hideHeading: PropTypes.string,
+  variant: PropTypes.string
 };
 
 export default Menu;
