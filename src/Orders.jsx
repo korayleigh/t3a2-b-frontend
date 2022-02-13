@@ -101,7 +101,7 @@ const Orders = () => {
         />
         <ButtonRow>
           <ButtonBunch>
-            <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Order</StyledButton>
+            {/* <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Order</StyledButton> */}
             <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>
