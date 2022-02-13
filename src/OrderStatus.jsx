@@ -1,7 +1,7 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import { Container, Form, FloatingLabel, Row, Col } from 'react-bootstrap';
 import { useNavigate , useSearchParams} from 'react-router-dom';
-import { Heading, StyledFormControl, ButtonRow, ButtonBunch, StyledButton, SubHeading } from './styled/styled';
+import { Heading, StyledFormControl, ButtonRow, ButtonBunch, StyledButton, SubHeading, PageContainer } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { setOrderValue, setFormValidated, setFormValidation, showOrderStatus, transformOrderStatus } from './services/orderServices';
 import { transformOrderItems } from './services/orderItemServices';
@@ -119,7 +119,7 @@ const OrderStatus = () => {
   }];
 
   return (
-    <>
+    <PageContainer>
       <Heading>Order Status</Heading>
       <span>Enter your order number and email</span>
       <Form className="mt-4" onSubmit={handleSubmit} >
@@ -169,7 +169,7 @@ const OrderStatus = () => {
         </Container>
       </ShowTable>
       }
-    </>
+    </PageContainer>
   );
 };
 

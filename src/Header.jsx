@@ -99,17 +99,7 @@ const Header = () => {
         </Container>
       </Navbar>
       <ToastArea />
-      { window.location.pathname === '/' ?
-        <Outlet />
-        :
-        <Container className="my-5"
-          style={{
-            padding: '3rem 0',
-          }}
-        >
-          <Outlet />
-        </Container>
-      }
+      <Outlet />
       <Footer />
 
     </>

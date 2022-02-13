@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, } from 'react-bootstrap';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
 import {useGlobalContext} from './utils/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { ButtonBunch, ButtonRow, Heading, StyledButton } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, PageContainer } from './styled/styled';
 import IndexTable from './components/IndexTable';
 
 const Categories = () => {
@@ -58,20 +58,23 @@ const Categories = () => {
   },[categories]);
 
   return (
-    Object.values(categories).length ? 
-      <>
-        <Heading>Categories</Heading>
-        <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
-        <ButtonRow>
-          <ButtonBunch>
-            <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Category</StyledButton>
-            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
-          </ButtonBunch>
-        </ButtonRow>
-      </>
-      :
-      loaded && <Alert variant='info'>No Categories!</Alert>
-  
+    <PageContainer>
+      {
+        Object.values(categories).length ? 
+          <>
+            <Heading>Categories</Heading>
+            <IndexTable data={categories_data} columns={categories_columns} showFooter={false} onRowClick={handleRowClick} />
+            <ButtonRow>
+              <ButtonBunch>
+                <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Category</StyledButton>
+                <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+              </ButtonBunch>
+            </ButtonRow>
+          </>
+          :
+          loaded && <Alert variant='info'>No Categories!</Alert>
+      }
+    </PageContainer>
   );
 
 };

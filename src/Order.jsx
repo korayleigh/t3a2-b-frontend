@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonRow, ButtonBunch, StyledButton, Heading, SubHeading } from './styled/styled';
+import { ButtonRow, ButtonBunch, StyledButton, Heading, SubHeading, PageContainer } from './styled/styled';
 import { Container } from 'react-bootstrap';
 import {useGlobalContext} from './utils/globalContext';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -118,7 +118,7 @@ const Order = () => {
   };
 
   return (
-    <>
+    <PageContainer>
       <Heading>Order Details</Heading>
       <ShowTable item={transformedOrder} model={{singular: 'order', plural:'orders'}}>
         <Container className="my-5 px-0">
@@ -152,7 +152,7 @@ const Order = () => {
       </ButtonRow>
       { order && <OrderItemModal order_item_id={orderItemModalId} order_id={order?.id} show={orderItemModalShow} onHide={handleOrderItemModalOnHide} onSubmit={handleOrderItemModalSubmit} /> }
       <YesNoModal show={deleteModalShow} prompt="Are you sure?" onYes={handleDeleteModalConfirm} onNo={handleDeleteModalCancel} yes_text="Delete" no_text="Cancel" yes_variant="danger" no_variant="secondary" />
-    </>
+    </PageContainer>
   );
 };
 

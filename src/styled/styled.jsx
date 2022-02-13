@@ -187,3 +187,15 @@ export const Footer = () => {
     </div>
   );
 };
+
+
+export const PageContainer = (props) => {
+  return (
+    <Container className="my-5"
+      style={{
+        padding: '3rem 0',
+      }}
+      {...props}
+    />
+  );
+};
