@@ -29,7 +29,6 @@ function App() {
   const navigate = useNavigate();
     
   const globalErrorHandler = (error) => {
-    console.dir(error);
     if (error.response) {
       if (error.response.data.error) {
         console.log(error.response.data.error);

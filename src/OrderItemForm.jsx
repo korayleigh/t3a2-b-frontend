@@ -1,16 +1,17 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { showOrderItem, createUpdateOrderItem, indexOrderItemStatuses, setOrderItemStatuses, setOrderItem, setOrderItemValue, setMenuItemOptions, destroyOrderItem} from './services/orderItemServices';
 import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
-import { formatCentsAsDollars } from './utils/textUtils';
+import { formatCentsAsDollars, formatDollarsAsCents} from './utils/textUtils';
 import { indexMenu } from './services/menuServices';  
 import { setMenu } from './services/globalContextServices';
 import orderItemReducer from './utils/orderItemReducer';
 import PropTypes from 'prop-types';
 import { setFormValidated, setFormValidation } from './services/orderServices';
 import { capitalCase } from 'change-case';
+import YesNoModal from './YesNoModal';
 
 const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) => {
 
@@ -35,7 +36,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
   const {globalStore, globalDispatch} = useGlobalContext();
   const [ formState, formDispatch ] = useReducer(orderItemReducer, initialFormState);
   const {order_item} = formState;
-
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
 
   useEffect(() => {
     if (globalStore.menu.length) {
@@ -82,7 +83,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
 
   const handleChange = (event) => {
     if (event.target.name === 'price_at_order') {
-      setOrderItemValue(formDispatch, event.target.name, parseInt(event.target.value * 100));
+      setOrderItemValue(formDispatch, event.target.name, formatDollarsAsCents(event.target.value));
     } else {
       setOrderItemValue(formDispatch, event.target.name, event.target.value);
     }
@@ -122,7 +123,15 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
 
   const handleDeleteClick = (event) => {
     event.preventDefault();
+    setDeleteModalShow(true);
+  };
 
+
+  const handleBackClick = () => {
+    modalOnHide();
+  };
+
+  const handleDeleteModalConfirm = () => {
     destroyOrderItem(order_item.id)
       .then(() => {
         modalOnSubmit();
@@ -131,12 +140,12 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
       .catch((error) => {
         globalStore.globalErrorHandler(error);
       });
-
   };
 
-  const handleBackClick = () => {
-    modalOnHide();
+  const handleDeleteModalCancel = () => {
+    setDeleteModalShow(false);
   };
+
 
   return (
     <>
@@ -204,7 +213,9 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
             </ButtonRow>
           </Form.Group>
         </Form>
+        <YesNoModal show={deleteModalShow} prompt="Are you sure?" onYes={handleDeleteModalConfirm} onNo={handleDeleteModalCancel} yes_text="Delete" no_text="Cancel" yes_variant="danger" no_variant="secondary" />
       </Container>
+      
     </>
   );
 };
