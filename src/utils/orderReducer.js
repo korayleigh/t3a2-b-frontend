@@ -60,7 +60,6 @@ export default function orderReducer (state, action) {
     };
   }
 
-
   default: return state;
   }
 

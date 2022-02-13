@@ -23,7 +23,7 @@ function Cart() {
       <br />
       <br />
 
-      <ul style={{'list-style-type' : 'none', 'padding':'0%'}} >
+      <ul style={{listStyleType : 'none', 'padding':'0%'}} >
         {items.map((item) => (
           <li style={{'padding':'4%'}} key={item.id}>
             <Row>

@@ -1,6 +1,6 @@
-import React, {useReducer, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import { Container, Form, FloatingLabel, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useSearchParams} from 'react-router-dom';
 import { Heading, StyledFormControl, ButtonRow, ButtonBunch, StyledButton, SubHeading } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { setOrderValue, setFormValidated, setFormValidation, showOrderStatus, transformOrderStatus } from './services/orderServices';
@@ -12,10 +12,13 @@ import IndexTable from './components/IndexTable';
 
 const OrderStatus = () => {
 
+
+  const [search_params, ] = useSearchParams();
+
   const initialFormState = { 
     order: {
-      id: '',
-      email: '',
+      id: search_params.get('id') || '',
+      email: search_params.get('email')|| '',
     },
     validation: {
       validated: false,
@@ -32,14 +35,12 @@ const OrderStatus = () => {
   const [transformedOrderStatus, setTransformedOrderStatus ]= useState(null);
   const navigate = useNavigate();
 
-
-
-
-
-
-
-
-
+  useEffect(() => {
+    if (formState.order.id && formState.order.email) {
+      submitForm();
+    }
+  },[]);
+    
   const handleChange = (event) => {
     setOrderValue(formDispatch, event.target.name, event.target.value);
     setFormValidated(formDispatch, false);
@@ -47,8 +48,14 @@ const OrderStatus = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    submitForm();
+  };
+
+  const submitForm = () => {
     if (!formState.order.id || !formState.order.email) {
       setFormValidated(formDispatch, true);
+      console.log('id:', formState.order.id);
+      console.log('email:', formState.order.email);
       if (!formState.order.id) {
         setFormValidation(formDispatch, 'id', false);
         showToast(globalStore, globalDispatch, 'Order Number is Required', 'danger' );
@@ -69,7 +76,6 @@ const OrderStatus = () => {
         .catch((error) => {
           globalStore.globalErrorHandler(error);
         });
-      
     }
   };
 
@@ -138,7 +144,7 @@ const OrderStatus = () => {
         <Form.Group className="mb-3 px-0" controlId="formGroupButtons">
           <ButtonRow>
             <ButtonBunch>
-              <StyledButton variant="primary" type="submit">Submit</StyledButton>
+              <StyledButton variant="primary" type="submit">{order ? 'Update' : 'Submit'}</StyledButton>
               <StyledButton variant="secondary" type="button" onClick={handleBackClick}>Back</StyledButton>
             </ButtonBunch>
           </ButtonRow>
