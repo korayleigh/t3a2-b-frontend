@@ -106,6 +106,7 @@ const OrderItemForm = ({order_item_id, order_id, modalOnHide, modalOnSubmit}) =>
     if (valid) {
       createUpdateOrderItem(order_item)
         .then((order_item) => {
+          console.log(order_item);
           setFormValidated(formDispatch, true);
           setFormValidation(formDispatch, 'quantity', true);
           setFormValidation(formDispatch, 'price', true);
