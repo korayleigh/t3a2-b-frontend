@@ -31,6 +31,9 @@ const MenuItemCard = props => {
   
   const increaseCartQuantity = () => {
     props.increaseCartQuantity(props.menuItem);
+    if (cartQuantity === 0) {
+      showToast(globalStore, globalDispatch, `Added ${props.menuItem.name} to cart`, 'success');
+    }
     setCartQuantity(cartQuantity + 1);
   };
   
