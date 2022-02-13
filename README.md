@@ -32,6 +32,7 @@ The planning documentation for this project is available [at this respository](h
 
 ## Links
 
+- [Deployed website](https://mexiqui.to)
 - [Trello Board](https://trello.com/b/CoWRRx5z/full-stack-app)
   containing all of the project management and task allocation information.
 - [Original Planning Documentation Repository](https://github.com/korayleigh/t3a2-a)
