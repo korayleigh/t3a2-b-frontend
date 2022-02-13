@@ -14,7 +14,7 @@ function CartSidebar() {
 
   return (
     <>
-      <NavLink onClick={handleShow}>Cart ({totalUniqueItems > 0 ? totalUniqueItems : null})</NavLink>
+      <NavLink onClick={handleShow}>Cart {totalUniqueItems > 0 ? '('+totalUniqueItems+')' : null}</NavLink>
 
       <Offcanvas show={show} onHide={handleClose} placement={'end'}>
         <Offcanvas.Header closeButton>
