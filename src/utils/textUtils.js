@@ -1,12 +1,3 @@
-// export const capitalise = (string) => {
-//   // return `${string[0].toUpperCase()}${string.slice(1).toLowerCase()}`;
-//   return sentenceCase(string);
-// };
-
-// export const titleise = (string) => {
-//   // return string.split(' ').map((word) => capitalise(word)).join(' ');
-//   return capitalCase(string);
-// };
 
 export const formatCentsAsDollars = (priceCents) => {
   let stringPriceCents = String(priceCents).replace(/\D/g, '');
