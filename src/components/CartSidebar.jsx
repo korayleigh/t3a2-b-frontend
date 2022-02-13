@@ -18,7 +18,7 @@ function CartSidebar() {
           <Offcanvas.Title>mexiqui.to </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Cart></Cart>
+          <Cart handleClose={handleClose}></Cart>
         </Offcanvas.Body>
       </Offcanvas>
     </>
