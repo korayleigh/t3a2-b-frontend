@@ -9,11 +9,7 @@ import { HashRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
     <CartProvider>
-      <HashRouter
-        basename={optionalString}
-        getUserConfirmation={optionalFunc}
-        hashType={optionalString}
-      >
+      <HashRouter>
         <App />
       </HashRouter>
     </CartProvider>

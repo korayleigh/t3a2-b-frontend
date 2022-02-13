@@ -5,7 +5,7 @@ import { useCart } from 'react-use-cart';
 import mexiquitoApi from './config/api';
 import { indexTables } from './services/orderServices';
 import { showToast } from './services/toastServices';
-import { StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
+import { PageContainer, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { formatCentsAsDollars } from './utils/textUtils';
 
@@ -99,7 +99,7 @@ function Checkout() {
   if (isEmpty) return <p>Your cart is empty</p>;
 
   return (
-    <>
+    <PageContainer>
       <div style={{'display': 'flex', 'justifyContent':'space-between'}}>
         <h1>Checkout</h1>
         <h1>Total: ${formatCentsAsDollars(cartTotal)}</h1>
@@ -169,7 +169,7 @@ function Checkout() {
         </tbody>
       </Table>
       
-    </>
+    </PageContainer>
   );
 }
 
