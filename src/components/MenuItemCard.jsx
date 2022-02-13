@@ -24,7 +24,7 @@ const MenuItemCard = props => {
       setDeleteModalShow(true);
     }
     else if (event.target.name === 'edit') {
-      setDeleteModalShow(true);
+      navigate(`/menuitems/${props.menuItem.id}/edit`);
     }
   };
   

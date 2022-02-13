@@ -75,7 +75,7 @@ const Header = () => {
               <Nav.Link as={Link} to="/orderstatus" href="/orderstatus">Order Status</Nav.Link>
               { user && user.role === 'Admin' && (
                 <NavDropdown title="Admin" id="basic-nav-dropdown">
-                  <NavDropdown.Item  as={Link} to="/editmenu" href="/editmenu">Edit Menu</NavDropdown.Item>
+                  <NavDropdown.Item  as={Link} to="/menuitems" href="/menuitems">Edit Menu</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/orders" href="/orders">Orders</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/categories" href="/categories">Categories</NavDropdown.Item>
                   <NavDropdown.Item  as={Link} to="/pending" href="/pending">Pending Items</NavDropdown.Item>

@@ -9,7 +9,7 @@ const EditMenu = () => {
       <div style={{'display':'flex', 'justifyContent':'space-between'}}>
         <h1>Edit Menu</h1>
         <div>
-          <Button as={Link} to="/editmenu/newitem" href="/editmenu/newitem">New Menu Item</Button>
+          <Button as={Link} to="/menuitems/new" href="/menuitems/new">New Menu Item</Button>
         </div>
       </div>
       <Menu hideHeading='true' variant='edit'/>
