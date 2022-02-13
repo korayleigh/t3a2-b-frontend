@@ -15,8 +15,6 @@ export async function createUpdateMenuItem(menu_item) {
   let response;
   if (menu_item.get('id')) {
     response = await mexiquitoApi.patch(`/menu_items/${menu_item.get('id')}`, menu_item);
-    console.log('RESPONSE DATA:');
-    console.log(response.data);
   } else {
     response = await mexiquitoApi.post('/menu_items', menu_item);
   }

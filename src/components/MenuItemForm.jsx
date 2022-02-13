@@ -43,7 +43,6 @@ const MenuItemForm = () => {
           delete menuItem.image;
         }
 
-        console.log(menuItem);
         setFormState(menuItem);
       })
       .catch(error => {
@@ -75,9 +74,6 @@ const MenuItemForm = () => {
     formData.append('price', formState.price);
     formData.append('description', formState.description);
     formData.append('category_id', formState.category_id);
-    console.log("FORMSTATE HAS IMAGE? before send")
-    console.log(formState.image !== null ? 'TRUE' : 'FALSE')
-    console.log(formState.image)
     
     if (formState.image){
       formData.append('image', formState.image);
