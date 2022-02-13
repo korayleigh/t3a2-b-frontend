@@ -56,7 +56,7 @@ const Home = () => {
               }}>
               <span>Mexiquito mexican restaurant</span>
               <span>42 Wallaby Way</span>
-              <span>Sydney</span>
+              <span>Melbourne</span>
               <span><a href="mailto:admin@mexiqui.to">Email Us</a></span>
             </div>
           </Alert>

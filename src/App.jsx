@@ -31,7 +31,6 @@ function App() {
   const globalErrorHandler = (error) => {
     if (error.response) {
       if (error.response.data.error) {
-        console.log(error.response.data.error);
         showToast(globalStore, globalDispatch, error.response.data.error, 'danger');
         // Login expired
         if (error.response.status === 401 ) {
@@ -39,19 +38,12 @@ function App() {
           clearLoginCredentials(globalDispatch);
           navigate('/');
         }
-      } else if (error.response.data) {
-        console.dir(error.response.data);
-        showToast(globalStore, globalDispatch, JSON.stringify(error.response.data), 'danger');
-
       } else {
-        console.dir(error.response.statusText);
         showToast(globalStore, globalDispatch, error.response.statusText, 'danger');
       }
     } else if (error.message) {
-      console.log(error.message);
       showToast(globalStore, globalDispatch, error.message, 'danger');
     } else {
-      console.dir(error);
       showToast(globalStore, globalDispatch, 'Unkown error', 'danger');
     }
   };

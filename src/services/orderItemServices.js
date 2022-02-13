@@ -2,6 +2,8 @@ import { formatCentsAsDollars } from '../utils/textUtils';
 import mexiquitoApi from '../config/api';
 import {menuItemOptionList} from './menuServices';
 
+// API HELPERS
+
 const order_items_path = '/order_items';
 
 export async function indexOrderItems() {
@@ -64,6 +66,8 @@ export function transformOrderItems(order_items) {
     return null;
   }
 }
+
+// DISPATCHERS
 
 export function setOrderItemStatuses(dispatch, statuses) {
   dispatch({

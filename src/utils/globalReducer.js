@@ -1,7 +1,5 @@
 export default function globalReducer (state, action) {
 
-  console.log('type:', action.type, 'data:', action.data);
-
   switch(action.type) {
 
   case 'setEmail': {

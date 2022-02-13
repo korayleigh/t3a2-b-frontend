@@ -23,7 +23,6 @@ const Header = () => {
   const handleLogout = () => {
     signOut()
       .then((response) => {
-        console.log(response);
         sessionStorage.clear();
         clearLoginCredentials(globalDispatch);
         showToast(globalStore, globalDispatch, response.message, 'primary');

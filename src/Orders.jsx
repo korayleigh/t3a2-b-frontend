@@ -12,7 +12,6 @@ const Orders = () => {
     orders: {}
   };
 
-  // const [store, dispatch] = useReducer(ordersReducer, initialState);
   const [state, setState] = useState(initialState);
   const {orders} = state;
   const [loaded, setLoaded] = useState(false);
@@ -101,7 +100,6 @@ const Orders = () => {
         />
         <ButtonRow>
           <ButtonBunch>
-            {/* <StyledButton variant="primary" name="new" onClick={handleButtonClick}>New Order</StyledButton> */}
             <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
           </ButtonBunch>
         </ButtonRow>

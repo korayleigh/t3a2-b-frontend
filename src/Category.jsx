@@ -60,8 +60,6 @@ const Category = () => {
     setDeleteModalShow(false);
   };
 
-  console.dir(category);
-
   return (
     <PageContainer>
       <Heading>Category Details</Heading>

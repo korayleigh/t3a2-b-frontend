@@ -1,9 +1,6 @@
 import mexiquitoApi from '../config/api';
 
-
-
 // API HELPERS
-
 
 const categories_path = '/categories';
 
