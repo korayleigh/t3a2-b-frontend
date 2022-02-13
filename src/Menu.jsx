@@ -100,11 +100,9 @@ const Menu = () => {
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {menu.length > 0 ? menu
           .filter((item) => {
-            return item.name.toLowerCase().includes(formState.search.toLowerCase());
+            return item.name.toLowerCase().includes(formState.search.toLowerCase()) || item.description.toLowerCase().includes(formState.search.toLowerCase());
           })
           .filter((item) => {
-            // console.log('item', item.category_id);
-            // console.log('filter', parseInt(formState.category_id));
             if (parseInt(formState.category_id) === 0) {
               return true;
             } else {
