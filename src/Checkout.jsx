@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, ButtonToolbar, FloatingLabel, Form, Table } from 'react-bootstrap';
+import { Button, ButtonGroup, ButtonToolbar, FloatingLabel, Form, Row, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
 import mexiquitoApi from './config/api';
@@ -105,21 +105,21 @@ function Checkout() {
         <h1>Total: ${formatCentsAsDollars(cartTotal)}</h1>
       </div>
       <br />
-      <div style={{'display': 'flex', 'justifyContent':'space-between'}}>
-        <Form onSubmit={handleSubmit} noValidate >
-          <Form.Group className='mb-3' controlId='formBasicName'>
+      <Form onSubmit={handleSubmit} noValidate >
+        <Row xs={1} md={4}>
+          <Form.Group column={true} className='mb-3' controlId='formBasicName'>
             <FloatingLabel controlId='floatinginput' label='Name' className='mb-3'>
               <StyledFormControl type='text' variant='light' placeholder='Enter name' name='name' onChange={handleChange} value={formState.name} />
             </FloatingLabel>
           </Form.Group>
           
-          <Form.Group className='mb-3' controlId='formEmail'>
+          <Form.Group column={true} className='mb-3' controlId='formEmail'>
             <FloatingLabel controlId='floatingEmail' label='Email' className='mb-3'>
               <StyledFormControl type='text' placeholder='Email' name='email' onChange={handleChange}  value={formState.email} />
             </FloatingLabel>
           </Form.Group>
           
-          <Form.Group className="mb-3" controlId="formGroupTable">
+          <Form.Group column={true} className="mb-3" controlId="formGroupTable">
             <FloatingLabel controlId='floatinginput' label="Order Table" className='mb-3'>
               <StyledFormSelect name="table" onChange={handleChange} value={formState.table} >
                 { tables ? Object.entries(tables).map(([key,], index) => {
@@ -129,10 +129,13 @@ function Checkout() {
             </FloatingLabel>
           </Form.Group>
           
-          <Form.Group className='mb-3' controlId='formButton'>
+          <Form.Group column={true} className='mb-3' controlId='formButton'>
             <StyledButton variant='primary' type='submit'>Confirm Order</StyledButton>
           </Form.Group>
-        </Form>
+        </Row>
+      </Form>
+
+      <div style={{'display': 'flex', 'justifyContent':'space-between'}}>
       </div>
       <p>You will need your email to check your order status.</p>
       <br />

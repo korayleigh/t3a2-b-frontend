@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, ButtonGroup, ButtonToolbar, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useCart } from 'react-use-cart';
 import { StyledButton } from '../styled/styled';
 import { formatCentsAsDollars } from '../utils/textUtils';
 
-function Cart() {
+function Cart(props) {
   const {
     isEmpty,
     items,
@@ -14,13 +15,20 @@ function Cart() {
     cartTotal
   } = useCart();
   
+  const navigate = useNavigate();
   
+  const handleClick = event => {
+    event.preventDefault();
+    props.handleClose();
+    navigate('/checkout');
+  };
+
   if (isEmpty) return <p>Your cart is empty</p>;
 
   return (
     <>
       <h1>Total ${formatCentsAsDollars(cartTotal)}</h1>
-      <StyledButton as={Link} to="/checkout" href="/checkout" size={'lg'}>Checkout</StyledButton>
+      <StyledButton onClick={handleClick} size={'lg'}>Checkout</StyledButton>
       <br />
       <br />
 
@@ -49,5 +57,9 @@ function Cart() {
     </>
   );
 }
+
+Cart.propTypes = {
+  handleClose: PropTypes.func
+};
 
 export default Cart;
