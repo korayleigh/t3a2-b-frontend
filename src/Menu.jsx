@@ -98,7 +98,7 @@ const Menu = (props) => {
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {menu.length > 0 ? menu
           .filter((item) => {
-            return item.name.toLowerCase().includes(formState.search.toLowerCase());
+            return item.name.toLowerCase().includes(formState.search.toLowerCase()) || item.description.toLowerCase().includes(formState.search.toLowerCase());
           })
           .filter((item) => {
             if (parseInt(formState.category_id) === 0) {

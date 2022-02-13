@@ -101,6 +101,7 @@ export function transformOrder(order) {
 export function transformOrderStatus(order) {
   if (order) {
     return {
+      id: order.id,
       table: order.table,
       name: order.name,
       items: order.items,
