@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { Container, Form, FloatingLabel } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { showOrder, createUpdateOrder, indexTables, setFormValidation, setFormValidated } from './services/orderServices';
-import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect } from './styled/styled';
+import { ButtonBunch, ButtonRow, Heading, StyledButton, StyledFormControl, StyledFormSelect, PageContainer } from './styled/styled';
 import { useGlobalContext } from './utils/globalContext';
 import { showToast } from './services/toastServices';
 import { capitalCase } from 'change-case';
@@ -96,7 +96,7 @@ const OrderForm = () => {
 
   
   return (
-    <>
+    <PageContainer>
       <Heading>{`${capitalCase(location.pathname.split('/').pop())} Order`}</Heading>
       <Container className="my-5">
         <Form onSubmit={handleSubmit} >
@@ -131,7 +131,7 @@ const OrderForm = () => {
           </Form.Group>
         </Form>
       </Container>
-    </>
+    </PageContainer>
   );
 };
 

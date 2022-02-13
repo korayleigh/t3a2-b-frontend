@@ -9,6 +9,7 @@ import { useGlobalContext } from '../utils/globalContext';
 import { showToast } from '../services/toastServices';
 import { useNavigate } from 'react-router-dom';
 import { destroyMenuItem } from '../services/menuServices';
+import { StyledButton } from '../styled/styled';
 
 const MenuItemCard = props => {
   const [cartQuantity, setCartQuantity] = useState(0);
@@ -73,10 +74,14 @@ const MenuItemCard = props => {
       </Button>
       <Button disabled variant='light'>{cartQuantity}</Button>
       <Button variant='primary'
-        onClick={increaseCartQuantity} >
+        onClick={increaseCartQuantity}
+        style={{
+          color: 'white',
+        }} >
           +
       </Button>
     </ButtonGroup>
+
   );
 
   const adminButtons = (
@@ -100,7 +105,7 @@ const MenuItemCard = props => {
 
         <Card.Footer border={'dark'}>
           <ButtonToolbar className='justify-content-between' >
-            <Button onClick={handleViewButtonClick} variant='primary'>View</Button>
+            <StyledButton onClick={handleViewButtonClick} variant="primary">View</StyledButton>
             {props.variant === 'edit' ? adminButtons : userButtons}
           </ButtonToolbar>
         </Card.Footer>

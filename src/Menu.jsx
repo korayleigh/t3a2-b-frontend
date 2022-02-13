@@ -8,7 +8,7 @@ import { Row, Col } from 'react-bootstrap';
 import MenuItemModal from './MenuItemModal';
 import { useCart } from 'react-use-cart';
 import { FloatingLabel} from 'react-bootstrap';
-import { Heading, StyledFormControl, StyledFormSelect } from './styled/styled';
+import { Heading, PageContainer, StyledFormControl, StyledFormSelect } from './styled/styled';
 import menuReducer from './utils/menuReducer';
 import { indexCategories } from './services/categoryServices';
 import { setCategories } from './services/globalContextServices';
@@ -75,8 +75,9 @@ const Menu = (props) => {
     
 
   return (
-    <>
+    <PageContainer>
       {props.hideHeading ? null : <Heading>Menu</Heading>}
+      <Heading>Menu</Heading>
       <Row xs={1} md={2}>
         <Col>
           <FloatingLabel controlId='floatinginput' label="Search" className='mb-3'>
@@ -113,7 +114,7 @@ const Menu = (props) => {
           : <p>Loading...</p>}
       </Row>
       <MenuItemModal show={modalShow} onHide={handleModalOnHide} menuItemId={modalId}></MenuItemModal>
-    </>
+    </PageContainer>
   );
 };
 
