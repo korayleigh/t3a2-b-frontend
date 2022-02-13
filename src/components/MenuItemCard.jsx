@@ -95,7 +95,7 @@ const MenuItemCard = props => {
   return (
     <Col>
       <Card border={'dark'}>
-        <Card.Img className={'img-fluid'} variant='top' src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
+        <Card.Img onClick={handleViewButtonClick} className={'img-fluid'} variant='top' src={props.menuItem.image ? props.menuItem.image.imagePath : imageNotFound} />
         <Card.Body>
           <div className='card-container'>
             <Card.Title >{props.menuItem.name}</Card.Title>
