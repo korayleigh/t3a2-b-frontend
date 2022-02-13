@@ -269,7 +269,7 @@ The project contains some extra dependencies than originally planned, and some s
 
 User testing is documented in the [User Testing Spreadsheet](https://docs.google.com/spreadsheets/d/1s3-LPndBm64y04VEfctXHCvG2uDPyusrkV6-mnXbwiQ/edit?usp=sharing)
 
-As a backup, the [user testing spreadsheet](docs/user_testing/User%20Testing.xlsx) and a [pdf of all pages](docs/user_testing/User%20Testing.pdf) are included in the docs/user_testing/ directory of this repository.
+As a backup, the [user testing spreadsheet](docs/user_testing/User%20Testing.xlsx) and a [pdf of all pages](docs/user_testing/User_Testing.pdf) are included in the docs/user_testing/ directory of this repository.
 
 ### Development
 
