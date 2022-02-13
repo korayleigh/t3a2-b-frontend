@@ -26,11 +26,9 @@ const MenuItemModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Ratio>
-        {menuItem && menuItem.image ?
-          <Image variant="top" src={menuItem.image.imagePath} />
-          : 
-          <Image variant="top" src={imageNotFound} />
-        }
+        <Image style={{'width' : '100%', 'object-fit': 'cover'}} variant="top" src={
+          menuItem && menuItem.image ?
+            menuItem.image.imagePath : imageNotFound} />
         
         {/* <Image variant="top" src={menuItem ? menuItem.image.imagePath : imageNotFound} /> */}
       </Ratio>
