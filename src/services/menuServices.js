@@ -12,20 +12,17 @@ export async function showMenuItem(id) {
 }
 
 export async function createUpdateMenuItem(menu_item) {
-  
   let response;
-  if (menu_item.id) {
-    response = await mexiquitoApi.put(`/menu_items/${menu_item.id}`, menu_item);
+  if (menu_item.get('id')) {
+    response = await mexiquitoApi.patch(`/menu_items/${menu_item.get('id')}`, menu_item);
   } else {
     response = await mexiquitoApi.post('/menu_items', menu_item);
   }
-
   return response.data;
 }
 
 export async function destroyMenuItem(id) {
   const response = await mexiquitoApi.delete(`/menu_items/${id}`);
-
   return response.data;
 }
 

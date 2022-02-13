@@ -70,7 +70,6 @@ function Checkout() {
         }     
       };
 
-      console.log(`DATA: ${itemAttributes}`);
 
       await mexiquitoApi.post('/orders', formData)
         .then(response => {
@@ -89,7 +88,6 @@ function Checkout() {
   useEffect(() => {
     indexTables()
       .then((tables) => {
-        console.log(tables);
         setTables(tables);
       })
       .catch(error => {

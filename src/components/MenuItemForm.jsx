@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Form, FloatingLabel, Alert} from 'react-bootstrap';
 import {useState} from 'react';
-import { StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
-import { useNavigate } from 'react-router-dom';
-import mexiquitoApi from '../config/api';
+import { ButtonBunch, ButtonRow, StyledButton, StyledFormControl, StyledFormSelect } from '../styled/styled';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGlobalContext } from '../utils/globalContext';
+import { createUpdateMenuItem, showMenuItem } from '../services/menuServices';
+import { showToast } from '../services/toastServices';
+import { indexCategories } from '../services/categoryServices';
 
 
 const MenuItemForm = () => {
@@ -19,13 +21,44 @@ const MenuItemForm = () => {
     valid: false
   };
 
+  const {globalStore, globalDispatch} = useGlobalContext();
   const [formState, setFormState] = useState(initialFormState);
+  const [categories, setCategories] = useState();
   const navigate = useNavigate();
-  const {globalStore} = useGlobalContext();
+  const params = useParams();
+
+  useEffect(() => {
+    indexCategories()
+      .then(categories => {
+        setCategories(categories);
+      })
+      .then(() => {
+        if (params.id) {
+          return showMenuItem(params.id);
+        }
+        return initialFormState;
+      })
+      .then(menuItem => {
+        if(params.id){
+          delete menuItem.image;
+        }
+
+        setFormState(menuItem);
+      })
+      .catch(error => {
+        console.log(error);
+        showToast(globalStore, globalDispatch, error.message, 'danger');
+      });
+  }, []);
+  
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (event.target.name === 'back') {
+      navigate(-1);
+    }
+  };
 
   const handleChange = (event) => {
-    console.log('BEFORE:');
-    console.log(formState);
     setFormState({
       ...formState,
       validated: false,
@@ -41,16 +74,17 @@ const MenuItemForm = () => {
     formData.append('price', formState.price);
     formData.append('description', formState.description);
     formData.append('category_id', formState.category_id);
-    formData.append('image', formState.image);
+    
+    if (formState.image){
+      formData.append('image', formState.image);
+    }
+    if (params.id) {
+      formData.append('id', params.id);
+    }
 
-    await mexiquitoApi.post('/menu_items', formData)
-      .then(response => {
-        console.log(response);
-        navigate('/menu_items/');
-      })
-      .catch(error => {
-        globalStore.globalErrorHandler(error);
-      });
+    createUpdateMenuItem(formData);
+    showToast(globalStore, globalDispatch, `Menu Item successfully ${formData.get('id') ? 'updated' : 'created'}`, 'success');
+    navigate('/menuitems');
   };
   
   const handleImageChange = event => { 
@@ -74,12 +108,9 @@ const MenuItemForm = () => {
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <FloatingLabel controlId="floatingSelect" label="Category">
           <StyledFormSelect aria-label="Default select example" name="category_id" onChange={handleChange}  value={formState.category_id}>
-            <option>Select a category</option>
-            <option value="1">Entrees</option>
-            <option value="2">Tacos</option>
-            <option value="3">Mains</option>
-            <option value="4">Postres</option>
-            <option value="5">Drinks</option>
+            { categories ? Object.entries(categories).map(([key,value], index) => {
+              return (<option key={index} value={key}>{value.name}</option>);
+            }) : null };
           </StyledFormSelect>
         </FloatingLabel>
       </Form.Group>
@@ -97,7 +128,12 @@ const MenuItemForm = () => {
 
 
       <Form.Group className="mb-3" controlId="formButton">
-        <StyledButton variant="primary" type="submit">Submit</StyledButton>
+        <ButtonRow>
+          <ButtonBunch>
+            <StyledButton variant="secondary" name="back" onClick={handleButtonClick}>Back</StyledButton>
+            <StyledButton variant="primary" type="submit">Submit</StyledButton>
+          </ButtonBunch>
+        </ButtonRow>
       </Form.Group>
       { (formState.validated && !formState.valid) && <Alert variant='danger'>Incorrect email or password</Alert> }
 

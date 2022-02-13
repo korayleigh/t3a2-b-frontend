@@ -12,7 +12,6 @@ const MenuItemModal = (props) => {
   const {menu} = globalStore;
 
   const menuItem = menu.find(menuItem => menuItem.id === props.menuItemId);
-  console.log(menuItem);
 
   const modalContent = (
     <Modal
