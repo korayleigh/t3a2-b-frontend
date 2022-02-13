@@ -14,42 +14,6 @@ import YesNoModal from './YesNoModal';
 
 const Order = () => {
 
-  const {globalStore, globalDispatch} = useGlobalContext();
-  const [order, setOrder] = useState(null);
-  const [transformedOrder, setTransformedOrder] = useState(null);
-  const [orderItemModalShow, setOrderItemModalShow] = useState(false);
-  const [orderItemModalId, setOrderItemModalId] = useState(null);
-  const [deleteModalShow, setDeleteModalShow] = useState(false);
-  const params = useParams();
-  const navigate = useNavigate();
-    
-  useEffect(() => {
-    showOrder(params.id)
-      .then((order) => {
-        setOrder(order);
-        setTransformedOrder(transformOrder(order));
-      })
-      .catch((error) => {
-        globalStore.globalErrorHandler(error);
-      });
-  },[]);
-
-
-  
-  const handleButtonClick = (event) => {
-    event.preventDefault();
-    if (event.target.name === 'delete') {
-      setDeleteModalShow(true);
-    } else if (event.target.name === 'edit') {
-      navigate('edit', );
-    } else if (event.target.name === 'newOrderItem') {
-      setOrderItemModalId(null);
-      setOrderItemModalShow(true);
-    } else if (event.target.name === 'back') {
-      navigate(-1);
-    }
-  };
-
   const order_items_columns = [{
     Header: 'id',
     accessor: 'id',
@@ -81,8 +45,47 @@ const Order = () => {
     sortType: 'basic',
     rowAlign: 'right',
     footerAlign: 'right',
-    Footer: transformedOrder?.total
   }];
+
+  const {globalStore, globalDispatch} = useGlobalContext();
+  const [order, setOrder] = useState(null);
+  const [transformedOrder, setTransformedOrder] = useState(null);
+  const [orderItemModalShow, setOrderItemModalShow] = useState(false);
+  const [orderItemModalId, setOrderItemModalId] = useState(null);
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [orderItemsColumns, setOrderItemsColumns] = useState(order_items_columns);
+  const params = useParams();
+  const navigate = useNavigate();
+    
+  useEffect(() => {
+    showOrder(params.id)
+      .then((order) => {
+        setOrder(order);
+        const tOrder = transformOrder(order);
+        setTransformedOrder(tOrder);
+        updateFooterTotal(tOrder);
+      })
+      .catch((error) => {
+        globalStore.globalErrorHandler(error);
+      });
+  },[order]);
+
+  
+  
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    if (event.target.name === 'delete') {
+      setDeleteModalShow(true);
+    } else if (event.target.name === 'edit') {
+      navigate('edit', );
+    } else if (event.target.name === 'newOrderItem') {
+      setOrderItemModalId(null);
+      setOrderItemModalShow(true);
+    } else if (event.target.name === 'back') {
+      navigate(-1);
+    }
+  };
+
 
   const handleRowClick = (id) => {
     setOrderItemModalId(id);
@@ -96,7 +99,12 @@ const Order = () => {
   const handleOrderItemModalSubmit = () => {
     showOrder(params.id)
       .then((order) => {
-        setOrder(order);
+        const tOrder = transformOrder(order);
+        setTransformedOrder(tOrder);
+        updateFooterTotal(tOrder);
+      })
+      .then(() => {
+        updateFooterTotal();
       });
   };
 
@@ -117,13 +125,19 @@ const Order = () => {
     setDeleteModalShow(false);
   };
 
+  const updateFooterTotal = (tOrder) => {
+    let columns_with_total = order_items_columns;
+    columns_with_total[columns_with_total.length-1]['Footer'] = tOrder.total;
+    setOrderItemsColumns(columns_with_total);
+  };
+  
   return (
     <PageContainer>
       <Heading>Order Details</Heading>
       <ShowTable item={transformedOrder} model={{singular: 'order', plural:'orders'}}>
         <Container className="my-5 px-0">
           <SubHeading>Order Items</SubHeading>
-          <IndexTable data={transformOrderItems(order?.order_items)} columns={order_items_columns} showFooter={true} onRowClick={handleRowClick}
+          <IndexTable data={transformOrderItems(order?.order_items)} columns={orderItemsColumns} showFooter={true} onRowClick={handleRowClick}
             getHeaderProps={() => {
               return { style: { textAlign: 'center' } };
             }}
