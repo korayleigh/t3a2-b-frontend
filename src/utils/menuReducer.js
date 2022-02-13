@@ -1,7 +1,5 @@
 export default function menuReducer (state, action) {
 
-  console.log('action: ', action);
-
   switch(action.type) {
 
   case 'setSearch': {

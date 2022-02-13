@@ -79,7 +79,6 @@ function Checkout() {
           navigate(`/orderstatus?id=${response.data.id}&email=${response.data.email}`);
         })
         .catch(error => {
-          console.log(error);
           globalStore.globalErrorHandler(error);
         });
     }
@@ -91,8 +90,7 @@ function Checkout() {
         setTables(tables);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   },[]);
 

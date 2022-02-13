@@ -44,7 +44,6 @@ export async function showOrderStatus(id, email) {
   return response.data;
 }
 
-
 // DISPATCHERS
 
 export function setOrder(dispatch, order) {

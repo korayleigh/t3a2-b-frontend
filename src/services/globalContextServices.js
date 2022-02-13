@@ -1,3 +1,5 @@
+// DISPATCHERS
+
 export function setLoginCredentials(dispatch, email, jwt, role) {
   dispatch({
     type: 'setLoginCredentials',

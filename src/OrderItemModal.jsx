@@ -21,9 +21,6 @@ const OrderItemModal = ({order_item_id, order_id, onHide, onSubmit, ...restProps
       <Modal.Body>
         <OrderItemForm order_item_id={order_item_id} order_id={order_id} modalOnHide={onHide} modalOnSubmit={onSubmit} />
       </Modal.Body>
-      {/* <Modal.Footer>
-        <Button onClick={props.onHide}>Close</StyledButton>
-      </Modal.Footer> */}
     </Modal>
   );
 };

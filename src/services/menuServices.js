@@ -1,5 +1,7 @@
 import mexiquitoApi from '../config/api';
 
+// API HELPERS
+
 export async function indexMenu() {
 
   const response = await mexiquitoApi.get('/menu_items');
@@ -31,6 +33,8 @@ export function menuItemOptionList(menu) {
     return [menu_item.id, menu_item.name];
   });
 }
+
+// DISPATCHERS
 
 export function setSearchText(dispatch, search_text) {
   dispatch({

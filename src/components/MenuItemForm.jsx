@@ -46,8 +46,7 @@ const MenuItemForm = () => {
         setFormState(menuItem);
       })
       .catch(error => {
-        console.log(error);
-        showToast(globalStore, globalDispatch, error.message, 'danger');
+        globalStore.globalErrorHandler(error);
       });
   }, []);
   

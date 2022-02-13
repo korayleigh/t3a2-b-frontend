@@ -1,5 +1,7 @@
 import mexiquitoApi from '../config/api';
 
+// API HELPERS
+
 export async function signIn({email, password}) {
 
   const response = await mexiquitoApi.post('/users/sign_in', {
