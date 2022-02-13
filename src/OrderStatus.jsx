@@ -54,8 +54,6 @@ const OrderStatus = () => {
   const submitForm = () => {
     if (!formState.order.id || !formState.order.email) {
       setFormValidated(formDispatch, true);
-      console.log('id:', formState.order.id);
-      console.log('email:', formState.order.email);
       if (!formState.order.id) {
         setFormValidation(formDispatch, 'id', false);
         showToast(globalStore, globalDispatch, 'Order Number is Required', 'danger' );

@@ -31,13 +31,11 @@ const Menu = (props) => {
   useEffect( ()=>{
     indexMenu()
       .then(menu => {
-        console.log(menu);
         setMenu(globalDispatch, menu);
       })
       .catch(error => {
         globalStore.globalErrorHandler(error);
       });
-    console.log('globalStore.categories.length:',globalStore.categories.length);
     if (!globalStore.categories.length) {
       indexCategories()
         .then((categories) => {
@@ -75,8 +73,6 @@ const Menu = (props) => {
     setCategoryFilter(formDispatch, event.target.value);
   };
     
-  console.log('formState:',formState);
-  console.log('categories', globalStore.categories);
 
   return (
     <>
@@ -104,8 +100,6 @@ const Menu = (props) => {
             return item.name.toLowerCase().includes(formState.search.toLowerCase());
           })
           .filter((item) => {
-            // console.log('item', item.category_id);
-            // console.log('filter', parseInt(formState.category_id));
             if (parseInt(formState.category_id) === 0) {
               return true;
             } else {

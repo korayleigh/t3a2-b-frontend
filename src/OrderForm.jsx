@@ -35,7 +35,6 @@ const OrderForm = () => {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  console.log(formState);
 
   useEffect(() => {
     if (params.id) {
