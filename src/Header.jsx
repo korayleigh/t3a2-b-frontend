@@ -53,7 +53,6 @@ const Header = () => {
     }
   }),[user.jwt];
 
-  console.dir(window.location);
 
   return (
     <>
