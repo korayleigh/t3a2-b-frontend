@@ -98,7 +98,7 @@ function Checkout() {
 
   return (
     <PageContainer>
-      <div style={{'display': 'flex', 'justifyContent':'space-between'}}>
+      <div style={{display: 'flex', justifyContent:'space-between'}}>
         <h1>Checkout</h1>
         <h1>Total: ${formatCentsAsDollars(cartTotal)}</h1>
       </div>
@@ -133,7 +133,7 @@ function Checkout() {
         </Row>
       </Form>
 
-      <div style={{'display': 'flex', 'justifyContent':'space-between'}}>
+      <div style={{display: 'flex', justifyContent:'space-between'}}>
       </div>
       <p>You will need your email to check your order status.</p>
       <br />
@@ -163,7 +163,7 @@ function Checkout() {
                   </ButtonToolbar>
                 </td>
                 <td>${formatCentsAsDollars(item.price)}</td>
-                <td style={{'fontWeight':'bold'}}>${formatCentsAsDollars(item.price * item.quantity)}</td>
+                <td style={{fontWeight:'bold'}}>${formatCentsAsDollars(item.price * item.quantity)}</td>
               </tr>
             );
           })}

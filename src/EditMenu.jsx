@@ -6,7 +6,11 @@ import Menu from './Menu';
 const EditMenu = () => {
   return (
     <>
-      <div style={{'display':'flex', 'justifyContent':'space-between'}}>
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className='container' style={{display:'flex', justifyContent:'space-between'}} >
         <h1>Edit Menu</h1>
         <div>
           <Button as={Link} to="/menuitems/new" href="/menuitems/new">New Menu Item</Button>
